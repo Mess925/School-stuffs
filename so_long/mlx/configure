@@ -24,6 +24,7 @@ get_xlib_include_path(){
 	local result=""
 
 	for inc in \
+		/opt/homebrew/include \
 		/usr/X11/include          \
 		/usr/X11R6/include        \
 		/usr/X11R5/include        \
