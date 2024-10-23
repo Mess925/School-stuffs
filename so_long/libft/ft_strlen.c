@@ -1,29 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   controller.c                                       :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: messs <messs@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/23 16:38:41 by messs             #+#    #+#             */
-/*   Updated: 2024/10/23 21:14:52 by messs            ###   ########.fr       */
+/*   Created: 2021/10/06 13:50:29 by tblaase           #+#    #+#             */
+/*   Updated: 2024/10/23 15:51:18 by messs            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../so_long.h"
+#include <unistd.h>
 
-int close_window(mlx_data *vars)
+size_t	ft_strlen(const char *s)
+/* will return the length of a string
+** will return 0 if the string is empty */
 {
-	mlx_destroy_window(vars->mlx, vars->win);
-	exit(0); // Exit the program after closing the window
-}
+	int	i;
 
-// Function to handle key press events
-int handle_keypress(int key, mlx_data *vars)
-{
-	if (key == 53) // 'ESC' key on macOS
+	i = 0;
+	while (s && s[i])
 	{
-		close_window(vars);
+		i++;
 	}
-	return (0);
+	return (i);
 }

@@ -10,29 +10,34 @@ else ifeq ($(UNAME), Darwin)
     MLX_FLAGS = -Lmlx -lmlx -L/usr/X11/lib -lXext -lX11 -framework OpenGL -framework AppKit
 endif
 
-# Paths to MiniLibX library
+# Paths to MiniLibX library and libft
 MLX_PATH = ./mlx
 MLX_LIB = $(MLX_PATH)/libmlx.a
+LIBFT_PATH = ./libft  # Adjusted to point to the correct directory
+LIBFT_LIB = $(LIBFT_PATH)/libft.a  # Assuming your libft.a is created here
 CONTROLLER_PATH = ./src/controller
 
 # Compilation flags
 CFLAGS = -Werror -Wall -Wextra $(INCLUDES)
-SRCS = ./src/main.c ${CONTROLLER_PATH}/controller.c
+SRCS = ./src/main.c ${CONTROLLER_PATH}/controller.c ${CONTROLLER_PATH}/map.c ${CONTROLLER_PATH}/map_check.c
 OBJS = $(SRCS:.c=.o)
 CC = cc
 NAME = so_long
 
 # Default rule
-all: $(NAME)
+all: $(LIBFT_LIB) $(NAME)
 
-# Link the game with MiniLibX and other flags
-$(NAME): $(OBJS) $(MLX_LIB)
-	$(CC) $(CFLAGS) $(OBJS) $(MLX_FLAGS) -o $(NAME)
+# Link the game with MiniLibX and libft
+$(NAME): $(OBJS) $(MLX_LIB) $(LIBFT_LIB)
+	$(CC) $(CFLAGS) $(OBJS) $(MLX_FLAGS) -L$(LIBFT_PATH) -lft -o $(NAME)
 
 # Compile the MiniLibX library if not already compiled
 $(MLX_LIB):
 	@$(MAKE) -C $(MLX_PATH)
 
+# Ensure libft is built before linking
+$(LIBFT_LIB):
+	@$(MAKE) -C $(LIBFT_PATH)
 
 # Clean up object files
 clean:

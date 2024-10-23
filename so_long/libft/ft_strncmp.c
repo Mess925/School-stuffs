@@ -1,29 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   controller.c                                       :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: messs <messs@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/23 16:38:41 by messs             #+#    #+#             */
-/*   Updated: 2024/10/23 21:14:52 by messs            ###   ########.fr       */
+/*   Created: 2024/10/23 15:39:18 by messs             #+#    #+#             */
+/*   Updated: 2024/10/23 15:51:18 by messs            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../so_long.h"
+#include "libft.h"
 
-int close_window(mlx_data *vars)
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	mlx_destroy_window(vars->mlx, vars->win);
-	exit(0); // Exit the program after closing the window
-}
+	size_t	i;
 
-// Function to handle key press events
-int handle_keypress(int key, mlx_data *vars)
-{
-	if (key == 53) // 'ESC' key on macOS
+	i = 0;
+	while (i < n)
 	{
-		close_window(vars);
+		if (s1[i] != s2[i])
+			return (((unsigned char)s1[i] - (unsigned char)s2[i]));
+		if (s1[i] == '\0')
+			return (0);
+		i++;
 	}
+	if (n == 0)
+		return (0);
 	return (0);
 }

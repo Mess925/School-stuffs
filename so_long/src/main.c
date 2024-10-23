@@ -9,7 +9,7 @@ int main(void)
 	int height = 25;
 
 	mlx.mlx = mlx_init();
-	mlx.win = mlx_new_window(mlx.mlx, 680, 800, "Hello world!");
+	mlx.win = mlx_new_window(mlx.mlx, 700, 640, "My Window");
 	if (!mlx.mlx || !mlx.win)
 	{
 		printf("Error initializing MLX or creating window\n");
