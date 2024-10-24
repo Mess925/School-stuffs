@@ -6,7 +6,7 @@
 /*   By: messs <messs@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 17:16:28 by messs             #+#    #+#             */
-/*   Updated: 2024/10/23 21:14:50 by messs            ###   ########.fr       */
+/*   Updated: 2024/10/24 22:33:33 by messs            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 
 void    ft_print_error_msg(const char *error_msg)
 {
-    write(2, &error_msg ,ft_strlen(error_msg));
-    write(2,"\n",1);
+    ft_putstr_fd((char *)error_msg,2);
     exit(EXIT_FAILURE);
 }
 
@@ -29,9 +28,9 @@ void ft_check_rectangular(window_data *window)
     expected_height = window->height / IMG_H;
     if (expected_width < 3 || expected_height < 3)
         ft_print_error_msg("ERROR: Map has to be at least 3x3");
-
     y = 0;
-    while (y < (window->height / IMG_H))
+    printf("hi");
+    while (y < expected_height)
     {
         if ((int)(ft_strlen)(window->map->map[y]) != expected_width)
             ft_print_error_msg("ERROR: Map has to be rectangular");

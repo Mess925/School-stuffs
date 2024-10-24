@@ -15,11 +15,11 @@ MLX_PATH = ./mlx
 MLX_LIB = $(MLX_PATH)/libmlx.a
 LIBFT_PATH = ./libft  # Adjusted to point to the correct directory
 LIBFT_LIB = $(LIBFT_PATH)/libft.a  # Assuming your libft.a is created here
-CONTROLLER_PATH = ./src/controller
+
 
 # Compilation flags
 CFLAGS = -Werror -Wall -Wextra $(INCLUDES)
-SRCS = ./src/main.c ${CONTROLLER_PATH}/controller.c ${CONTROLLER_PATH}/map.c ${CONTROLLER_PATH}/map_check.c
+SRCS = main.c controller.c map.c map_check.c
 OBJS = $(SRCS:.c=.o)
 CC = cc
 NAME = so_long

@@ -1,34 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_line_length.c                                   :+:      :+:    :+:   */
+/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: messs <messs@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/06 15:42:17 by tblaase           #+#    #+#             */
-/*   Updated: 2024/10/24 18:25:32 by messs            ###   ########.fr       */
+/*   Created: 2024/05/23 10:52:00 by hthant            #+#    #+#             */
+/*   Updated: 2024/10/24 18:29:49 by messs            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include"libft.h"
 
-int	ft_line_length(int fd)
-/* this function will find the length of the first line in a file */
+void	ft_putstr_fd(char *s, int fd)
 {
-	char	buffer[1];
-	int		length;
-	int		bytes;
-
-	buffer[0] = '\0';
-	bytes = 1;
-	length = 0;
-	while (bytes == 1)
-	{
-		bytes = read(fd, buffer, 1);
-		if (buffer[0] != '\n')
-			length++;
-		else
-			break ;
-	}
-	return (length);
+	write (fd, s, ft_strlen(s));
+	write(1,"\n",1);
 }
+
+// int	main(void)
+// {
+// 	ft_putstr_fd("hello",1);
+// }

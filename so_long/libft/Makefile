@@ -6,7 +6,7 @@
 #    By: messs <messs@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/06 12:53:31 by tblaase           #+#    #+#              #
-#    Updated: 2024/10/23 20:53:44 by messs            ###   ########.fr        #
+#    Updated: 2024/10/24 18:25:21 by messs            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,7 @@ CFILES = \
 		ft_strncmp.c\
 		ft_strncpy.c\
 		ft_strndup.c\
+		ft_putstr_fd.c\
 		get_next_line_utils.c\
 		get_next_line.c
 

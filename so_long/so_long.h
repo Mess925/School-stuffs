@@ -48,7 +48,7 @@ int close_window(mlx_data *vars);
 int handle_keypress(int key, mlx_data *vars);
 
 // map.c
-void	ft_input_error(int	argc);
+void	ft_input_error(int	argc, int fd);
 int is_ber_file(const char *filename);
 void    get_window_size(window_data *window, char **av);
 void	read_lines_to_map(window_data *window, int fd, char **map);

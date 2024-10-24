@@ -6,7 +6,7 @@
 /*   By: messs <messs@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/06 12:53:29 by tblaase           #+#    #+#             */
-/*   Updated: 2024/10/23 20:53:20 by messs            ###   ########.fr       */
+/*   Updated: 2024/10/24 18:48:35 by messs            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ size_t	ft_strlen(const char *s);
 int	ft_strncmp(const char *s1, const char *s2, size_t n);
 char *ft_strncpy(char *dest, const char *src, size_t n);
 char *ft_strndup(const char *s1, size_t n);
+void	ft_putstr_fd(char *s, int fd);
 
 
 // get_next_line
