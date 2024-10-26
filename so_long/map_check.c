@@ -6,7 +6,7 @@
 /*   By: messs <messs@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 00:28:16 by messs             #+#    #+#             */
-/*   Updated: 2024/10/27 01:54:06 by messs            ###   ########.fr       */
+/*   Updated: 2024/10/27 02:21:11 by messs            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,49 +36,46 @@ void ft_is_rectangular(map_data *map)
     }
 }
 
-void ft_check_walls(map_data *map)
+void ft_check_walls(map_data *map,int height, int width)
 {
     int i;
 
     i = 0;
-    while (i < map->width / 32)
+    while (i < width)
     {
-        if (map->map[0][i] != '1' || map->map[map->height- 1][i] != '1')
+        if (map->map[0][i] != '1' || map->map[height -  1][i] != '1')
         {
-            ft_putstr_fd("Error\n Map has to be surrounded by walls.\n",1);
+            ft_putstr_fd("Error: Map has to be surrounded by walls.\n",1);
             return;
         }
         i++;
     }
     i = 0;
-    while (i < map->height / 32)
+    while (i < height)
     {
-        if (map->map[i][0] != '1' || map->map[i][map->width - 1] != '1')
+        if (map->map[i][0] != '1' || map->map[i][width - 1] != '1')
         {
-            ft_putstr_fd("Error\n Map has to be surrounded by walls.\n",1);
+            ft_putstr_fd("Error: Map has to be surrounded by walls.\n",1);
             return;
         }
         i++;
     }
 }
 
-void ft_check_valid_characters(map_data *map)
+void ft_check_valid_characters(map_data *map,int height, int width)
 {
-    int i;
-    int j;
-    char current;
+    int i = 0;
 
-    i = 0;
-    while (i < map->height / 32)
+    while (i < height)
     {
-        j = 0;
-        while (j < map->width / 32)
+        int j = 0;
+        while (j < width)
         {
-            current = map->map[i][j];
+            char current = map->map[i][j];
             if (current != '0' && current != '1' && current != 'C' && 
                 current != 'P' && current != 'E')
             {
-                ft_putstr_fd("Error\nInvalid character found in the map\n",1);
+                ft_putstr_fd("Error: Invalid character found in the map\n",1);
                 return;
             }
             j++;
@@ -110,8 +107,13 @@ void ft_check_valid_characters(map_data *map)
 
 void ft_check_map(map_data *map)
 {
+    int height;
+    int width;
+    
+    height = map->height / IMG_H;
+    width = map->width / IMG_W;
     ft_is_rectangular(map);
-    ft_check_walls(map);
-    ft_check_valid_characters(map);
+    ft_check_walls(map,height,width);
+    ft_check_valid_characters(map,height,width);
     ft_check_validate_counts(map);
 }

@@ -6,7 +6,7 @@
 /*   By: messs <messs@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 03:10:45 by messs             #+#    #+#             */
-/*   Updated: 2024/10/27 01:51:18 by messs            ###   ########.fr       */
+/*   Updated: 2024/10/27 02:28:39 by messs            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,20 +48,28 @@ int ft_count_lines(const char *filename)
     return height;
 }
 
+void get_size(map_data *map, int height)
+{
+    map->width = (ft_strlen(map->map[0])) * IMG_W;
+    map->height = height * IMG_H;
+}
+
 void ft_load_map(map_data *map, const char *filename, int height)
 {
     int fd;
     char *line;
-    int i = 0;
+    int i;
 
+    i = 0;
     fd = open(filename, O_RDONLY);
     if (fd < 0)
         return;
-
     map->map = (char **)malloc(sizeof(char *) * (height + 1));
     if (!map->map)
+    {
+        ft_putstr_fd("Error: Memory allocation failed\n", 1);
         return;
-
+    }
     while ((line = get_next_line(fd)) != NULL)
     {
         if (line[ft_strlen(line) - 1] == '\n')
@@ -72,9 +80,7 @@ void ft_load_map(map_data *map, const char *filename, int height)
     }
     map->map[i] = NULL;
     close(fd);
-
-    map->width = (ft_strlen(map->map[0])) * IMG_W;
-    map->height = height * IMG_H;
+    get_size(map,height);
 }
 void get_map_size(map_data *map, char **av)
 {
@@ -87,7 +93,10 @@ void get_map_size(map_data *map, char **av)
     }
 
     height = ft_count_lines(av[1]);
-    if (height < 0)
+    if (height < 1)
+    {
+        ft_putstr_fd("Error: Invalid map height\n", 1);
         return;
+    }
     ft_load_map(map, av[1], height);
 }

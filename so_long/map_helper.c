@@ -6,7 +6,7 @@
 /*   By: messs <messs@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 01:29:25 by messs             #+#    #+#             */
-/*   Updated: 2024/10/27 01:51:52 by messs            ###   ########.fr       */
+/*   Updated: 2024/10/27 02:23:37 by messs            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,17 +30,17 @@ void ft_count(int player_count, int exit_count ,int sheep)
 {
     if (player_count != 1)
     {
-        ft_putstr_fd("Error\nThere must be exactly 1 player in the map\n",1);
+        ft_putstr_fd("Error: There must be exactly 1 player in the map\n",1);
         return;
     }
     if (sheep <= 0)
     {
-        ft_putstr_fd("Error\nThere must be at least 1 collectible in the map\n",1);
+        ft_putstr_fd("Error: There must be at least 1 collectible in the map\n",1);
         return;
     }
     if (exit_count != 1)
     {
-        ft_putstr_fd("Error\nThere must be exactly 1 exit in the map\n",1);
+        ft_putstr_fd("Error: There must be exactly 1 exit in the map\n",1);
         return;
     }
 }

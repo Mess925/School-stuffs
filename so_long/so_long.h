@@ -42,11 +42,12 @@ int is_ber_file(const char *filename);
 int ft_count_lines(const char *file_path);
 void ft_load_map(map_data *map, const char *file_path, int height);
 void get_map_size(map_data *map, char **av);
+void get_size(map_data *map, int height);
 
 // check_map.c
 void ft_is_rectangular(map_data *map);
-void ft_check_walls(map_data *map);
-void ft_check_valid_characters(map_data *map);
+void ft_check_walls(map_data *map,int height,int width);
+void ft_check_valid_characters(map_data *map,int height,int width);
 void ft_validate_counts(map_data *map);
 void ft_check_map(map_data *map);
 
