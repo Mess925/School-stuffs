@@ -6,7 +6,7 @@
 /*   By: messs <messs@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 03:10:45 by messs             #+#    #+#             */
-/*   Updated: 2024/10/25 05:56:45 by messs            ###   ########.fr       */
+/*   Updated: 2024/10/27 01:51:18 by messs            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,10 @@ int is_ber_file(const char *filename)
 int ft_count_lines(const char *filename)
 {
     int fd;
-    int height = 0;
+    int height;
     char *line;
 
+    height = 0;
     fd = open(filename, O_RDONLY);
     if (fd < 0)
         return -1; 
@@ -88,31 +89,5 @@ void get_map_size(map_data *map, char **av)
     height = ft_count_lines(av[1]);
     if (height < 0)
         return;
-
     ft_load_map(map, av[1], height);
-}
-
-void ft_is_rectangular(map_data *map)
-{
-    int first_row_length;
-    int current_row_length;
-    int i;
-
-    if (map->map == NULL || map->map[0] == NULL)
-        return;
-    
-    first_row_length = (int)(ft_strlen(map->map[0]));
-    i = 1;
-    
-    while (map->map[i] != NULL)
-    {
-        current_row_length = (int)(ft_strlen(map->map[i]));
-        if (current_row_length != first_row_length)
-        {
-            ft_putstr_fd("Error: Map is not rectangular!\n", 1);
-            return;
-        }
-        i++;
-    }
-    ft_putstr_fd("Map is rectangular.\n", 1);
 }

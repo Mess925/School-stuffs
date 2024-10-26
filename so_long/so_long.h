@@ -21,6 +21,7 @@ typedef struct t_data
 	char **map;
 	int	width;
 	int height;
+	int sheep;
 } map_data;
 
 
@@ -41,7 +42,16 @@ int is_ber_file(const char *filename);
 int ft_count_lines(const char *file_path);
 void ft_load_map(map_data *map, const char *file_path, int height);
 void get_map_size(map_data *map, char **av);
-void ft_is_rectangular(map_data *map);
 
+// check_map.c
+void ft_is_rectangular(map_data *map);
+void ft_check_walls(map_data *map);
+void ft_check_valid_characters(map_data *map);
+void ft_validate_counts(map_data *map);
+void ft_check_map(map_data *map);
+
+// map_helper.c
+int ft_count_char(const char *str, char c);
+void ft_count(int player_count, int exit_count ,int sheep);
 
 #endif

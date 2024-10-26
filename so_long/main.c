@@ -4,11 +4,10 @@
 int main(int ac, char **av)
 {
 	map_data map;
+
 	if (ac != 2)
 		return 0;
-	
 	get_map_size(&map,av);
-	ft_is_rectangular(&map);
-	ft_is_valid(&map);
+	ft_check_map(&map);
 	return 0;
 }
