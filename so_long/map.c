@@ -6,7 +6,7 @@
 /*   By: messs <messs@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 03:10:45 by messs             #+#    #+#             */
-/*   Updated: 2024/10/27 02:28:39 by messs            ###   ########.fr       */
+/*   Updated: 2024/10/27 14:49:11 by messs            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,7 @@ void ft_load_map(map_data *map, const char *filename, int height)
         return;
     map->map = (char **)malloc(sizeof(char *) * (height + 1));
     if (!map->map)
-    {
-        ft_putstr_fd("Error: Memory allocation failed\n", 1);
-        return;
-    }
+        ft_write_error_msg("Error: Memory allocation failed\n");
     while ((line = get_next_line(fd)) != NULL)
     {
         if (line[ft_strlen(line) - 1] == '\n')
@@ -87,16 +84,10 @@ void get_map_size(map_data *map, char **av)
     int height;
 
     if (!is_ber_file(av[1]))
-    {
-        ft_putstr_fd("Error: File is not a .ber file\n", 1);
-        return;
-    }
+        ft_write_error_msg("Error: File is not a .ber file\n");
 
     height = ft_count_lines(av[1]);
     if (height < 1)
-    {
-        ft_putstr_fd("Error: Invalid map height\n", 1);
-        return;
-    }
+        ft_write_error_msg("Error: Invalid map height\n");
     ft_load_map(map, av[1], height);
 }

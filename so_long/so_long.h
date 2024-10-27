@@ -52,6 +52,7 @@ void ft_validate_counts(map_data *map);
 void ft_check_map(map_data *map);
 
 // map_helper.c
+void ft_write_error_msg(char *str);
 int ft_count_char(const char *str, char c);
 void ft_count(int player_count, int exit_count ,int sheep);
 
