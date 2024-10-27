@@ -6,7 +6,7 @@
 /*   By: messs <messs@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 03:10:45 by messs             #+#    #+#             */
-/*   Updated: 2024/10/27 14:49:11 by messs            ###   ########.fr       */
+/*   Updated: 2024/10/28 02:49:45 by messs            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int ft_count_lines(const char *filename)
     height = 0;
     fd = open(filename, O_RDONLY);
     if (fd < 0)
-        return -1; 
+        ft_write_error_msg("Error: File not found\n"); 
     while ((line = get_next_line(fd)) != NULL)
     {
         height++;
@@ -63,7 +63,7 @@ void ft_load_map(map_data *map, const char *filename, int height)
     i = 0;
     fd = open(filename, O_RDONLY);
     if (fd < 0)
-        return;
+        ft_write_error_msg("Error: File not found\n");
     map->map = (char **)malloc(sizeof(char *) * (height + 1));
     if (!map->map)
         ft_write_error_msg("Error: Memory allocation failed\n");
@@ -73,6 +73,7 @@ void ft_load_map(map_data *map, const char *filename, int height)
             line[ft_strlen(line) - 1] = '\0'; 
         map->map[i] = ft_strdup(line);
         free(line);
+        line = NULL;
         i++;
     }
     map->map[i] = NULL;

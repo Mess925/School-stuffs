@@ -6,7 +6,7 @@
 /*   By: messs <messs@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 01:29:25 by messs             #+#    #+#             */
-/*   Updated: 2024/10/27 14:49:40 by messs            ###   ########.fr       */
+/*   Updated: 2024/10/28 02:49:44 by messs            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void ft_write_error_msg(char *str)
 {
 	write (1, str, ft_strlen(str));
-    return;
+    exit(1);
 }
 
 int ft_count_char(const char *str, char c)

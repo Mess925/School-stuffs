@@ -7,6 +7,9 @@
 #include <fcntl.h>
 #include <stdio.h>
 
+#define IMG_W 32
+#define IMG_H 32
+
 typedef struct s_data
 {
 	void *img;
@@ -31,9 +34,6 @@ typedef struct m_data
 	void *win;
 } mlx_data;
 
-#define IMG_W 32;
-#define IMG_H 32;
-
 int close_window(mlx_data *vars);
 int handle_keypress(int key, mlx_data *vars);
 
@@ -55,5 +55,16 @@ void ft_check_map(map_data *map);
 void ft_write_error_msg(char *str);
 int ft_count_char(const char *str, char c);
 void ft_count(int player_count, int exit_count ,int sheep);
+
+// flood_fill.c
+char **copy_map(map_data *map);
+int **create_visited(int rows, int cols);
+void free_visited(int **visited, int rows);
+int flood_fill(map_data *map, char **map_copy, int x, int y, int **visited);
+int is_reachable(map_data *map, int start_x, int start_y);
+
+// player.c
+int find_player_start_y(map_data *map);
+int find_player_start_x(map_data *map);
 
 #endif
