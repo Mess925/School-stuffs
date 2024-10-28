@@ -27,6 +27,14 @@ typedef struct t_data
 	int sheep;
 } map_data;
 
+typedef struct s_copy_map_data
+{
+    char **map;     
+    int height;      
+    int width;      
+    int collected;  
+	int exit_found;
+} copy_map_data;
 
 typedef struct m_data
 {
@@ -55,13 +63,15 @@ void ft_check_map(map_data *map);
 void ft_write_error_msg(char *str);
 int ft_count_char(const char *str, char c);
 void ft_count(int player_count, int exit_count ,int sheep);
+void free_copy_map(copy_map_data *copy);
+void free_map(char **map_copy);
 
-// flood_fill.c
-char **copy_map(map_data *map);
-int **create_visited(int rows, int cols);
-void free_visited(int **visited, int rows);
-int flood_fill(map_data *map, char **map_copy, int x, int y, int **visited);
-int is_reachable(map_data *map, int start_x, int start_y);
+// is_map_valid.c
+int copy_map_content(copy_map_data *copy, char **original_map);
+copy_map_data *init_copy_map_data(int rows, int cols);
+copy_map_data *create_copy_map(map_data *original_map);
+int flood_fill(copy_map_data *copy, int x, int y);
+int is_map_valid(map_data *map, int start_x, int start_y);
 
 // player.c
 int find_player_start_y(map_data *map);

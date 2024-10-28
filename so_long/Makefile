@@ -18,7 +18,7 @@ LIBFT = $(LIBFT_PATH)/libft.a
 
 # Compilation flags
 CFLAGS = -Werror -Wall -Wextra $(INCLUDES)
-SRCS = ./get_next_line/get_next_line.c ./get_next_line/get_next_line_utils.c main.c controller.c map.c map_check.c map_helper.c flood_fill.c player.c
+SRCS = ./get_next_line/get_next_line.c ./get_next_line/get_next_line_utils.c main.c controller.c map.c map_check.c map_helper.c is_map_valid.c player.c
 OBJS = $(SRCS:.c=.o)
 CC = cc
 NAME = so_long

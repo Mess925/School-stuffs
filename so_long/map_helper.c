@@ -6,7 +6,7 @@
 /*   By: messs <messs@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 01:29:25 by messs             #+#    #+#             */
-/*   Updated: 2024/10/28 02:49:44 by messs            ###   ########.fr       */
+/*   Updated: 2024/10/28 14:46:21 by messs            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,26 @@ void ft_count(int player_count, int exit_count ,int sheep)
         ft_write_error_msg("Error: There must be at least 1 collectible in the map\n");
     if (exit_count != 1)
         ft_write_error_msg("Error: There must be exactly 1 exit in the map\n");
+}
+
+void free_map(char **map_copy)
+{
+    int i;
+    i = 0;
+    while (map_copy[i])
+    {
+        free(map_copy[i]);
+        i++;
+    }
+    free(map_copy);
+}
+
+void free_copy_map(copy_map_data *copy)
+{
+    if (!copy)
+        return;
+    for (int i = 0; i < copy->rows; i++)
+        free(copy->map[i]);
+    free(copy->map);
+    free(copy);
 }
