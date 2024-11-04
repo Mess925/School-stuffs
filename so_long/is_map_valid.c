@@ -3,124 +3,116 @@
 /*                                                        :::      ::::::::   */
 /*   is_map_valid.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: messs <messs@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 14:41:11 by messs             #+#    #+#             */
-/*   Updated: 2024/10/28 15:09:19 by messs            ###   ########.fr       */
+/*   Updated: 2024/11/04 23:09:40 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-copy_map_data *init_copy_map_data(int height, int width)
+t_copy__map_data	*init_t_copy__map_data(int height, int width)
 {
-    copy_map_data *copy;
-    
-    copy = (copy_map_data *)malloc(sizeof(copy_map_data));
-    if (!copy)
-        return NULL;
+	t_copy__map_data	*copy;
 
-    copy->height = height;
-    copy->width = width;
-    copy->collected = 0;
-    copy->exit_found = 0;  
-    copy->map = (char **)malloc((height + 1) * sizeof(char *));
-    
-    if (!copy->map)
-    {
-        free(copy);
-        return NULL;
-    }
-    return copy;
-}
-int copy_map_content(copy_map_data *copy, char **original_map)
-{
-    int i;
-    
-    i = 0;
-    while (original_map[i])
-    {
-        copy->map[i] = ft_strdup(original_map[i]);
-        if (!copy->map[i])
-        {
-            while (--i >= 0)
-                free(copy->map[i]);
-            free(copy->map);
-            return 0;
-        }
-        i++;
-    }
-    copy->map[i] = NULL;
-    return 1;
-}
-copy_map_data *create_copy_map(map_data *original_map)
-{
-    int height;
-    int width;
-    copy_map_data *copy;
-    
-    width = original_map->width / IMG_W;
-    height = original_map->height / IMG_H;
-    copy = init_copy_map_data(height, width);
-    if (!copy)
-        return NULL;
-\
-    if (!copy_map_content(copy, original_map->map))
-    {
-        free(copy->map);
-        free(copy);
-        return NULL;
-    }
-    return copy;
+	copy = (t_copy__map_data *)malloc(sizeof(t_copy__map_data));
+	if (!copy)
+		return (NULL);
+	copy->height = height;
+	copy->width = width;
+	copy->collected = 0;
+	copy->exit_found = 0;
+	copy->map = (char **)malloc((height + 1) * sizeof(char *));
+	if (!copy->map)
+	{
+		free(copy);
+		return (NULL);
+	}
+	return (copy);
 }
 
-
-int flood_fill(copy_map_data *copy, int x, int y)
+int	copy_map_content(t_copy__map_data *copy, char **original_map)
 {
-    if (x < 0 || y < 0 || x >= copy->height || y >= copy->width || 
-        copy->map[x][y] == '1' || copy->map[x][y] == 'V')
-        return 0;
+	int	i;
 
-    if (copy->map[x][y] == 'C')
-        copy->collected++;
-    else if (copy->map[x][y] == 'E')
-        copy->exit_found = 1;
-
-    copy->map[x][y] = 'V'; 
-
-    flood_fill(copy, x + 1, y);
-    flood_fill(copy, x - 1, y);
-    flood_fill(copy, x, y + 1);
-    flood_fill(copy, x, y - 1);
-
-    return 0;
+	i = 0;
+	while (original_map[i])
+	{
+		copy->map[i] = ft_strdup(original_map[i]);
+		if (!copy->map[i])
+		{
+			while (--i >= 0)
+				free(copy->map[i]);
+			free(copy->map);
+			return (0);
+		}
+		i++;
+	}
+	copy->map[i] = NULL;
+	return (1);
 }
 
-int is_map_valid(map_data *map, int start_x, int start_y)
+t_copy__map_data	*create_copy_map(t_map_data *original_map)
 {
-    copy_map_data *map_copy;
-    
-    map_copy = create_copy_map(map);
+	int					height;
+	int					width;
+	t_copy__map_data	*copy;
 
-    if (!map_copy)
-    {
-        ft_write_error_msg("Error: Memory allocation failed\n");
-        return 0;
-    }
+	width = original_map->width;
+	height = original_map->height;
+	copy = init_t_copy__map_data(height, width);
+	if (!copy)
+		return (NULL);
+	if (!copy_map_content(copy, original_map->map))
+	{
+		free(copy->map);
+		free(copy);
+		return (NULL);
+	}
+	return (copy);
+}
 
-    flood_fill(map_copy, start_x, start_y);
+void	flood_fill(t_copy__map_data *copy, int x, int y)
+{
+	if (x < 0 || y < 0 || y >= copy->height || x >= copy->width
+		|| copy->map[y][x] == '1' || copy->map[y][x] == 'R')
+		return ;
+	if (copy->map[y][x] == 'C')
+		copy->collected++;
+	if (copy->map[y][x] == 'E')
+		copy->exit_found = 1;
+	copy->map[y][x] = 'R';
+	flood_fill(copy, x + 1, y);
+	flood_fill(copy, x - 1, y);
+	flood_fill(copy, x, y + 1);
+	flood_fill(copy, x, y - 1);
+}
 
-    if(map_copy->collected != map->sheep)
-    {
-        ft_write_error_msg("Error: Not all collectibles are reachable\n");
-        return 0;
-    }
-    
-    if (map_copy->exit_found != 1)
-    {
-        ft_write_error_msg("Error: Exit is not reachable\n");
-        return 0;
-    }
-    free_copy_map(map_copy);
-    return 1;
+int	is_map_valid(t_map_data *map, int start_x, int start_y)
+{
+	t_copy__map_data	*map_copy;
+
+	map_copy = create_copy_map(map);
+	if (!map_copy)
+	{
+		free_copy_map(map_copy);
+		free_map(map);
+		ft_write_error_msg("Error: Memory allocation failed\n");
+	}
+	flood_fill(map_copy, start_x, start_y);
+	if (map_copy->collected != map->sheep)
+	{
+		free_copy_map(map_copy);
+		free_map(map);
+		ft_write_error_msg("Error: Not all collectibles are reachable\n");
+	}
+	if (map_copy->exit_found != 1)
+	{
+		free_copy_map(map_copy);
+		free_map(map);
+		ft_write_error_msg("Error: Exit is not reachable\n");
+	}
+	free_copy_map(map_copy);
+	return (1);
 }

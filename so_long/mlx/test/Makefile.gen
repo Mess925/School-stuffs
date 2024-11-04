@@ -1,4 +1,4 @@
-INC=/opt/homebrew/include
+INC=/usr/include
 
 
 INCLIB=$(INC)/../lib
