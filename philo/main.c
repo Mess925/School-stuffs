@@ -1,31 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.h                                            :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: messs <messs@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/07 18:37:18 by messs             #+#    #+#             */
-/*   Updated: 2024/11/13 20:53:10 by messs            ###   ########.fr       */
+/*   Created: 2024/11/13 17:59:36 by messs             #+#    #+#             */
+/*   Updated: 2024/11/13 20:10:07 by messs            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_H
-#define PHILO_H
+#include "philo.h"
 
-typedef struct s_data
+int main(int ac, char **av)
 {
-    int number_of_philoshopers;
-    int number_of_forks;
-    int time_to_die;
-    int time_to_eat;
-    int time_to_sleep;
-    int number_of_times_to_eat;
-}t_data;
-
-typedef struct s_philo
-{
-
-}t_philo;
-
-#endif
+    
+}
