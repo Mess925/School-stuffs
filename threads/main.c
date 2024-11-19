@@ -2,33 +2,40 @@
 #include <pthread.h>
 #include <unistd.h>
 
-void *thread_function(void *arg)
+pthread_mutex_t lock; 
+int sharedCounter = 0;
+
+void* incrementCounter(void* thread_id)
 {
-    int *num = (int *)(arg);
-    printf("The number is %d.\n",*num);
-    usleep(10000);
-    printf("hi\n");
+    pthread_mutex_lock(&lock);
+
+    int id = *((int*)thread_id);
+    sharedCounter++;
+    printf("Thread %d incremented counter to %d\n", id, sharedCounter);
+
+    pthread_mutex_unlock(&lock);
+
     return NULL;
 }
-
-void *thread2_function(void *arg)
-{
-    printf ("Thread 2 is running.\n");
-    return NULL;
-}
-
 
 int main()
 {
-    pthread_t thread1;
-    pthread_t thread2;
-    int value_1 = 2;
-    int value_2 = 4;
+    pthread_t t1, t2;
+    int id1 = 1, id2 = 2;
 
-    pthread_create(&thread1,NULL,thread_function,(void *) &value_1);
-    pthread_create(&thread2,NULL,thread_function,(void *) &value_2);
-    pthread_join(thread1,NULL);
-    pthread_join(thread2,NULL);
+    if (pthread_mutex_init(&lock, NULL) != 0) {
+        printf("Mutex initialization failed\n");
+        return 1;
+    }
+    pthread_create(&t1, NULL, incrementCounter, (void*)&id1);
+    pthread_create(&t2, NULL, incrementCounter, (void*)&id2);
+
+    pthread_join(t1, NULL);
+    pthread_join(t2, NULL);
+
+    printf("Final counter value: %d\n", sharedCounter);
+
+    pthread_mutex_destroy(&lock);
 
     return 0;
 }
