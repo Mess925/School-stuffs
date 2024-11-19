@@ -6,26 +6,47 @@
 /*   By: messs <messs@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 18:37:18 by messs             #+#    #+#             */
-/*   Updated: 2024/11/13 20:53:10 by messs            ###   ########.fr       */
+/*   Updated: 2024/11/19 17:48:42 by messs            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 #define PHILO_H
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <pthread.h>
+#include <unistd.h>
+#include <sys/time.h>
+
 typedef struct s_data
 {
-    int number_of_philoshopers;
+    int num_philosophers;
     int number_of_forks;
     int time_to_die;
     int time_to_eat;
     int time_to_sleep;
     int number_of_times_to_eat;
+    pthread_mutex_t *forks;
+    pthread_mutex_t print_mutex;
 }t_data;
 
-typedef struct s_philo
-{
+typedef struct s_philosopher {
+    int id; 
+    long last_meal_time;
+    int times_eaten; 
+    int dead;
+    pthread_t thread;
+    t_data *data; 
+} t_philosopher;
 
-}t_philo;
 
+// philo_init.c
+t_data *init_data(int argc, char **argv);
+void *philo_task(void *arg);
+
+// utils.c
+long get_current_time(void);
+void print_state(t_philosopher *philo, const char *state);
+void *check_death(void *arg);
 #endif
