@@ -6,7 +6,7 @@
 /*   By: messs <messs@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 16:07:53 by messs             #+#    #+#             */
-/*   Updated: 2024/11/19 17:48:14 by messs            ###   ########.fr       */
+/*   Updated: 2024/11/19 18:26:05 by messs            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int main(int ac, char **av)
         pthread_join(philosphers[i].thread,NULL);
         i++;
     }
-
     free(philosphers);
     free(data->forks);
     free(data);

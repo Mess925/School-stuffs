@@ -6,7 +6,7 @@
 /*   By: messs <messs@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 16:39:15 by messs             #+#    #+#             */
-/*   Updated: 2024/11/19 18:18:13 by messs            ###   ########.fr       */
+/*   Updated: 2024/11/19 18:25:21 by messs            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,28 +51,23 @@ void *philo_task(void *arg)
     while (meals_eaten < philo->data->number_of_times_to_eat || philo->data->number_of_times_to_eat == -1) {
         printf("%ld %d is thinking\n", get_current_time(), philo->id);
 
-        // Try to take forks
-        pthread_mutex_lock(&philo->data->forks[philo->id - 1]); // Left fork
+        pthread_mutex_lock(&philo->data->forks[philo->id - 1]);
         printf("%ld %d has taken a fork\n", get_current_time(), philo->id);
 
-        pthread_mutex_lock(&philo->data->forks[philo->id % philo->data->num_philosophers]); // Right fork
+        pthread_mutex_lock(&philo->data->forks[philo->id % philo->data->num_philosophers]);
         printf("%ld %d has taken a fork\n", get_current_time(), philo->id);
-
-        // Eating
-        philo->last_meal_time = get_current_time(); // Update last meal time
+        
+        philo->last_meal_time = get_current_time();
         printf("%ld %d is eating\n", get_current_time(), philo->id);
-        usleep(philo->data->time_to_eat * 1000); // Simulate eating for 'time_to_eat'
+        usleep(philo->data->time_to_eat * 1000);
 
-        // Increment meals eaten
         meals_eaten++;
 
-        // Put down forks
         pthread_mutex_unlock(&philo->data->forks[philo->id - 1]);
         pthread_mutex_unlock(&philo->data->forks[philo->id % philo->data->num_philosophers]);
 
-        // Sleeping
         printf("%ld %d is sleeping\n", get_current_time(), philo->id);
-        usleep(philo->data->time_to_sleep * 1000); // Simulate sleeping for 'time_to_sleep'
+        usleep(philo->data->time_to_sleep * 1000);
     }
 
     return NULL;
