@@ -62,6 +62,11 @@ int ft_printf(const char *formet, ... )
             ft_putnbr(va_arg(args,int), &count);
             else if (*formet == 'x')
             ft_hexa(va_arg(args, unsigned int), &count);
+            else
+            {
+                write(1,formet,1);
+                count++;
+            }
         }
         else
         {
