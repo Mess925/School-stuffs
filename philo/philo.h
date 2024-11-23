@@ -6,7 +6,7 @@
 /*   By: messs <messs@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 18:37:18 by messs             #+#    #+#             */
-/*   Updated: 2024/11/19 17:48:42 by messs            ###   ########.fr       */
+/*   Updated: 2024/11/23 17:34:55 by messs            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@
 typedef struct s_data
 {
     int num_philosophers;
-    int number_of_forks;
     int time_to_die;
     int time_to_eat;
     int time_to_sleep;
     int number_of_times_to_eat;
     pthread_mutex_t *forks;
-    pthread_mutex_t print_mutex;
+    pthread_mutex_t death;
+    pthread_mutex_t output;
 }t_data;
 
 typedef struct s_philosopher {
@@ -47,6 +47,7 @@ void *philo_task(void *arg);
 
 // utils.c
 long get_current_time(void);
-void print_state(t_philosopher *philo, const char *state);
-void *check_death(void *arg);
+void check_death(t_philosopher *philo);
+int	ft_atoi(const char *nptr);
+void print_status(t_philosopher *philo, char *state);
 #endif

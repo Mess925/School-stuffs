@@ -1,40 +1,36 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   philo.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: messs <messs@student.42.fr>                +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/19 16:07:53 by messs             #+#    #+#             */
-/*   Updated: 2024/11/19 18:26:05 by messs            ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "philo.h"
 
 int main(int ac, char **av)
 {
     t_data *data;
-    t_philosopher *philosphers;
+    t_philosopher *philosophers;
     int i;
-    
+
     data = init_data(ac, av);
-    philosphers = malloc(sizeof(t_philosopher)* data->num_philosophers);
+    philosophers = malloc(sizeof(t_philosopher) * data->num_philosophers);
+    if (!philosophers)
+        return 1;
     i = 0;
-    while (i < data->num_philosophers)
+    while(i < data->num_philosophers)
     {
-        philosphers[i].id = i +1;
-        philosphers[i].data = data;
-        pthread_create(&philosphers[i].thread, NULL, philo_task, &philosphers[i]);
+        philosophers[i].id = i + 1;
+        philosophers[i].data = data;
+        philosophers[i].last_meal_time = get_current_time();
+        philosophers[i].times_eaten = 0;
+        philosophers[i].dead = 0;
+        pthread_create(&philosophers[i].thread, NULL, philo_task, &philosophers[i]);
         i++;
     }
     i = 0;
-    while (i < data->num_philosophers)
+    while(i < data->num_philosophers)
     {
-        pthread_join(philosphers[i].thread,NULL);
+        pthread_join(philosophers[i].thread, NULL);
+        if(philosophers[i].dead)
+            break;
         i++;
     }
-    free(philosphers);
+
+    free(philosophers);
     free(data->forks);
     free(data);
     return 0;
