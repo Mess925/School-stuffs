@@ -9,14 +9,27 @@ void *philo_routine(void *arg)
 
     while (philo->num_times_to_eat == -1 || i < philo->num_times_to_eat) {
         usleep(philo->time_to_sleep * 1000);
+
+        pthread_mutex_lock(&philo->print_mutex);
         printf("%ld %d is thinking\n", time(NULL), philo->id);
+        pthread_mutex_unlock(&philo->print_mutex);
 
         pthread_mutex_lock(&philo->forks[left_fork]);
+        
+        pthread_mutex_lock(&philo->print_mutex);
         printf("%ld %d has taken a fork\n", time(NULL), philo->id);
-        pthread_mutex_lock(&philo->forks[right_fork]);
-        printf("%ld %d has taken a fork\n", time(NULL), philo->id);
+        pthread_mutex_unlock(&philo->print_mutex);
 
+        pthread_mutex_lock(&philo->forks[right_fork]);
+
+        pthread_mutex_lock(&philo->print_mutex);
+        printf("%ld %d has taken a fork\n", time(NULL), philo->id);
+        pthread_mutex_unlock(&philo->print_mutex);
+
+        pthread_mutex_lock(&philo->print_mutex);
         printf("%ld %d is eating\n", time(NULL), philo->id);
+        pthread_mutex_unlock(&philo->print_mutex);
+
         usleep(philo->time_to_eat * 1000);
 
         pthread_mutex_unlock(&philo->forks[right_fork]);
