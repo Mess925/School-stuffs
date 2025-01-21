@@ -6,7 +6,7 @@
 /*   By: messs <messs@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 16:51:22 by yocelynnns        #+#    #+#             */
-/*   Updated: 2025/01/21 10:26:42 by messs            ###   ########.fr       */
+/*   Updated: 2025/01/21 10:40:13 by messs            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,20 +51,22 @@ int read_until_delimiter(t_heredoc *hd, t_minishell *mini)
 		bytes_read = read_line(hd->content, hd->total_length, hd->current_size);
 		if (g_sig.sigint)
 		{
-			g_sig.sigint = 0;
+			g_sig.sigint = 0; // Reset signal state
 			mini->exit = g_sig.exit_value;
-			set_signal_handlers(INTERACTIVE);
+			set_signal_handlers(INTERACTIVE); // Reset handlers immediately
 			return (-1);
 		}
 		if (bytes_read < 0)
 		{
 			perror("read");
 			mini->exit = 1;
+			set_signal_handlers(INTERACTIVE); // Reset handlers
 			return (-1);
 		}
 		else if (bytes_read == 0)
 		{
 			ft_putstr_fd("Heredoc terminated (Ctrl+D)\n", STDERR_FILENO);
+			set_signal_handlers(INTERACTIVE); // Reset handlers
 			return (-1);
 		}
 		hd->content[hd->total_length + bytes_read] = '\0';
@@ -79,11 +81,13 @@ int read_until_delimiter(t_heredoc *hd, t_minishell *mini)
 			if (!hd->content)
 			{
 				mini->exit = 1;
+				set_signal_handlers(INTERACTIVE); // Reset handlers
 				return (-1);
 			}
 		}
 	}
 	mini->exit = 0;
+	set_signal_handlers(INTERACTIVE); // Always reset before returning
 	return (0);
 }
 
