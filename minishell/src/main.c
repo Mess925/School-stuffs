@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ysetiawa <ysetiawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 17:51:00 by ysetiawa          #+#    #+#             */
-/*   Updated: 2025/01/17 16:50:44 by hthant           ###   ########.fr       */
+/*   Updated: 2025/01/20 19:02:10 by ysetiawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-int	main(int ac, char **av, char **env)
+int main(int ac, char **av, char **env)
 {
-	char		*input;
-	t_token		*tokens;
-	t_ast_node	*ast;
-	t_minishell	*mini;
+	char *input;
+	t_token *tokens;
+	t_ast_node *ast;
+	t_minishell *mini;
 	mini = malloc(sizeof(t_minishell));
-	if(!mini)
+	if (!mini)
 		return 1;
 
 	mini->exit = 0;
@@ -40,8 +40,8 @@ int	main(int ac, char **av, char **env)
 	// print_sorted_env(mini.env);
 	while (1)
 	{
-		signal(SIGINT, sig_int_handler);
-		signal(SIGQUIT, sig_quit_handler);
+		// signal(SIGINT, sig_int_handler);
+		// signal(SIGQUIT, sig_quit_handler);
 
 		input = readline("minishell$ ");
 		handle_eof(input, mini);
@@ -50,6 +50,7 @@ int	main(int ac, char **av, char **env)
 			add_history(input);
 
 		tokens = lexer(input, mini);
+		mini->token = tokens;
 		// print_tokens(tokens);
 		if (!tokens)
 		{
@@ -58,6 +59,7 @@ int	main(int ac, char **av, char **env)
 		}
 
 		ast = build_ast(tokens, mini);
+		mini->ast = ast;
 		// print_ast(ast, 0);
 		if (!ast)
 		{
@@ -68,7 +70,7 @@ int	main(int ac, char **av, char **env)
 		execute_command(ast, env, mini);
 
 		free_tokens(tokens);
-		// free_ast(ast);
+		free_ast(ast);
 		free(input);
 	}
 	// // Free the environment

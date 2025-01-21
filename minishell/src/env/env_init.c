@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ysetiawa <ysetiawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 16:53:38 by hthant            #+#    #+#             */
-/*   Updated: 2025/01/05 17:19:47 by hthant           ###   ########.fr       */
+/*   Updated: 2025/01/20 19:58:33 by ysetiawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int	init_env_list(t_minishell *mini, char **env_array)
 	t_env	*env;
 	int		i;
 	t_env	*new;
+			t_env *tmp;
 
 	env = create_env_node(env_array[0]);
 	if (!env)
@@ -53,7 +54,12 @@ int	init_env_list(t_minishell *mini, char **env_array)
 		new = create_env_node(env_array[i]);
 		if (!new)
 		{
-			free_env(mini->env);
+			while (mini->env)
+			{
+				tmp = mini->env;
+				mini->env = mini->env->next;
+				free_env(tmp);
+			}
 			return (1);
 		}
 		env->next = new;

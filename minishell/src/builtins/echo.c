@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ysetiawa <ysetiawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 18:05:42 by messs             #+#    #+#             */
-/*   Updated: 2024/12/20 17:53:33 by hthant           ###   ########.fr       */
+/*   Updated: 2025/01/20 19:39:54 by ysetiawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	is_valid_n_flag(const char *arg)
 	return (1);
 }
 
-int	ft_echo(char **args)
+int	ft_echo(char **args, t_minishell *mini)
 {
 	int	i;
 	int	n_contains;
@@ -103,5 +103,9 @@ int	ft_echo(char **args)
 	}
 	if (n_contains == 0)
 		ft_putstr_fd("\n", 1);
+	free_tokens(mini->token);
+	free_ast(mini->ast);
+	free_env(mini->env);
+	free(mini);
 	return (SUCCESS);
 }

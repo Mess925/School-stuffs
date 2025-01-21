@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ysetiawa <ysetiawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 19:09:35 by ysetiawa          #+#    #+#             */
-/*   Updated: 2025/01/17 16:43:14 by hthant           ###   ########.fr       */
+/*   Updated: 2025/01/20 18:22:27 by ysetiawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	init_cmd(t_ast_node *cmd, int i)
 	cmd->command = malloc(sizeof(t_ast_command));
 	if (!cmd->command)
 		return ;
-	cmd->command->args = malloc(sizeof(char *) * i);
+	cmd->command->args = malloc(sizeof(char *) * (i + 1));
 	if (!cmd->command->args)
 	{
 		free(cmd->command);

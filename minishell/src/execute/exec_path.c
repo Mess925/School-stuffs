@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_path.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ysetiawa <ysetiawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 17:22:59 by yocelynnns        #+#    #+#             */
-/*   Updated: 2025/01/17 15:52:43 by hthant           ###   ########.fr       */
+/*   Updated: 2025/01/20 19:27:01 by ysetiawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,15 +93,16 @@ char	*get_executable_path(t_ast_node *ast, t_minishell *mini)
 	return (NULL);
 }
 
-int	fork_and_execute(t_ast_node *ast, char **env, t_minishell *mini, int *status)
+int	fork_and_execute(t_ast_node *ast, char **env, t_minishell *mini,
+		int *status)
 {
 	pid_t	pid;
 
 	pid = fork();
 	if (pid == 0)
 	{
-		execute_in_child(ast, env, mini);
-		exit(EXIT_FAILURE);
+		if (execute_in_child(ast, env, mini) == -1)
+			exit(EXIT_FAILURE);
 	}
 	else if (pid < 0)
 	{
@@ -112,6 +113,8 @@ int	fork_and_execute(t_ast_node *ast, char **env, t_minishell *mini, int *status
 	waitpid(pid, status, 0);
 	g_sig.pid = 0;
 	if (WIFEXITED(*status))
-		return(mini->exit = WEXITSTATUS(*status));
-	return (0);
+		mini->exit = WEXITSTATUS(*status);
+	else
+		mini->exit = g_sig.exit_value;
+	return (mini->exit);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ysetiawa <ysetiawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 16:54:12 by messs             #+#    #+#             */
-/*   Updated: 2025/01/17 16:52:10 by hthant           ###   ########.fr       */
+/*   Updated: 2025/01/20 20:07:26 by ysetiawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,12 @@ int	ft_exit(char **av, t_minishell *mini)
 	if (av[1] && check_is_number(av[1]) == 0)
 	{
 		print_exit_error(av);
-		exit(2);
+		free_tokens(mini->token);
+		free_ast(mini->ast);
+		free_env(mini->env);
+		exit_code = mini->exit;
+		free(mini);
+		exit(exit_code);
 	}
 	if (av[1] && av[2])
 	{
@@ -63,7 +68,12 @@ int	ft_exit(char **av, t_minishell *mini)
 		}
 		exit(exit_code % 256);
 	}
-	exit(mini->exit);
+	free_tokens(mini->token);
+	free_ast(mini->ast);
+	free_env(mini->env);
+	exit_code = mini->exit;
+	free(mini);
+	exit(exit_code);
 }
 
 int	add_env_node(char *new_value, t_env **env)

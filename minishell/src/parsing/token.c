@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yocelynnns <yocelynnns@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 15:19:25 by ysetiawa          #+#    #+#             */
-/*   Updated: 2025/01/17 16:48:33 by hthant           ###   ########.fr       */
+/*   Updated: 2025/01/20 23:25:22 by yocelynnns       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,6 +198,7 @@ void	process_remaining_token(const char *input, t_lexer_state *state,
 		if (processed_token)
 			add_token(&state->token_list, create_token(WORD, processed_token));
 		free(raw_token);
+		free(processed_token);
 	}
 }
 
@@ -213,7 +214,7 @@ int	checkpipe(const char *input, t_lexer_state *state, t_minishell *mini)
 	else if ((input[state->i] == '"' || input[state->i] == '\'')
 			&& (input[state->i + 1] == '"' || input[state->i + 1] == '\''))
 	{
-		printf("Command not found: '\n");
+		printf("Command not found: ''\n");
 		mini->exit = 127;
 		free_tokens(state->token_list);
 		return (1);
@@ -235,9 +236,8 @@ t_token	*lexer(const char *input, t_minishell *mini)
 	{
 		if (input[state.i] == '$')
 			handle_dollar(input, &state, mini);
-		else if ((input[state.i] == '\'' || input[state.i] == '"')
-				&& input[state.i - 1] != '\\')
-			handle_quotes(input, &state);
+		else if ((input[state.i] == '\'' || input[state.i] == '"') && (state.i == 0 || input[state.i - 1] != '\\'))
+    		handle_quotes(input, &state);
 		else if (isspace(input[state.i]) && !state.quote)
 			handle_spaces(input, &state, mini);
 		else if ((input[state.i] == '<' || input[state.i] == '>')
