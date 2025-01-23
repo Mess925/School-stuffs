@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yocelynnns <yocelynnns@student.42.fr>      +#+  +:+       +#+        */
+/*   By: ysetiawa <ysetiawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 15:19:25 by ysetiawa          #+#    #+#             */
-/*   Updated: 2025/01/20 23:25:22 by yocelynnns       ###   ########.fr       */
+/*   Updated: 2025/01/22 21:04:09 by ysetiawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ t_token	*create_token(t_token_type type, const char *value)
 	new_token->value = ft_strdup(value);
 	if (!new_token->value)
 	{
-		free(new_token->value);
 		free(new_token);
 		return (NULL);
 	}
@@ -120,6 +119,7 @@ void	handle_spaces(const char *input, t_lexer_state *state,
 		processed_token = first_processing(raw_token, mini);
 		add_token(&state->token_list, create_token(WORD, processed_token));
 		free(raw_token);
+		free(processed_token);
 	}
 	state->start = state->i + 1;
 }
@@ -136,11 +136,13 @@ void	handle_redir(const char *input, t_lexer_state *state, char direction,
 		processed_token = first_processing(raw_token, mini);
 		add_token(&state->token_list, create_token(WORD, processed_token));
 		free(raw_token);
+		free(processed_token);
 	}
 	if (direction == '<')
 	{
 		if (input[state->i + 1] == '<')
 		{
+			mini->here = 1;
 			add_token(&state->token_list, create_token(HEREDOC, "<<"));
 			state->i++;
 		}
@@ -211,7 +213,7 @@ int	checkpipe(const char *input, t_lexer_state *state, t_minishell *mini)
 		free_tokens(state->token_list);
 		return (1);
 	}
-	else if ((input[state->i] == '"' || input[state->i] == '\'')
+	if ((input[state->i] == '"' || input[state->i] == '\'')
 			&& (input[state->i + 1] == '"' || input[state->i + 1] == '\''))
 	{
 		printf("Command not found: ''\n");

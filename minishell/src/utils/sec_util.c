@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sec_util.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: messs <messs@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ysetiawa <ysetiawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 17:45:45 by hthant            #+#    #+#             */
-/*   Updated: 2025/01/17 17:23:51 by messs            ###   ########.fr       */
+/*   Updated: 2025/01/22 20:52:43 by ysetiawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ char *format_env_value(const char *env_value)
 	{
 		formatted_value = ft_strdup(env_value);
 	}
+	free(key);
+	free(value);
 	return (formatted_value);
 }
 

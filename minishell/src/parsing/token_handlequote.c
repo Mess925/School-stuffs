@@ -6,7 +6,7 @@
 /*   By: ysetiawa <ysetiawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 19:47:30 by ysetiawa          #+#    #+#             */
-/*   Updated: 2025/01/20 20:28:10 by ysetiawa         ###   ########.fr       */
+/*   Updated: 2025/01/22 21:36:11 by ysetiawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ char    *ft_strcjoin(char *str, char c)
 
 char *handle_backslash(t_process *proc)
 {
-    if ((proc->str[proc->i] == '\\' || 
-                            proc->str[proc->i] == '\'' || 
-                            proc->str[proc->i] == '$' || 
+    if ((proc->str[proc->i] == '\\' ||
+                            proc->str[proc->i] == '\'' ||
+                            proc->str[proc->i] == '$' ||
                             proc->str[proc->i] == '\"'))
     {
         proc->result = ft_strcjoin(proc->result, proc->str[++proc->i]);
@@ -74,6 +74,7 @@ char *handle_single_quote(t_process *proc)
 
 char *expand_variable(t_process *proc)
 {
+    proc->mini->flag = 1;
     char *start;
     start = ++proc->i + proc->str;
     while (proc->str[proc->i] && !ft_strchr("\\\"\'$ ", proc->str[proc->i]))
@@ -97,7 +98,7 @@ char *handle_double_quote(t_process *proc)
     {
         if (proc->str[proc->i] == '\\' && proc->str[proc->i + 1] != '\'')
             proc->result = handle_backslash(proc);
-        else if (proc->str[proc->i] == '$' && proc->str[proc->i - 1] != '\\')
+        else if (proc->str[proc->i] == '$' && proc->str[proc->i - 1] != '\\' && proc->mini->here)
             proc->result = expand_variable(proc);
         else if (proc->str[proc->i] == proc->in_quote)
         {
@@ -115,7 +116,7 @@ char *process_character(t_process *proc)
 {
     if (proc->str[proc->i] == '\\' && !proc->in_quote)
         proc->result = handle_backslash(proc);
-    else if (proc->str[proc->i] == '$')
+    else if (proc->str[proc->i] == '$' && proc->mini->here)
         proc->result = expand_variable(proc);
     else if (proc->str[proc->i] == '\'')
         proc->result = handle_single_quote(proc);
@@ -135,6 +136,8 @@ char *first_processing(char *str, t_minishell *mini)
     proc.in_quote = 0;
     proc.result = NULL;
     proc.mini = mini;
+    proc.mini->here = 0;
+    mini->flag = 0;
 
     while (proc.str[proc.i])
         process_character(&proc);

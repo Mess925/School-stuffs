@@ -6,7 +6,7 @@
 /*   By: ysetiawa <ysetiawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 17:22:59 by yocelynnns        #+#    #+#             */
-/*   Updated: 2025/01/20 19:27:01 by ysetiawa         ###   ########.fr       */
+/*   Updated: 2025/01/22 15:37:34 by ysetiawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,9 @@ int	fork_and_execute(t_ast_node *ast, char **env, t_minishell *mini,
 	waitpid(pid, status, 0);
 	g_sig.pid = 0;
 	if (WIFEXITED(*status))
+	{
 		mini->exit = WEXITSTATUS(*status);
+	}
 	else
 		mini->exit = g_sig.exit_value;
 	return (mini->exit);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yocelynnns <yocelynnns@student.42.fr>      +#+  +:+       +#+        */
+/*   By: ysetiawa <ysetiawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 14:41:11 by messs             #+#    #+#             */
-/*   Updated: 2025/01/15 00:26:49 by yocelynnns       ###   ########.fr       */
+/*   Updated: 2025/01/22 20:43:57 by ysetiawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,8 @@ void	free_ast(t_ast_node *node)
 				}
 				free(node->command->args);
 			}
-			free(node->command->redirect);
+			free(node->command->heredoc);
+			free_ast(node->command->redirect);
 			free(node->command);
 		}
 	}
@@ -89,8 +90,8 @@ void	free_ast(t_ast_node *node)
 	{
 		if (node->redirect)
 		{
-			if (node->redirect->file)
-    			free(node->redirect->file);
+			free_ast(node->redirect->next);
+			free(node->redirect->file);
 			free(node->redirect);
 		}
 	}

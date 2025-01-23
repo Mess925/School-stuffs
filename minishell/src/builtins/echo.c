@@ -6,7 +6,7 @@
 /*   By: ysetiawa <ysetiawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 18:05:42 by messs             #+#    #+#             */
-/*   Updated: 2025/01/20 19:39:54 by ysetiawa         ###   ########.fr       */
+/*   Updated: 2025/01/22 20:17:32 by ysetiawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ int	ft_echo(char **args, t_minishell *mini)
 	int	n_contains;
 	int	print_space;
 
+	(void)mini;
 	i = 1;
 	n_contains = 0;
 	while (args[i] && is_valid_n_flag(args[i]))
@@ -103,9 +104,5 @@ int	ft_echo(char **args, t_minishell *mini)
 	}
 	if (n_contains == 0)
 		ft_putstr_fd("\n", 1);
-	free_tokens(mini->token);
-	free_ast(mini->ast);
-	free_env(mini->env);
-	free(mini);
 	return (SUCCESS);
 }

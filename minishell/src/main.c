@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: messs <messs@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ysetiawa <ysetiawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 17:51:00 by ysetiawa          #+#    #+#             */
-/*   Updated: 2025/01/21 10:41:38 by messs            ###   ########.fr       */
+/*   Updated: 2025/01/22 20:48:59 by ysetiawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,8 @@ int main(int ac, char **av, char **env)
 	// print_sorted_env(mini.env);
 	while (1)
 	{
-		signal(SIGINT, sig_int_handler);
-		signal(SIGQUIT, sig_quit_handler);
-		if (g_sig.sigint)
-			continue;
+		// signal(SIGINT, sig_int_handler);
+		// signal(SIGQUIT, sig_quit_handler);
 
 		input = readline("minishell$ ");
 		handle_eof(input, mini);
@@ -70,7 +68,6 @@ int main(int ac, char **av, char **env)
 			continue;
 		}
 		execute_command(ast, env, mini);
-
 		free_tokens(tokens);
 		free_ast(ast);
 		free(input);

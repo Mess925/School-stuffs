@@ -6,7 +6,7 @@
 /*   By: ysetiawa <ysetiawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 21:08:26 by ysetiawa          #+#    #+#             */
-/*   Updated: 2025/01/20 20:21:49 by ysetiawa         ###   ########.fr       */
+/*   Updated: 2025/01/22 18:07:55 by ysetiawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,14 +69,27 @@ void	execute_command(t_ast_node *ast, char **env, t_minishell *mini)
 
 void	cmdchecks(t_ast_node *ast, t_minishell *mini)
 {
+	// ast->command->args[0] == NULL; 
 	if (ast->command->redirect)
-		handle_all_redirections(ast);
+		handle_all_redirections(ast, mini);
 	if (ast->command->heredoc)
 		handle_heredoc(ast);
 	if (handle_builtin_commands(ast, mini) == 1)
+	{
+		free_tokens(mini->token);
+		free_ast(ast);
+		free_env(mini->env);
+		free(mini);
 		exit(EXIT_SUCCESS);
-	if (ast->command->args[0] == NULL || ast->command->args[0][0] == '\0')
+	}
+	if ((ast->command->args[0] == NULL) || ((ast->command->args[0][0] == '\0') && (mini->flag == 1)))
+	{
+		free_tokens(mini->token);
+		free_ast(ast);
+		free_env(mini->env);
+		free(mini);
 		exit(EXIT_SUCCESS);
+	}
 	if (is_directory(ast->command->args[0]))
 	{
 		printf("minishell: %s: Is a directory\n", ast->command->args[0]);
@@ -87,6 +100,7 @@ void	cmdchecks(t_ast_node *ast, t_minishell *mini)
 int	execute_in_child(t_ast_node *ast, char **env, t_minishell *mini)
 {
 	char	*executable_path;
+	int		i;
 
 	cmdchecks(ast, mini);
 	executable_path = get_executable_path(ast, mini);
@@ -96,7 +110,7 @@ int	execute_in_child(t_ast_node *ast, char **env, t_minishell *mini)
 		{
 			perror("execve");
 			exit(mini->exit);
-			return -1;
+			return (-1);
 		}
 	}
 	else
@@ -108,12 +122,12 @@ int	execute_in_child(t_ast_node *ast, char **env, t_minishell *mini)
 		free_tokens(mini->token);
 		free_ast(ast);
 		free_env(mini->env);
-		int i = mini->exit;
+		i = mini->exit;
 		free(mini);
 		exit(i);
-		return -1;
+		return (-1);
 	}
 	return (0);
 }
 
-		// printf("Command not found: %s\n", ast->command->args[0]);
+// printf("Command not found: %s\n", ast->command->args[0]);
