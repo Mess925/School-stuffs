@@ -6,7 +6,7 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 18:32:08 by yocelynnns        #+#    #+#             */
-/*   Updated: 2025/01/08 16:01:56 by hthant           ###   ########.fr       */
+/*   Updated: 2025/01/24 16:03:34 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,22 @@ char	*ft_strncpy(char *dest, char *src, unsigned int n)
 	}
 	return (dest);
 }
-long	ft_atol(const char *str)
+
+int check_limit(int sign, unsigned long long result, t_minishell *mini,char *av)
 {
-	long	result;
+	if ((sign == 1 && result > LONG_MAX)
+		|| (sign == -1 && result > -(unsigned long)LONG_MIN))
+	{
+		print_exit_error(av);
+		cleanup(mini);
+		exit(2);
+		return 1;
+	}
+	return 0;
+}
+long	ft_atol(char *str, t_minishell *mini)
+{
+	unsigned long long	result;
 	int		sign;
 	int		i;
 
@@ -100,13 +113,11 @@ long	ft_atol(const char *str)
 			sign = -1;
 		i++;
 	}
-	while (str[i] >= '0' && str[i] <= '9')
+	while (str[i] && ft_isdigit(str[i]))
 	{
-		if (sign == 1 && result > (LONG_MAX - (str[i] - '0')) / 10)
-			return (LONG_MAX);
-		if (sign == -1 && -result < (LONG_MIN + (str[i] - '0')) / 10)
-			return (LONG_MIN);
 		result = result * 10 + (str[i] - '0');
+		if(check_limit(sign,result,mini,str))
+			break;
 		i++;
 	}
 	return (result * sign);

@@ -83,8 +83,8 @@ int	handle_redirect(t_ast_node *cmd, t_token **tokens, t_minishell *mini)
 // 		waitpid(pid, &status, 0);
 // 		if (WIFEXITED(status))
 // 		{
-// 			mini->exit = WEXITSTATUS(status);
-// 			if (mini->exit != 0)
+// 			g_sig.exit_value = WEXITSTATUS(status);
+// 			if (g_sig.exit_value != 0)
 // 			{
 // 				free_ast(cmd);
 // 				return (0);
@@ -92,7 +92,7 @@ int	handle_redirect(t_ast_node *cmd, t_token **tokens, t_minishell *mini)
 // 		}
 // 		else if (WIFSIGNALED(status))
 // 		{
-// 			mini->exit = g_sig.exit_value;
+// 			g_sig.exit_value = g_sig.exit_value;
 // 			free_ast(cmd);
 // 			return (0);
 // 		}

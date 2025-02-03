@@ -3,23 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   token_handlequote.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysetiawa <ysetiawa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yocelynnns <yocelynnns@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 19:47:30 by ysetiawa          #+#    #+#             */
-/*   Updated: 2025/01/22 21:36:11 by ysetiawa         ###   ########.fr       */
+/*   Updated: 2025/02/03 00:15:25 by yocelynnns       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
-
-typedef struct s_process
-{
-    char *str;
-    int         i;
-    int         in_quote;
-    char        *result;
-    t_minishell *mini;
-}               t_process;
 
 char    *ft_strcjoin(char *str, char c)
 {
@@ -82,9 +73,13 @@ char *expand_variable(t_process *proc)
     start = ft_strndup(start, proc->str + proc->i - start);
     char *env_value = get_env_value(start, proc->mini->env);
     if (!proc->result)
-			proc->result = ft_strdup("");
+			proc->result = ft_strdup(""); // need to free
     if (env_value)
-        proc->result = ft_strjoin(proc->result, env_value);
+    {
+        char *temp = proc->result;
+        proc->result = ft_strjoin(proc->result, env_value);  
+        free(temp);
+    }
     else
         proc->result = ft_strcjoin(proc->result, '\0');
     free(start);
@@ -98,7 +93,7 @@ char *handle_double_quote(t_process *proc)
     {
         if (proc->str[proc->i] == '\\' && proc->str[proc->i + 1] != '\'')
             proc->result = handle_backslash(proc);
-        else if (proc->str[proc->i] == '$' && proc->str[proc->i - 1] != '\\' && proc->mini->here)
+        else if (proc->str[proc->i] == '$' && proc->str[proc->i - 1] != '\\')
             proc->result = expand_variable(proc);
         else if (proc->str[proc->i] == proc->in_quote)
         {
@@ -116,7 +111,7 @@ char *process_character(t_process *proc)
 {
     if (proc->str[proc->i] == '\\' && !proc->in_quote)
         proc->result = handle_backslash(proc);
-    else if (proc->str[proc->i] == '$' && proc->mini->here)
+    else if (proc->str[proc->i] == '$' && !proc->mini->here)
         proc->result = expand_variable(proc);
     else if (proc->str[proc->i] == '\'')
         proc->result = handle_single_quote(proc);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_helper.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysetiawa <ysetiawa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 15:35:01 by hthant            #+#    #+#             */
-/*   Updated: 2025/01/22 15:34:18 by ysetiawa         ###   ########.fr       */
+/*   Updated: 2025/01/24 17:05:37 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,7 @@ int	execute_left_command(t_ast_node *ast, int pipefd[2], char **env,
 		close(pipefd[0]);
 		close(pipefd[1]);
 		execute_command(ast->pipeline->left, env, mini);
-		free_tokens(mini->token);
-		free_ast(ast);
-		free_env(mini->env);
-		free(mini);
+		cleanup(mini);
 		exit(0);
 	}
 	else if (pid1 < 0)
@@ -50,10 +47,7 @@ int	execute_right_command(t_ast_node *ast, int pipefd[2], char **env,
 		close(pipefd[1]);
 		close(pipefd[0]);
 		execute_command(ast->pipeline->right, env, mini);
-		free_tokens(mini->token);
-		free_ast(ast);
-		free_env(mini->env);
-		free(mini);
+		cleanup(mini);
 		exit(0);
 	}
 	else if (pid2 < 0)
@@ -77,15 +71,20 @@ int	execute_pipeline(t_ast_node *ast, char **env, t_minishell *mini)
 		return (-1);
 	}
 	pid1 = execute_left_command(ast, pipefd, env, mini);
+	pid2 = execute_right_command(ast, pipefd, env, mini);
 	if (pid1 > 0)
 	{
 		waitpid(pid1, &status, 0);
+		if (WIFEXITED(status))
+			g_sig.exit_value = WEXITSTATUS(status);
+		close(pipefd[0]);
 		close(pipefd[1]);
 	}
-	pid2 = execute_right_command(ast, pipefd, env, mini);
 	if (pid2 > 0)
 	{
 		waitpid(pid2, &status, 0);
+		if (WIFEXITED(status))
+			g_sig.exit_value = WEXITSTATUS(status);
 		close(pipefd[0]);
 		close(pipefd[1]);
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysetiawa <ysetiawa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yocelynnns <yocelynnns@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 15:19:25 by ysetiawa          #+#    #+#             */
-/*   Updated: 2025/01/22 21:04:09 by ysetiawa         ###   ########.fr       */
+/*   Updated: 2025/02/02 23:44:04 by yocelynnns       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,12 @@ void	init_lexstate(t_lexer_state *state)
 
 int	checkquote(t_lexer_state *state, t_minishell *mini)
 {
+	(void)mini;
 	if (state->quote)
 	{
 		printf("Error: Unclosed quote '%c'\n", state->quote);
 		free_tokens(state->token_list);
-		mini->exit = 2;
+		g_sig.exit_value = 2;
 		return (1);
 	}
 	return (0);
@@ -80,12 +81,13 @@ int	checkquote(t_lexer_state *state, t_minishell *mini)
 void	handle_dollar(const char *input, t_lexer_state *state,
 		t_minishell *mini)
 {
+	(void)mini;
 	char	*status_str;
 		char *empty;
 
 	if (input[state->i + 1] == '?')
 	{
-		status_str = ft_itoa(mini->exit);
+		status_str = ft_itoa(g_sig.exit_value);
 		add_token(&state->token_list, create_token(WORD, status_str));
 		free(status_str);
 		state->i++;
@@ -124,6 +126,29 @@ void	handle_spaces(const char *input, t_lexer_state *state,
 	state->start = state->i + 1;
 }
 
+void	handle_redirect_in(t_lexer_state *state, const char *input, t_minishell *mini)
+{
+	if (input[state->i + 1] == '<')
+	{
+        mini->here = 1;
+		add_token(&state->token_list, create_token(HEREDOC, "<<"));
+		state->i++;
+	}
+	else
+		add_token(&state->token_list, create_token(REDIRECT_IN, "<"));
+}
+
+void	handle_redirect_out(t_lexer_state *state, const char *input)
+{
+	if (input[state->i + 1] == '>')
+	{
+		add_token(&state->token_list, create_token(APPEND, ">>"));
+		state->i++;
+	}
+	else
+		add_token(&state->token_list, create_token(REDIRECT_OUT, ">"));
+}
+
 void	handle_redir(const char *input, t_lexer_state *state, char direction,
 		t_minishell *mini)
 {
@@ -139,26 +164,9 @@ void	handle_redir(const char *input, t_lexer_state *state, char direction,
 		free(processed_token);
 	}
 	if (direction == '<')
-	{
-		if (input[state->i + 1] == '<')
-		{
-			mini->here = 1;
-			add_token(&state->token_list, create_token(HEREDOC, "<<"));
-			state->i++;
-		}
-		else
-			add_token(&state->token_list, create_token(REDIRECT_IN, "<"));
-	}
+		handle_redirect_in(state, input, mini);
 	else if (direction == '>')
-	{
-		if (input[state->i + 1] == '>')
-		{
-			add_token(&state->token_list, create_token(APPEND, ">>"));
-			state->i++;
-		}
-		else
-			add_token(&state->token_list, create_token(REDIRECT_OUT, ">"));
-	}
+		handle_redirect_out(state, input);
 	state->start = state->i + 1;
 }
 
@@ -173,7 +181,7 @@ void	handle_pipe(const char *input, t_lexer_state *state, t_minishell *mini)
 			"Error: Invalid sequence of consecutive '|' operators\n");
 		free_tokens(state->token_list);
 		state->token_list = NULL;
-		mini->exit = 2;
+		g_sig.exit_value = 2;
 	}
 	state->last_token_was_pipe = 1;
 	if (state->i > state->start)
@@ -195,7 +203,7 @@ void	process_remaining_token(const char *input, t_lexer_state *state,
 
 	if (state->i > state->start)
 	{
-		raw_token = strndup(input + state->start, state->i - state->start);
+		raw_token = ft_strndup(input + state->start, state->i - state->start);
 		processed_token = first_processing(raw_token, mini);
 		if (processed_token)
 			add_token(&state->token_list, create_token(WORD, processed_token));
@@ -206,22 +214,40 @@ void	process_remaining_token(const char *input, t_lexer_state *state,
 
 int	checkpipe(const char *input, t_lexer_state *state, t_minishell *mini)
 {
+	(void)mini;
 	if (input[state->i] == '|' && input[state->i + 1] != '|')
 	{
 		printf("Error: Syntax error near unexpected token `|'\n");
-		mini->exit = 2;
+		g_sig.exit_value = 2;
 		free_tokens(state->token_list);
 		return (1);
 	}
-	if ((input[state->i] == '"' || input[state->i] == '\'')
-			&& (input[state->i + 1] == '"' || input[state->i + 1] == '\''))
+	if (((input[state->i] == '"' && input[state->i + 1] == '"') ||
+	(input[state->i] == '\'' && input[state->i + 1] == '\'')) && (input[state->i + 2] == '\0'))
 	{
 		printf("Command not found: ''\n");
-		mini->exit = 127;
+		g_sig.exit_value = 127;
 		free_tokens(state->token_list);
 		return (1);
 	}
 	return (0);
+}
+
+void lexer_checks(const char *input, t_lexer_state *state, t_minishell *mini)
+{
+	if (input[state->i] == '$')
+		handle_dollar(input, state, mini);
+	else if ((input[state->i] == '\'' || input[state->i] == '"') && (state->i == 0 || input[state->i - 1] != '\\'))
+		handle_quotes(input, state);
+	else if (isspace(input[state->i]) && !state->quote)
+		handle_spaces(input, state, mini);
+	else if ((input[state->i] == '<' || input[state->i] == '>')
+		&& !state->quote)
+		handle_redir(input, state, input[state->i], mini);
+	else if (input[state->i] == '|' && !state->quote)
+		handle_pipe(input, state, mini);
+	else
+		state->last_token_was_pipe = 0;
 }
 
 t_token	*lexer(const char *input, t_minishell *mini)
@@ -236,19 +262,7 @@ t_token	*lexer(const char *input, t_minishell *mini)
 	i = checkpipe(input, &state, mini);
 	while (input[state.i])
 	{
-		if (input[state.i] == '$')
-			handle_dollar(input, &state, mini);
-		else if ((input[state.i] == '\'' || input[state.i] == '"') && (state.i == 0 || input[state.i - 1] != '\\'))
-    		handle_quotes(input, &state);
-		else if (isspace(input[state.i]) && !state.quote)
-			handle_spaces(input, &state, mini);
-		else if ((input[state.i] == '<' || input[state.i] == '>')
-			&& !state.quote)
-			handle_redir(input, &state, input[state.i], mini);
-		else if (input[state.i] == '|' && !state.quote)
-			handle_pipe(input, &state, mini);
-		else
-			state.last_token_was_pipe = 0;
+		lexer_checks(input, &state, mini);
 		state.i++;
 	}
 	j = checkquote(&state, mini);
@@ -257,6 +271,20 @@ t_token	*lexer(const char *input, t_minishell *mini)
 	process_remaining_token(input, &state, mini);
 	return (state.token_list);
 }
+
+		// if (input[state.i] == '$')
+		// 	handle_dollar(input, &state, mini);
+		// else if ((input[state.i] == '\'' || input[state.i] == '"') && (state.i == 0 || input[state.i - 1] != '\\'))
+    	// 	handle_quotes(input, &state);
+		// else if (isspace(input[state.i]) && !state.quote)
+		// 	handle_spaces(input, &state, mini);
+		// else if ((input[state.i] == '<' || input[state.i] == '>')
+		// 	&& !state.quote)
+		// 	handle_redir(input, &state, input[state.i], mini);
+		// else if (input[state.i] == '|' && !state.quote)
+		// 	handle_pipe(input, &state, mini);
+		// else
+		// 	state.last_token_was_pipe = 0;
 
 //   if (input[state.i] == '$' && (input[state.i - 1] != '=') &&
 //         (input[state.i - 1] != '\'') && (input[state.i - 2] != '=')

@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   sec_util.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysetiawa <ysetiawa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 17:45:45 by hthant            #+#    #+#             */
-/*   Updated: 2025/01/22 20:52:43 by ysetiawa         ###   ########.fr       */
+/*   Updated: 2025/01/24 15:40:06 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-void print_exit_error(char **av)
+void print_exit_error(char *av)
 {
 	ft_putstr_fd("minishell: exit: ", STDERR);
-	ft_putstr_fd(av[1], STDERR);
+	ft_putstr_fd(av, STDERR);
 	ft_putendl_fd(": numeric argument required", STDERR);
 }
 char *ft_strjoin_three(const char *s1, const char *s2, const char *s3,
@@ -48,13 +48,13 @@ char *format_env_value(const char *env_value)
 		value = ft_substr(env_value, equal_sign - env_value + 1,
 						  ft_strlen(env_value) - (equal_sign - env_value + 1));
 		formatted_value = ft_strjoin_three(key, "=\"", value, "\"");
+		free(key);
+		free(value);
 	}
 	else
 	{
 		formatted_value = ft_strdup(env_value);
 	}
-	free(key);
-	free(value);
 	return (formatted_value);
 }
 

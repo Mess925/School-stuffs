@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysetiawa <ysetiawa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 19:44:08 by hthant            #+#    #+#             */
-/*   Updated: 2025/01/22 20:50:47 by ysetiawa         ###   ########.fr       */
+/*   Updated: 2025/02/03 13:43:23 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ char	*parse_key_value(char *arg, char **key)
 			new_value = ft_strdup(arg);
 	}
 	else
-		new_value = ft_strdup(*key);
-	if (!new_value)
+		new_value = NULL;
+	if (!new_value && ft_strchr(arg, '='))
 	{
 		free(*key);
 		return (NULL);
@@ -65,8 +65,18 @@ int	add_or_update_env(char *arg, t_env **env)
 	char	*new_value;
 
 	new_value = parse_key_value(arg, &key);
-	if (!new_value)
+	if (!key)
 		return (print_export_error(-1, arg));
+	if (!new_value)
+	{
+		if (!key_exists_in_env(key, *env))
+		{
+			free(key);
+			return (print_export_error(-3, arg));
+		}
+		free(key);
+		return (SUCCESS);
+	}
 	if (update_env(key, new_value, env) == SUCCESS)
 	{
 		free(key);
@@ -75,6 +85,7 @@ int	add_or_update_env(char *arg, t_env **env)
 	free(key);
 	return (add_env(new_value, env));
 }
+
 int	add_env(char *new_value, t_env **env)
 {
 	char	*key;

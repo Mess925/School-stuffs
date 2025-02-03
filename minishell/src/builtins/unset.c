@@ -6,7 +6,7 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 12:23:36 by hthant            #+#    #+#             */
-/*   Updated: 2024/12/18 15:39:11 by hthant           ###   ########.fr       */
+/*   Updated: 2025/02/03 13:49:12 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,27 +25,32 @@ size_t	env_size(char *env)
 int	unset_env_var(t_minishell *mini, char *arg)
 {
 	t_env	*env;
-	t_env	*tmp;
+	t_env	*prev;
+	char	*key;
+	size_t	key_len;
 
+	if (!arg || !mini->env)
+		return (SUCCESS);
 	env = mini->env;
-	if (!arg)
-		return (SUCCESS);
-	if (ft_strncmp(arg, env->value, env_size(env->value)) == 0)
+	prev = NULL;
+	while (env)
 	{
-		if (env->next)
-			mini->env = env->next;
-		free_node(mini, env);
-		return (SUCCESS);
-	}
-	while (env && env->next)
-	{
-		if (ft_strncmp(arg, env->next->value, env_size(env->next->value)) == 0)
+		key_len = env_size(env->value);
+		key = ft_substr(env->value, 0, key_len);
+		if (!key)
+			return (ERROR);
+		if (ft_strcmp(arg, key) == 0)
 		{
-			tmp = env->next->next;
-			free_node(mini, env->next);
-			env->next = tmp;
+			free(key);
+			if (prev == NULL)
+				mini->env = env->next;
+			else
+				prev->next = env->next;
+			free_node(mini, env);
 			return (SUCCESS);
 		}
+		free(key);
+		prev = env;
 		env = env->next;
 	}
 	return (SUCCESS);
@@ -60,7 +65,6 @@ int	ft_unset(char **args, t_minishell *mini)
 	i = 1;
 	while (args[i])
 	{
-		unset_env_var(mini, args[i]);
 		unset_env_var(mini, args[i]);
 		i++;
 	}

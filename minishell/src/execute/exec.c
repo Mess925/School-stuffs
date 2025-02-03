@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysetiawa <ysetiawa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yocelynnns <yocelynnns@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 21:08:26 by ysetiawa          #+#    #+#             */
-/*   Updated: 2025/01/22 18:07:55 by ysetiawa         ###   ########.fr       */
+/*   Updated: 2025/02/03 00:23:44 by yocelynnns       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,7 @@ void	execute_command(t_ast_node *ast, char **env, t_minishell *mini)
 
 	if (ast->type == AST_COMMAND)
 	{
-		// expand_variables_in_args(ast->command->args, mini.env);
-		if (ft_strcmp(ast->command->args[0], "exit") == 0)
-			ft_exit(ast->command->args, mini);
-		else if (ft_strcmp(ast->command->args[0], "cd") == 0)
+		if (ft_strcmp(ast->command->args[0], "cd") == 0)
 			ft_cd(ast->command->args, mini->env);
 		else if (ft_strcmp(ast->command->args[0], "export") == 0)
 		{
@@ -62,37 +59,36 @@ void	execute_command(t_ast_node *ast, char **env, t_minishell *mini)
 		}
 		else if (fork_and_execute(ast, env, mini, &status) < 0)
 			return ;
+		else if (ft_strcmp(ast->command->args[0], "exit") == 0)
+			ft_exit(ast->command->args, mini);
 	}
 	else if (ast->type == AST_PIPELINE)
+	{
 		execute_pipeline(ast, env, mini);
+	}
 }
 
 void	cmdchecks(t_ast_node *ast, t_minishell *mini)
 {
-	// ast->command->args[0] == NULL; 
 	if (ast->command->redirect)
 		handle_all_redirections(ast, mini);
 	if (ast->command->heredoc)
 		handle_heredoc(ast);
 	if (handle_builtin_commands(ast, mini) == 1)
 	{
-		free_tokens(mini->token);
-		free_ast(ast);
-		free_env(mini->env);
-		free(mini);
+		cleanup(mini);
 		exit(EXIT_SUCCESS);
 	}
-	if ((ast->command->args[0] == NULL) || ((ast->command->args[0][0] == '\0') && (mini->flag == 1)))
+	if (((ast->command->args[0] == NULL) || (ast->command->args[0][0] == '\0'))
+		&& (mini->flag == 1))
 	{
-		free_tokens(mini->token);
-		free_ast(ast);
-		free_env(mini->env);
-		free(mini);
-		exit(EXIT_SUCCESS);
+		cleanup(mini);
+		exit(0);
 	}
 	if (is_directory(ast->command->args[0]))
 	{
 		printf("minishell: %s: Is a directory\n", ast->command->args[0]);
+		cleanup(mini);
 		exit(126);
 	}
 }
@@ -109,7 +105,7 @@ int	execute_in_child(t_ast_node *ast, char **env, t_minishell *mini)
 		if (execve(executable_path, ast->command->args, env) == -1)
 		{
 			perror("execve");
-			exit(mini->exit);
+			exit(g_sig.exit_value);
 			return (-1);
 		}
 	}
@@ -118,12 +114,9 @@ int	execute_in_child(t_ast_node *ast, char **env, t_minishell *mini)
 		write(2, "Command not found: ", 19);
 		write(2, ast->command->args[0], ft_strlen(ast->command->args[0]));
 		write(2, "\n", 1);
-		mini->exit = 127;
-		free_tokens(mini->token);
-		free_ast(ast);
-		free_env(mini->env);
-		i = mini->exit;
-		free(mini);
+		g_sig.exit_value = 127;
+		i = g_sig.exit_value;
+		cleanup(mini);
 		exit(i);
 		return (-1);
 	}
@@ -131,3 +124,4 @@ int	execute_in_child(t_ast_node *ast, char **env, t_minishell *mini)
 }
 
 // printf("Command not found: %s\n", ast->command->args[0]);
+// expand_variables_in_args(ast->command->args, mini.env);

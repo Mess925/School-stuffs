@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_handle.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yocelynnns <yocelynnns@student.42.fr>      +#+  +:+       +#+        */
+/*   By: ysetiawa <ysetiawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 17:43:56 by ysetiawa          #+#    #+#             */
-/*   Updated: 2025/01/15 01:23:34 by yocelynnns       ###   ########.fr       */
+/*   Updated: 2025/01/23 21:10:17 by ysetiawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,30 +41,6 @@
 // 			add_token(&state->token_list, create_token(WORD, ""));
 // 		state->start = *i + 1;
 // 	}
-// }
-
-// void	handle_redirect_in(t_lexer_state *state, const char *input, int *i)
-// {
-// 	if (input[*i + 1] == '<')
-// 	{
-// 		add_token(&state->token_list, create_token(HEREDOC, "<<"));
-// 		(*i)++;
-// 	}
-// 	else
-// 		add_token(&state->token_list, create_token(REDIRECT_IN, "<"));
-// 	state->start = *i + 1;
-// }
-
-// void	handle_redirect_out(t_lexer_state *state, const char *input, int *i)
-// {
-// 	if (input[*i + 1] == '>')
-// 	{
-// 		add_token(&state->token_list, create_token(APPEND, ">>"));
-// 		(*i)++;
-// 	}
-// 	else
-// 		add_token(&state->token_list, create_token(REDIRECT_OUT, ">"));
-// 	state->start = *i + 1;
 // }
 
 // void	handle_special_char(t_lexer_state *state, const char *input, int *i, t_minishell *mini)

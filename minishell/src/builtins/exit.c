@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysetiawa <ysetiawa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 16:54:12 by messs             #+#    #+#             */
-/*   Updated: 2025/01/20 20:07:26 by ysetiawa         ###   ########.fr       */
+/*   Updated: 2025/01/24 16:37:42 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+#include <limits.h>
 
 int	check_is_number(char *str)
 {
@@ -38,42 +39,29 @@ int	check_is_number(char *str)
 
 int	ft_exit(char **av, t_minishell *mini)
 {
-	long	exit_code;
-
-	ft_putstr_fd("exit\n", STDERR);
-	mini->exit = 0;
 	if (av[1] && check_is_number(av[1]) == 0)
 	{
-		print_exit_error(av);
-		free_tokens(mini->token);
-		free_ast(mini->ast);
-		free_env(mini->env);
-		exit_code = mini->exit;
-		free(mini);
-		exit(exit_code);
+		ft_putstr_fd("exit a\n", STDERR);
+		print_exit_error(av[1]);
+		cleanup(mini);
+		exit(2);
 	}
 	if (av[1] && av[2])
 	{
 		ft_putendl_fd("minishell: exit: too many arguments", STDERR);
-		mini->exit = 1;
-		return 1;
+		g_sig.exit_value = 1;
+		return (1);
 	}
 	if (av[1])
 	{
-		exit_code = ft_atol(av[1]);
-		if (exit_code > INT_MAX || exit_code < INT_MIN)
-		{
-			print_exit_error(av);
-			exit(2);
-		}
-		exit(exit_code % 256);
+		ft_putstr_fd("exit\n", STDERR);
+		g_sig.exit_value = ft_atol(av[1], mini);
+		printf("eixt code is %d\n", g_sig.exit_value);
+		exit(g_sig.exit_value % 256);
 	}
-	free_tokens(mini->token);
-	free_ast(mini->ast);
-	free_env(mini->env);
-	exit_code = mini->exit;
-	free(mini);
-	exit(exit_code);
+	printf("hi\n");
+	cleanup(mini);
+	exit(g_sig.exit_value % 256);
 }
 
 int	add_env_node(char *new_value, t_env **env)

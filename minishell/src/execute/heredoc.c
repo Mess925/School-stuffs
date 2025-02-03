@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysetiawa <ysetiawa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 16:51:22 by yocelynnns        #+#    #+#             */
-/*   Updated: 2025/01/22 21:34:26 by ysetiawa         ###   ########.fr       */
+/*   Updated: 2025/02/03 15:10:37 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,27 +48,25 @@ int	read_until_delimiter(t_heredoc *hd, t_minishell *mini)
 {
 	ssize_t	bytes_read;
 
+	(void)mini;
 	set_signal_handlers(HEREDOC_MODE);
 	while (1)
 	{
 		bytes_read = read_line(hd->content, hd->total_length, hd->current_size);
 		if (g_sig.sigint)
 		{
-			mini->exit = g_sig.exit_value;
+			g_sig.exit_value = g_sig.exit_value;
 			g_sig.sigint = 0;
-			set_signal_handlers(INTERACTIVE);
 			return (-1);
 		}
 		if (bytes_read < 0)
 		{
 			perror("read");
-			mini->exit = 1;
-			set_signal_handlers(INTERACTIVE);
+			g_sig.exit_value = 1;
 			return (-1);
 		}
 		else if (bytes_read == 0)
 		{
-			set_signal_handlers(INTERACTIVE);
 			return (-1);
 		}
 		hd->content[hd->total_length + bytes_read] = '\0';
@@ -83,11 +81,9 @@ int	read_until_delimiter(t_heredoc *hd, t_minishell *mini)
 			if (!hd->content)
 			{
 				return (-1);
-				set_signal_handlers(INTERACTIVE);
 			}
 		}
 	}
-	set_signal_handlers(INTERACTIVE);
 	return (0);
 }
 
@@ -102,13 +98,13 @@ int	read_until_delimiter(t_heredoc *hd, t_minishell *mini)
 // 		if (g_sig.sigint)
 // 		{
 // 			g_sig.sigint = 0;
-// 			mini->exit = g_sig.exit_value;
+// 			g_sig.exit_value = g_sig.exit_value;
 // 			return (-1);
 // 		}
 // 		if (bytes_read < 0)
 // 		{
 // 			perror("read");
-// 			mini->exit = 1;
+// 			g_sig.exit_value = 1;
 // 			return (-1);
 // 		}
 // 		else if (bytes_read == 0)
@@ -127,12 +123,12 @@ int	read_until_delimiter(t_heredoc *hd, t_minishell *mini)
 // 					&hd->current_size);
 // 			if (!hd->content)
 // 			{
-// 				mini->exit = 1;
+// 				g_sig.exit_value = 1;
 // 				return (-1);
 // 			}
 // 		}
 // 	}
-// 	mini->exit = 0;
+// 	g_sig.exit_value = 0;
 // 	return (0);
 // }
 
