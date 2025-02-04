@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ysetiawa <ysetiawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 18:32:08 by yocelynnns        #+#    #+#             */
-/*   Updated: 2025/01/24 16:03:34 by hthant           ###   ########.fr       */
+/*   Updated: 2025/02/04 19:16:25 by ysetiawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ char	*ft_strcat(char *dest, char *src)
 
 	i = 0;
 	j = 0;
-	while (dest[i] != '\0')
+	while (dest && dest[i] != '\0')
 		i++;
-	while (src[j] != '\0')
+	while (src && src[j] != '\0')
 	{
 		dest[i + j] = src[j];
 		j++;

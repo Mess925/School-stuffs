@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_path.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ysetiawa <ysetiawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 17:22:59 by yocelynnns        #+#    #+#             */
-/*   Updated: 2025/02/03 15:10:36 by hthant           ###   ########.fr       */
+/*   Updated: 2025/02/04 20:51:30 by ysetiawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ char	*get_executable_path(t_ast_node *ast, t_minishell *mini)
 	char	*executable_path;
 
 	command = ast->command->args[0];
-	if (command[0] == '/' || command[0] == '.')
+	if (command && (command[0] == '/' || command[0] == '.'))
 	{
 		if (access(command, X_OK) == 0)
 			return (command);
@@ -97,10 +97,14 @@ int	fork_and_execute(t_ast_node *ast, char **env, t_minishell *mini,
 		int *status)
 {
 	pid_t	pid;
+	int		signal;
 
+	if (handle_builtin_commands(ast, mini) == 0)
+		return g_sig.exit_value;
 	pid = fork();
 	if (pid == 0)
 	{
+		init_signals();
 		if (execute_in_child(ast, env, mini) == -1)
 			exit(EXIT_FAILURE);
 	}
@@ -111,9 +115,28 @@ int	fork_and_execute(t_ast_node *ast, char **env, t_minishell *mini,
 	}
 	g_sig.pid = pid;
 	waitpid(g_sig.pid, status, 0);
-	set_signal_handlers(INTERACTIVE);
 	g_sig.pid = 0;
-	if (WIFEXITED(*status))
+	if (WIFSIGNALED(*status))
+	{
+		signal = WTERMSIG(*status);
+		if (signal == SIGINT)
+		{
+			g_sig.sigint = 1;
+			g_sig.exit_value = 130;
+			ft_putstr_fd("\n", STDOUT_FILENO);
+			rl_on_new_line();
+		}
+		else if (signal == SIGQUIT)
+		{
+			g_sig.exit_value = 131;
+			if (WCOREDUMP(*status))
+				write(STDERR_FILENO, "Quit (core dumped)\n", 20);
+			else
+				write(STDERR_FILENO, "Quit\n", 5);
+			return (131);
+		}
+	}
+	else if (WIFEXITED(*status))
 		g_sig.exit_value = WEXITSTATUS(*status);
 	return (g_sig.exit_value);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yocelynnns <yocelynnns@student.42.fr>      +#+  +:+       +#+        */
+/*   By: ysetiawa <ysetiawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 15:19:25 by ysetiawa          #+#    #+#             */
-/*   Updated: 2025/02/02 23:44:04 by yocelynnns       ###   ########.fr       */
+/*   Updated: 2025/02/04 14:16:03 by ysetiawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,15 +200,38 @@ void	process_remaining_token(const char *input, t_lexer_state *state,
 {
 	char	*raw_token;
 	char	*processed_token;
+	char	**split_tokens;
+	int i;
 
 	if (state->i > state->start)
 	{
 		raw_token = ft_strndup(input + state->start, state->i - state->start);
 		processed_token = first_processing(raw_token, mini);
-		if (processed_token)
-			add_token(&state->token_list, create_token(WORD, processed_token));
+		// **NEW: Split the token if it contains spaces**
+		if (input[0] == '$')
+		{
+			split_tokens = ft_split(processed_token, ' ');
+			free(processed_token);
+
+			if (!split_tokens)
+				return;
+
+			i = 0;
+			while (split_tokens[i])
+			{
+				add_token(&state->token_list, create_token(WORD, split_tokens[i]));
+				free(split_tokens[i]);
+				i++;
+			}
+			free(split_tokens);
+		}
+		else
+			if (processed_token)
+			{
+				add_token(&state->token_list, create_token(WORD, processed_token));
+				free(processed_token);
+			}
 		free(raw_token);
-		free(processed_token);
 	}
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_handle.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ysetiawa <ysetiawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 17:22:00 by yocelynnns        #+#    #+#             */
-/*   Updated: 2025/01/24 18:25:36 by hthant           ###   ########.fr       */
+/*   Updated: 2025/02/04 20:49:53 by ysetiawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,20 @@
 int	handle_builtin_commands(t_ast_node *ast, t_minishell *mini)
 {
 	if (ft_strcmp(ast->command->args[0], "echo") == 0)
-		return (ft_echo(ast->command->args, mini), 1);
+		return (ft_echo(ast->command->args, mini), 0);
+	else if (ft_strcmp(ast->command->args[0], "cd") == 0)
+		return (ft_cd(ast->command->args, mini->env), 0);
 	else if (ft_strcmp(ast->command->args[0], "pwd") == 0)
-		return (ft_pwd(), 1);
+		return (ft_pwd(), 0);
 	else if (ft_strcmp(ast->command->args[0], "env") == 0)
-		return (ft_env(mini->env), 1);
+		return (ft_env(mini->env), 0);
 	else if (ft_strcmp(ast->command->args[0], "export") == 0)
-		return (ft_export(ast->command->args, &mini->env), 1);
+		return (ft_export(ast->command->args, &mini->env), 0);
 	else if (ft_strcmp(ast->command->args[0], "unset") == 0)
-		return (ft_unset(ast->command->args, mini), 1);
+		return (ft_unset(ast->command->args, mini), 0);
 	else if (ft_strcmp(ast->command->args[0], "exit") == 0)
-		return (ft_exit(ast->command->args, mini), 1);
-	return (-1);
+		return (ft_exit(ast->command->args, mini), 0);
+	return (1);
 }
 
 void	handle_redirection(t_ast_node *redirect, t_minishell *mini)
