@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysetiawa <ysetiawa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 15:51:40 by hthant            #+#    #+#             */
-/*   Updated: 2025/02/04 21:11:10 by ysetiawa         ###   ########.fr       */
+/*   Updated: 2025/02/05 17:39:20 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,6 @@
 
 # define BUFF_SIZE 4096
 # define INITIAL_SIZE 4096
-
-typedef enum e_signal_mode
-{
-	INTERACTIVE,
-	HEREDOC_MODE,
-	CHILD_PROCESS_MODE,
-}							t_signal_mode;
 
 typedef enum
 {
@@ -162,8 +155,11 @@ typedef struct s_var_process
 }							t_var_process;
 
 extern t_signal				g_sig;
-void stop_signals(void);
-void	cmdchecks(t_ast_node *ast, t_minishell *mini, int *org_fd);
+
+int							is_directory(const char *path);
+void						stop_signals(void);
+void						cmdchecks(t_ast_node *ast, t_minishell *mini,
+								int *org_fd);
 t_token						*create_token(t_token_type type, const char *value);
 void						add_token(t_token **head, t_token *new_token);
 t_token						*lexer(const char *input, t_minishell *mini);
@@ -304,5 +300,10 @@ void						set_signals_heredoc(void);
 void						signal_print_newline(int signal);
 void						set_signals_interactive(void);
 void						signal_reset_prompt(int signo);
-
+int							handle_key_value(char *key, char *new_value,
+								t_env **env);
+int							handle_key_only(char *key, char *arg, t_env **env);
+int							remove_env_var(t_minishell *mini, t_env *target,
+								t_env *prev);
+t_env						*find_env_var(t_env *env, char *arg, t_env **prev);
 #endif

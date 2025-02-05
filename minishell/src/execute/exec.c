@@ -3,32 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysetiawa <ysetiawa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yocelynnns <yocelynnns@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 21:08:26 by ysetiawa          #+#    #+#             */
-/*   Updated: 2025/02/04 21:08:10 by ysetiawa         ###   ########.fr       */
+/*   Updated: 2025/02/05 01:03:18 by yocelynnns       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
-
-void	expand_variables_in_args(char **args, t_env *env)
-{
-	int		i;
-	char	*expanded_arg;
-
-	i = 0;
-	while (args[i])
-	{
-		expanded_arg = expand_argument(args[i], env);
-		if (expanded_arg)
-		{
-			free(args[i]);
-			args[i] = expanded_arg;
-		}
-		i++;
-	}
-}
 
 int	is_directory(const char *path)
 {
@@ -72,11 +54,6 @@ void	cmdchecks(t_ast_node *ast, t_minishell *mini, int *org_fd)
 		close(org_fd[0]);
 		close(org_fd[1]);
 		cleanup(mini);
-		return ;
-	}
-	if (is_directory(ast->command->args[0]))
-	{
-		printf("minishell: %s: Is a directory\n", ast->command->args[0]);
 		return ;
 	}
 }

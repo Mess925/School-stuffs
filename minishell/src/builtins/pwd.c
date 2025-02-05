@@ -6,7 +6,7 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 06:57:56 by messs             #+#    #+#             */
-/*   Updated: 2025/01/06 15:15:06 by hthant           ###   ########.fr       */
+/*   Updated: 2025/02/05 16:08:16 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	ft_pwd(void)
 		return (ERROR);
 	}
 }
+
 int	handle_tilde(char **path, t_env *env_list)
 {
 	char	*home;

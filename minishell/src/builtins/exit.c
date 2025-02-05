@@ -6,7 +6,7 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 16:54:12 by messs             #+#    #+#             */
-/*   Updated: 2025/02/04 20:13:01 by hthant           ###   ########.fr       */
+/*   Updated: 2025/02/05 17:39:49 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,25 +41,21 @@ int	ft_exit(char **av, t_minishell *mini)
 {
 	if (av[1] && check_is_number(av[1]) == 0)
 	{
-		ft_putstr_fd("exit a\n", STDERR);
 		print_exit_error(av[1]);
 		cleanup(mini);
 		exit(2);
 	}
-	if (av[1] && av[2])
+	else if (av[1] && av[2])
 	{
 		ft_putendl_fd("minishell: exit: too many arguments", STDERR);
 		g_sig.exit_value = 1;
 		return (1);
 	}
-	if (av[1])
-	{
-		ft_putstr_fd("exit\n", STDERR);
+	else if (av[1])
 		g_sig.exit_value = ft_atol(av[1], mini);
-		exit(g_sig.exit_value % 256);
-	}
-	printf("exit\n");
 	cleanup(mini);
+	if(isatty(STDIN))
+		ft_putstr_fd("exit\n",STDERR);
 	exit(g_sig.exit_value % 256);
 }
 
@@ -83,4 +79,27 @@ int	add_env_node(char *new_value, t_env **env)
 		last->next = new_node;
 	}
 	return (SUCCESS);
+}
+
+int	handle_key_value(char *key, char *new_value, t_env **env)
+{
+	if (update_env(key, new_value, env) == SUCCESS)
+	{
+		free(key);
+		return (SUCCESS);
+	}
+	return (add_env(new_value, env));
+}
+
+int	add_or_update_env(char *arg, t_env **env)
+{
+	char	*key;
+	char	*new_value;
+
+	new_value = parse_key_value(arg, &key);
+	if (!key)
+		return (print_export_error(-1, arg));
+	if (!new_value)
+		return (handle_key_only(key, arg, env));
+	return (handle_key_value(key, new_value, env));
 }

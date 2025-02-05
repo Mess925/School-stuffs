@@ -6,7 +6,7 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 19:44:08 by hthant            #+#    #+#             */
-/*   Updated: 2025/02/04 15:11:07 by hthant           ###   ########.fr       */
+/*   Updated: 2025/02/05 16:15:20 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,35 +46,20 @@ char	*parse_key_value(char *arg, char **key)
 	return (NULL);
 }
 
-int	add_or_update_env(char *arg, t_env **env)
+int	handle_key_only(char *key, char *arg, t_env **env)
 {
-	char	*key;
-	char	*new_value;
-
-	new_value = parse_key_value(arg, &key);
-	if (!key)
+	if (key_exists_in_env(key, *env))
+	{
+		free(key);
+		return (SUCCESS);
+	}
+	if (add_env_node(ft_strdup(key), env) == ERROR)
+	{
+		free(key);
 		return (print_export_error(-1, arg));
-	if (!new_value)
-	{
-		if (key_exists_in_env(key, *env))
-		{
-			free(key);
-			return (SUCCESS);
-		}
-		if (add_env_node(ft_strdup(key), env) == ERROR)
-		{
-			free(key);
-			return (print_export_error(-1, arg));
-		}
-		free(key);
-		return (SUCCESS);
 	}
-	if (update_env(key, new_value, env) == SUCCESS)
-	{
-		free(key);
-		return (SUCCESS);
-	}
-	return (add_env(new_value, env));
+	free(key);
+	return (SUCCESS);
 }
 
 int	add_env(char *new_value, t_env **env)

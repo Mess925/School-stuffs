@@ -6,7 +6,7 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 17:45:45 by hthant            #+#    #+#             */
-/*   Updated: 2025/01/24 15:40:06 by hthant           ###   ########.fr       */
+/*   Updated: 2025/02/05 17:41:32 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void print_exit_error(char *av)
 {
+	ft_putstr_fd("exit\n",STDERR);
 	ft_putstr_fd("minishell: exit: ", STDERR);
 	ft_putstr_fd(av, STDERR);
 	ft_putendl_fd(": numeric argument required", STDERR);

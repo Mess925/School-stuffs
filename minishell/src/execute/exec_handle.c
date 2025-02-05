@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_handle.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysetiawa <ysetiawa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yocelynnns <yocelynnns@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 17:22:00 by yocelynnns        #+#    #+#             */
-/*   Updated: 2025/02/04 20:49:53 by ysetiawa         ###   ########.fr       */
+/*   Updated: 2025/02/05 01:00:08 by yocelynnns       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int	handle_builtin_commands(t_ast_node *ast, t_minishell *mini)
 {
+	g_sig.exit_value = 0;
 	if (ft_strcmp(ast->command->args[0], "echo") == 0)
 		return (ft_echo(ast->command->args, mini), 0);
 	else if (ft_strcmp(ast->command->args[0], "cd") == 0)
@@ -28,6 +29,7 @@ int	handle_builtin_commands(t_ast_node *ast, t_minishell *mini)
 		return (ft_unset(ast->command->args, mini), 0);
 	else if (ft_strcmp(ast->command->args[0], "exit") == 0)
 		return (ft_exit(ast->command->args, mini), 0);
+	g_sig.exit_value = 1;
 	return (1);
 }
 
@@ -73,7 +75,11 @@ void	handle_heredoc(t_ast_node *ast)
 {
 	int	pipefd[2];
 
-	pipe(pipefd);
+	if (pipe(pipefd) == -1)
+	{
+		perror("pipe");
+		exit(EXIT_FAILURE);
+	}
 	write(pipefd[1], ast->command->heredoc, ft_strlen(ast->command->heredoc));
 	close(pipefd[1]);
 	dup2(pipefd[0], STDIN);
