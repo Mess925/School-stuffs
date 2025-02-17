@@ -1,108 +1,107 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/08 15:40:28 by hthant            #+#    #+#             */
+/*   Updated: 2025/02/08 18:55:18 by hthant           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
-void *philo_routine(void *arg)
+long	timestamp(void)
 {
-    t_philo *philo = (t_philo *)arg;
-    int left_fork = philo->id - 1;
-    int right_fork = philo->id % philo->num_philosophers;
-    int i = 0;
+	struct timeval	tv;
 
-    while (philo->num_times_to_eat == -1 || i < philo->num_times_to_eat) {
-        usleep(philo->time_to_sleep * 1000);
-
-        pthread_mutex_lock(&philo->print_mutex);
-        printf("%ld %d is thinking\n", time(NULL), philo->id);
-        pthread_mutex_unlock(&philo->print_mutex);
-
-        pthread_mutex_lock(&philo->forks[left_fork]);
-        
-        pthread_mutex_lock(&philo->print_mutex);
-        printf("%ld %d has taken a fork\n", time(NULL), philo->id);
-        pthread_mutex_unlock(&philo->print_mutex);
-
-        pthread_mutex_lock(&philo->forks[right_fork]);
-
-        pthread_mutex_lock(&philo->print_mutex);
-        printf("%ld %d has taken a fork\n", time(NULL), philo->id);
-        pthread_mutex_unlock(&philo->print_mutex);
-
-        pthread_mutex_lock(&philo->print_mutex);
-        printf("%ld %d is eating\n", time(NULL), philo->id);
-        pthread_mutex_unlock(&philo->print_mutex);
-
-        usleep(philo->time_to_eat * 1000);
-
-        pthread_mutex_unlock(&philo->forks[right_fork]);
-        pthread_mutex_unlock(&philo->forks[left_fork]);
-
-        i++;
-    }
-
-    return NULL;
+	gettimeofday(&tv, NULL);
+	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 }
 
-int main(int argc, char **argv)
+int	init_data(int ac, char **av, t_data *data)
 {
-    if (argc != 5 && argc != 6)
-    {
-        write_error_msg("Usage: num_philosophers time_to_die time_to_eat time_to_sleep [num_times_to_eat]");
-        return 1;
-    }
-    int i;
+	int	i;
 
-    i = 0;
-    int num_philosophers = ft_atoi(argv[1]);
-    int time_to_die = ft_atoi(argv[2]);
-    int time_to_eat = ft_atoi(argv[3]);
-    int time_to_sleep = ft_atoi(argv[4]);
-    int num_times_to_eat ;
-    if(argc == 6)
-        num_times_to_eat = ft_atoi(argv[5]);
-    else
-        num_times_to_eat = -1;
-
-    t_philo *philos = malloc(sizeof(t_philo) * num_philosophers);
-    pthread_t *threads = malloc(sizeof(pthread_t) * num_philosophers);
-    pthread_mutex_t *forks = malloc(sizeof(pthread_mutex_t) * num_philosophers);
-
-    while(i < num_philosophers)
-    {
-        philos[i].id = i + 1;
-        philos[i].num_philosophers = num_philosophers;
-        philos[i].time_to_die = time_to_die;
-        philos[i].time_to_eat = time_to_eat;
-        philos[i].time_to_sleep = time_to_sleep;
-        philos[i].num_times_to_eat = num_times_to_eat;
-        philos[i].forks = forks;
-        pthread_mutex_init(&philos[i].print_mutex, NULL);
-        pthread_mutex_init(&forks[i], NULL);
-        i++;
-    }
-    i = 0;
-    while(i < num_philosophers)
-    {
-        pthread_create(&threads[i], NULL, philo_routine, &philos[i]);
-        i++;
-    }
-    i = 0;
-    while(i < num_philosophers )
-    {
-        pthread_join(threads[i], NULL);
-        i++;
-    }
-
-    i = 0;
-    while( i < num_philosophers)
-    {
-        pthread_mutex_destroy(&forks[i]);
-        pthread_mutex_destroy(&philos[i].print_mutex);
-        i++;
-    }
-
-    free(philos);
-    free(threads);
-    free(forks);
-
-    return 0;
+	i = 0;
+	data->num_philo = ft_atoi(av[1]);
+	data->time_die = ft_atoi(av[2]);
+	data->time_eat = ft_atoi(av[3]);
+	data->time_sleep = ft_atoi(av[4]);
+	if (ac == 6)
+		data->max_meal = ft_atoi(av[5]);
+	else
+		data->max_meal = -1;
+	if (data->num_philo == ERROR || data->time_die == ERROR
+		|| data->time_eat == ERROR || data->time_sleep == ERROR || (ac == 6
+			&& data->max_meal == ERROR))
+		return (printf("Error: Invalid input arguments.\n"), ERROR);
+	data->start_time = timestamp();
+	// printf("Start time is %ld\n", data->start_time);
+	data->forks = malloc(sizeof(pthread_mutex_t) * data->num_philo);
+	if (!data->forks)
+		return (printf("Malloc allocation failed\n"), ERROR);
+	while (i < data->num_philo)
+	{
+		if (pthread_mutex_init(&data->forks[i], NULL) != 0)
+			return (printf("Mutex initilization failed\n"), ERROR);
+		i++;
+	}
+	if (pthread_mutex_init(&data->print_mtx, NULL) != 0)
+		return (printf("Error: Failed to initialize print mutex\n"), ERROR);
+	if (pthread_mutex_init(&data->state_mtx, NULL) != 0)
+		return (printf("Error: Failed to initialize state mutex\n"), ERROR);
+	return (SUCCESS);
 }
 
+int	main(int ac, char **av)
+{
+	t_data	*data;
+	t_philo	*philo;
+	int		i;
+
+	i = 0;
+	if (ac == 5 || ac == 6)
+	{
+		data = malloc(sizeof(t_data));
+		if (!data)
+			return (printf("Malloc allocation failed\n"), ERROR);
+		if (init_data(ac, av, data) == SUCCESS)
+		{
+			philo = malloc(sizeof(t_philo) * data->num_philo);
+			if (!philo)
+			{
+				printf("Malloc allocation failed\n");
+				i = 0;
+				while (i < data->num_philo)
+				{
+					pthread_mutex_destroy(&data->forks[i]);
+					i++;
+				}
+				pthread_mutex_destroy(&data->print_mtx);
+				pthread_mutex_destroy(&data->state_mtx);
+				free(data);
+				return (ERROR);
+			}
+			init_philo(philo);
+			while (i < data->num_philo)
+			{
+				pthread_mutex_destroy(&data->forks[i]);
+				i++;
+			}
+			pthread_mutex_destroy(&data->print_mtx);
+			pthread_mutex_destroy(&data->state_mtx);
+			free(philo);
+		}
+		else
+		{
+			free(data);
+			return (ERROR);
+		}
+		free(data);
+	}
+	else
+		return (printf("Invalid number of arguments\n"), ERROR);
+	return (SUCCESS);
+}

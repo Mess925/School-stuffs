@@ -6,7 +6,7 @@
 /*   By: ysetiawa <ysetiawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 16:53:38 by hthant            #+#    #+#             */
-/*   Updated: 2025/01/20 19:58:33 by ysetiawa         ###   ########.fr       */
+/*   Updated: 2025/02/13 14:07:39 by ysetiawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,36 @@ int	init_env_list(t_minishell *mini, char **env_array)
 	return (0);
 }
 
+char **env_list_to_array(t_env *env_list)
+{
+    t_env *current = env_list;
+    int count = 0;
+    
+    while (current)
+    {
+        count++;
+        current = current->next;
+    }
+    char **env_array = malloc((count + 1) * sizeof(char *));
+    if (!env_array)
+        return NULL;
+    current = env_list;
+    for (int i = 0; i < count; i++)
+    {
+        env_array[i] = strdup(current->value);
+        if (!env_array[i])
+        {
+            for (int j = 0; j < i; j++)
+                free(env_array[j]);
+            free(env_array);
+            return NULL;
+        }
+        current = current->next;
+    }
+    env_array[count] = NULL;
+    return env_array;
+}
+
 int	env_init(t_minishell *mini, char **env_array)
 {
 	if (!env_array || !env_array[0])
@@ -78,7 +108,14 @@ int	env_init(t_minishell *mini, char **env_array)
 	}
 	if (init_env_list(mini, env_array) != 0)
 		return (1);
-	ft_putendl_fd("Environment variables successfully initialized.", 2);
+		
+	mini->env2 = env_list_to_array(mini->env);
+    if (!mini->env2)
+    {
+        ft_putstr_fd("Error: Failed to convert environment variables to array\n", STDERR);
+        return (1);
+    }
+	// ft_putendl_fd("Environment variables successfully initialized.", 2);
 	return (0);
 }
 

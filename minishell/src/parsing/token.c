@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysetiawa <ysetiawa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yocelynnns <yocelynnns@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 15:19:25 by ysetiawa          #+#    #+#             */
-/*   Updated: 2025/02/04 14:16:03 by ysetiawa         ###   ########.fr       */
+/*   Updated: 2025/02/12 03:00:48 by yocelynnns       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_token	*create_token(t_token_type type, const char *value)
 	new_token->value = ft_strdup(value);
 	if (!new_token->value)
 	{
-		free(new_token);
+		free_tokens(new_token);
 		return (NULL);
 	}
 	new_token->next = NULL;
@@ -53,7 +53,7 @@ t_ast_node	*build_ast(t_token *tokens, t_minishell *mini)
 	int	i;
 
 	i = count_cmds(tokens);
-	return (parse_pipeline(&tokens, mini, i));
+	return (parse_pipeline(tokens, mini, i));
 }
 
 void	init_lexstate(t_lexer_state *state)
@@ -67,38 +67,14 @@ void	init_lexstate(t_lexer_state *state)
 
 int	checkquote(t_lexer_state *state, t_minishell *mini)
 {
-	(void)mini;
 	if (state->quote)
 	{
 		printf("Error: Unclosed quote '%c'\n", state->quote);
 		free_tokens(state->token_list);
-		g_sig.exit_value = 2;
+		mini->exit = 2;
 		return (1);
 	}
 	return (0);
-}
-
-void	handle_dollar(const char *input, t_lexer_state *state,
-		t_minishell *mini)
-{
-	(void)mini;
-	char	*status_str;
-		char *empty;
-
-	if (input[state->i + 1] == '?')
-	{
-		status_str = ft_itoa(g_sig.exit_value);
-		add_token(&state->token_list, create_token(WORD, status_str));
-		free(status_str);
-		state->i++;
-		state->start = state->i + 1;
-	}
-	else if (input[state->i + 1] == '\0' && input[state->i - 1] != ' ')
-	{
-		empty = "$";
-		add_token(&state->token_list, create_token(WORD, empty));
-		state->start = state->i + 1;
-	}
 }
 
 void	handle_quotes(const char *input, t_lexer_state *state)
@@ -117,7 +93,7 @@ void	handle_spaces(const char *input, t_lexer_state *state,
 
 	if (state->i > state->start)
 	{
-		raw_token = strndup(input + state->start, state->i - state->start);
+		raw_token = ft_strndup(input + state->start, state->i - state->start);
 		processed_token = first_processing(raw_token, mini);
 		add_token(&state->token_list, create_token(WORD, processed_token));
 		free(raw_token);
@@ -157,7 +133,7 @@ void	handle_redir(const char *input, t_lexer_state *state, char direction,
 
 	if (state->i > state->start)
 	{
-		raw_token = strndup(input + state->start, state->i - state->start);
+		raw_token = ft_strndup(input + state->start, state->i - state->start);
 		processed_token = first_processing(raw_token, mini);
 		add_token(&state->token_list, create_token(WORD, processed_token));
 		free(raw_token);
@@ -179,14 +155,12 @@ void	handle_pipe(const char *input, t_lexer_state *state, t_minishell *mini)
 	{
 		fprintf(stderr,
 			"Error: Invalid sequence of consecutive '|' operators\n");
-		free_tokens(state->token_list);
-		state->token_list = NULL;
-		g_sig.exit_value = 2;
+		mini->exit = 217;
 	}
 	state->last_token_was_pipe = 1;
 	if (state->i > state->start)
 	{
-		raw_token = strndup(input + state->start, state->i - state->start);
+		raw_token = ft_strndup(input + state->start, state->i - state->start);
 		processed_token = first_processing(raw_token, mini);
 		add_token(&state->token_list, create_token(WORD, processed_token));
 		free(raw_token);
@@ -201,21 +175,21 @@ void	process_remaining_token(const char *input, t_lexer_state *state,
 	char	*raw_token;
 	char	*processed_token;
 	char	**split_tokens;
-	int i;
+	int		i;
 
+	raw_token = NULL;
+	processed_token = NULL;
+	split_tokens = NULL;
 	if (state->i > state->start)
 	{
 		raw_token = ft_strndup(input + state->start, state->i - state->start);
 		processed_token = first_processing(raw_token, mini);
-		// **NEW: Split the token if it contains spaces**
 		if (input[0] == '$')
 		{
 			split_tokens = ft_split(processed_token, ' ');
 			free(processed_token);
-
 			if (!split_tokens)
 				return;
-
 			i = 0;
 			while (split_tokens[i])
 			{
@@ -237,11 +211,10 @@ void	process_remaining_token(const char *input, t_lexer_state *state,
 
 int	checkpipe(const char *input, t_lexer_state *state, t_minishell *mini)
 {
-	(void)mini;
 	if (input[state->i] == '|' && input[state->i + 1] != '|')
 	{
 		printf("Error: Syntax error near unexpected token `|'\n");
-		g_sig.exit_value = 2;
+		mini->exit = 2;
 		free_tokens(state->token_list);
 		return (1);
 	}
@@ -249,7 +222,7 @@ int	checkpipe(const char *input, t_lexer_state *state, t_minishell *mini)
 	(input[state->i] == '\'' && input[state->i + 1] == '\'')) && (input[state->i + 2] == '\0'))
 	{
 		printf("Command not found: ''\n");
-		g_sig.exit_value = 127;
+		mini->exit = 127;
 		free_tokens(state->token_list);
 		return (1);
 	}
@@ -258,9 +231,7 @@ int	checkpipe(const char *input, t_lexer_state *state, t_minishell *mini)
 
 void lexer_checks(const char *input, t_lexer_state *state, t_minishell *mini)
 {
-	if (input[state->i] == '$')
-		handle_dollar(input, state, mini);
-	else if ((input[state->i] == '\'' || input[state->i] == '"') && (state->i == 0 || input[state->i - 1] != '\\'))
+	if ((input[state->i] == '\'' || input[state->i] == '"') && (state->i == 0 || input[state->i - 1] != '\\'))
 		handle_quotes(input, state);
 	else if (isspace(input[state->i]) && !state->quote)
 		handle_spaces(input, state, mini);
@@ -288,13 +259,43 @@ t_token	*lexer(const char *input, t_minishell *mini)
 		lexer_checks(input, &state, mini);
 		state.i++;
 	}
+	if (mini->exit == 217)
+	{
+		mini->exit = 2;
+		return (NULL);
+	}
 	j = checkquote(&state, mini);
 	if (j || i)
 		return (NULL);
 	process_remaining_token(input, &state, mini);
+	mini->here = 0;
 	return (state.token_list);
 }
 
+	// if (input[state->i] == '$')
+	// 	handle_dollar(input, state, mini);
+// void	handle_dollar(const char *input, t_lexer_state *state,
+// 		t_minishell *mini)
+// {
+// 	// char	*status_str;
+// 	char	*empty;
+
+// 	(void)mini;
+	// if (input[state->i + 1] == '?')
+	// {
+	// 	status_str = ft_itoa(mini->exit);
+	// 	add_token(&state->token_list, create_token(WORD, status_str));
+	// 	free(status_str);
+	// 	state->i++;
+	// 	state->start = state->i + 1;
+	// }
+	// if (input[state->i + 1] == '\0' && input[state->i - 1] != ' ')
+	// {
+	// 	empty = "$";
+	// 	add_token(&state->token_list, create_token(WORD, empty));
+	// 	state->start = state->i + 1;
+	// }
+// }
 		// if (input[state.i] == '$')
 		// 	handle_dollar(input, &state, mini);
 		// else if ((input[state.i] == '\'' || input[state.i] == '"') && (state.i == 0 || input[state.i - 1] != '\\'))

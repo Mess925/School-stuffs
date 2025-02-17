@@ -71,7 +71,7 @@ int	handle_redirect(t_ast_node *cmd, t_token **tokens, t_minishell *mini)
 // 			cmd->command->heredoc = read_heredoc(redirect_node->redirect->file,
 // 					mini);
 // 			if (!cmd->command->heredoc)
-// 				exit(g_sig.exit_value);
+// 				exit(mini->exit);
 // 			exit(0);
 // 		}
 // 		else if (pid < 0)
@@ -83,8 +83,8 @@ int	handle_redirect(t_ast_node *cmd, t_token **tokens, t_minishell *mini)
 // 		waitpid(pid, &status, 0);
 // 		if (WIFEXITED(status))
 // 		{
-// 			g_sig.exit_value = WEXITSTATUS(status);
-// 			if (g_sig.exit_value != 0)
+// 			mini->exit = WEXITSTATUS(status);
+// 			if (mini->exit != 0)
 // 			{
 // 				free_ast(cmd);
 // 				return (0);
@@ -92,7 +92,7 @@ int	handle_redirect(t_ast_node *cmd, t_token **tokens, t_minishell *mini)
 // 		}
 // 		else if (WIFSIGNALED(status))
 // 		{
-// 			g_sig.exit_value = g_sig.exit_value;
+// 			mini->exit = mini->exit;
 // 			free_ast(cmd);
 // 			return (0);
 // 		}

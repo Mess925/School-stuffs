@@ -6,7 +6,7 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 06:51:58 by messs             #+#    #+#             */
-/*   Updated: 2025/02/05 16:07:54 by hthant           ###   ########.fr       */
+/*   Updated: 2025/01/06 18:44:58 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int	ft_env(t_env *env)
 	}
 	return (SUCCESS);
 }
-
 int	key_exists_in_env(const char *key, t_env *env)
 {
 	if (!key || !env)
@@ -43,7 +42,7 @@ int	key_exists_in_env(const char *key, t_env *env)
 	return (0);
 }
 
-int	update_env(char *key, char *new_value, t_env **env)
+int	update_env(char *key, char *new_value, t_env **env, t_minishell *mini)
 {
 	t_env	*tmp;
 	size_t	key_len;
@@ -58,7 +57,7 @@ int	update_env(char *key, char *new_value, t_env **env)
 			free(tmp->value);
 			tmp->value = new_value;
 			if (!tmp->value)
-				return (print_export_error(-1, key));
+				return (print_export_error(-1, key, mini));
 			return (SUCCESS);
 		}
 		tmp = tmp->next;

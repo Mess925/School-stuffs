@@ -3,33 +3,52 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: messs <messs@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/07 18:37:18 by messs             #+#    #+#             */
-/*   Updated: 2024/11/25 19:34:31 by messs            ###   ########.fr       */
+/*   Created: 2025/02/08 15:39:54 by hthant            #+#    #+#             */
+/*   Updated: 2025/02/08 18:50:01 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
-#define PHILO_H
+# define PHILO_H
 
-#include <pthread.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
+# include <errno.h>
+# include <limits.h>
+# include <pthread.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <sys/time.h>
+# include <unistd.h>
 
-typedef struct s_philo {
-    int id;
-    int num_philosophers;
-    int time_to_die;
-    int time_to_eat;
-    int time_to_sleep;
-    int num_times_to_eat;
-    pthread_mutex_t *forks;
-    pthread_mutex_t print_mutex;
-} t_philo;
+# define SUCCESS 0
+# define ERROR -1
 
-int	ft_atoi(const char *nptr);
-void write_error_msg(const char *str);
+typedef struct s_data
+{
+	int				num_philo;
+	int				time_die;
+	int				time_eat;
+	int				time_sleep;
+	int				max_meal;
+	long			start_time;
+	pthread_mutex_t	*forks;
+	pthread_mutex_t print_mtx;
+	pthread_mutex_t state_mtx;
+}					t_data;
+
+typedef struct s_philo
+{
+	int				id;
+	pthread_t		thread;
+	pthread_mutex_t	*left_fork;
+	pthread_mutex_t	*right_fork;
+	t_data			*data;
+}					t_philo;
+
+
+int					ft_atoi(const char *str);
+long				timestamp(void);
+int					init_data(int ac, char **av, t_data *data);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 06:57:56 by messs             #+#    #+#             */
-/*   Updated: 2025/02/05 16:08:16 by hthant           ###   ########.fr       */
+/*   Updated: 2025/01/06 15:15:06 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int	ft_pwd(void)
 		return (ERROR);
 	}
 }
-
 int	handle_tilde(char **path, t_env *env_list)
 {
 	char	*home;
@@ -54,7 +53,7 @@ int	handle_tilde(char **path, t_env *env_list)
 	return (SUCCESS);
 }
 
-int	handle_special_cd(char **arguments, t_env *env_list)
+int	handle_special_cd(char **arguments, t_env *env_list, t_minishell *mini)
 {
 	char	*directory_path;
 
@@ -66,7 +65,7 @@ int	handle_special_cd(char **arguments, t_env *env_list)
 			ft_putendl_fd("minishell: cd: HOME not set", STDERR_FILENO);
 			return (ERROR);
 		}
-		return (navigate_to_special_dir(0, env_list));
+		return (navigate_to_special_dir(0, env_list, mini));
 	}
 	if (ft_strcmp(arguments[1], "-") == 0)
 	{
@@ -76,12 +75,12 @@ int	handle_special_cd(char **arguments, t_env *env_list)
 			ft_putendl_fd("minishell: cd: OLDPWD not set", STDERR_FILENO);
 			return (ERROR);
 		}
-		return (navigate_to_special_dir(1, env_list));
+		return (navigate_to_special_dir(1, env_list, mini));
 	}
 	return (SUCCESS);
 }
 
-int	handle_regular_cd(char *path, t_env *env_list)
+int	handle_regular_cd(char *path, t_env *env_list, t_minishell *mini)
 {
 	char	*expanded_path;
 	int		cd_result;
@@ -101,7 +100,7 @@ int	handle_regular_cd(char *path, t_env *env_list)
 	}
 	cd_result = chdir(expanded_path);
 	if (cd_result != 0)
-		print_cd_error(expanded_path);
+		print_cd_error(expanded_path, mini);
 	free(expanded_path);
 	return (cd_result);
 }
