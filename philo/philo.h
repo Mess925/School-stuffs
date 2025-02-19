@@ -6,7 +6,7 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 15:39:54 by hthant            #+#    #+#             */
-/*   Updated: 2025/02/08 18:50:01 by hthant           ###   ########.fr       */
+/*   Updated: 2025/02/17 20:58:24 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,12 @@ typedef struct s_data
 typedef struct s_philo
 {
 	int				id;
+	int				total_meal;
+	long			last_meal_eaten_time;
 	pthread_t		thread;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
+	pthread_mutex_t meal_mutex;
 	t_data			*data;
 }					t_philo;
 

@@ -6,23 +6,23 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 15:40:28 by hthant            #+#    #+#             */
-/*   Updated: 2025/02/08 18:55:18 by hthant           ###   ########.fr       */
+/*   Updated: 2025/02/17 21:09:59 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-long	timestamp(void)
+long timestamp(void)
 {
-	struct timeval	tv;
+	struct timeval tv;
 
 	gettimeofday(&tv, NULL);
 	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 }
 
-int	init_data(int ac, char **av, t_data *data)
+int init_data(int ac, char **av, t_data *data)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	data->num_philo = ft_atoi(av[1]);
@@ -33,12 +33,9 @@ int	init_data(int ac, char **av, t_data *data)
 		data->max_meal = ft_atoi(av[5]);
 	else
 		data->max_meal = -1;
-	if (data->num_philo == ERROR || data->time_die == ERROR
-		|| data->time_eat == ERROR || data->time_sleep == ERROR || (ac == 6
-			&& data->max_meal == ERROR))
+	if (data->num_philo == ERROR || data->time_die == ERROR || data->time_eat == ERROR || data->time_sleep == ERROR || (ac == 6 && data->max_meal == ERROR))
 		return (printf("Error: Invalid input arguments.\n"), ERROR);
 	data->start_time = timestamp();
-	// printf("Start time is %ld\n", data->start_time);
 	data->forks = malloc(sizeof(pthread_mutex_t) * data->num_philo);
 	if (!data->forks)
 		return (printf("Malloc allocation failed\n"), ERROR);
@@ -52,6 +49,30 @@ int	init_data(int ac, char **av, t_data *data)
 		return (printf("Error: Failed to initialize print mutex\n"), ERROR);
 	if (pthread_mutex_init(&data->state_mtx, NULL) != 0)
 		return (printf("Error: Failed to initialize state mutex\n"), ERROR);
+	return (SUCCESS);
+}
+
+int init_philo(t_philo *philo, t_data *data)
+{
+	int i;
+
+	i = 0;
+	while (i < data->num_philo)
+	{
+		philo[i].id = i;
+		philo[i].total_meal = 0;
+		philo[i].last_meal_eaten_time = data->start_time;
+		philo[i].left_fork = &data->forks[i];
+		philo[i].right_fork = &data->forks[(i + 1) % data->num_philo];
+		if (pthread_mutex_init(&philo[i].meal_mutex, NULL) != 0)
+		{
+			printf("Error: Failed to initialize meal_mutex for philo %d\n", i);
+			while (--i >= 0)
+				pthread_mutex_destroy(&philo[i].meal_mutex);
+			return (ERROR);
+		}
+		i++;
+	}
 	return (SUCCESS);
 }
 
@@ -73,23 +94,25 @@ int	main(int ac, char **av)
 			if (!philo)
 			{
 				printf("Malloc allocation failed\n");
-				i = 0;
 				while (i < data->num_philo)
-				{
-					pthread_mutex_destroy(&data->forks[i]);
-					i++;
-				}
+					pthread_mutex_destroy(&data->forks[i++]);
 				pthread_mutex_destroy(&data->print_mtx);
 				pthread_mutex_destroy(&data->state_mtx);
 				free(data);
 				return (ERROR);
 			}
-			init_philo(philo);
-			while (i < data->num_philo)
+			if (init_philo(philo, data) != SUCCESS)
 			{
-				pthread_mutex_destroy(&data->forks[i]);
-				i++;
+				while (i < data->num_philo)
+					pthread_mutex_destroy(&data->forks[i++]);
+				pthread_mutex_destroy(&data->print_mtx);
+				pthread_mutex_destroy(&data->state_mtx);
+				free(philo);
+				free(data);
+				return (ERROR);
 			}
+			while (i < data->num_philo)
+				pthread_mutex_destroy(&data->forks[i++]);
 			pthread_mutex_destroy(&data->print_mtx);
 			pthread_mutex_destroy(&data->state_mtx);
 			free(philo);
