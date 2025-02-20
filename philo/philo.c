@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
+/*   By: messs <messs@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 15:40:28 by hthant            #+#    #+#             */
-/*   Updated: 2025/02/17 21:09:59 by hthant           ###   ########.fr       */
+/*   Updated: 2025/02/20 12:03:55 by messs            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,11 +76,25 @@ int init_philo(t_philo *philo, t_data *data)
 	return (SUCCESS);
 }
 
-int	main(int ac, char **av)
+void destroy_mutex(t_data *data)
 {
-	t_data	*data;
-	t_philo	*philo;
-	int		i;
+	int i;
+
+	i = 0;
+	while (i < data->num_philo)
+		pthread_mutex_destroy(&data->forks[i++]);
+	pthread_mutex_destroy(&data->print_mtx);
+	pthread_mutex_destroy(&data->state_mtx);
+}
+void create_philo_threads(t_philo *philo)
+{
+}
+
+int main(int ac, char **av)
+{
+	t_data *data;
+	t_philo *philo;
+	int i;
 
 	i = 0;
 	if (ac == 5 || ac == 6)
@@ -94,27 +108,19 @@ int	main(int ac, char **av)
 			if (!philo)
 			{
 				printf("Malloc allocation failed\n");
-				while (i < data->num_philo)
-					pthread_mutex_destroy(&data->forks[i++]);
-				pthread_mutex_destroy(&data->print_mtx);
-				pthread_mutex_destroy(&data->state_mtx);
+				destroy_mutex(data);
 				free(data);
 				return (ERROR);
 			}
 			if (init_philo(philo, data) != SUCCESS)
 			{
-				while (i < data->num_philo)
-					pthread_mutex_destroy(&data->forks[i++]);
-				pthread_mutex_destroy(&data->print_mtx);
-				pthread_mutex_destroy(&data->state_mtx);
+				destroy_mutex(data);
 				free(philo);
 				free(data);
 				return (ERROR);
 			}
-			while (i < data->num_philo)
-				pthread_mutex_destroy(&data->forks[i++]);
-			pthread_mutex_destroy(&data->print_mtx);
-			pthread_mutex_destroy(&data->state_mtx);
+			create_philo_threads(philo);
+			destroy_mutex(data);
 			free(philo);
 		}
 		else
