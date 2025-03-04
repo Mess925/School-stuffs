@@ -6,7 +6,7 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 15:12:39 by hthant            #+#    #+#             */
-/*   Updated: 2025/02/28 15:21:45 by hthant           ###   ########.fr       */
+/*   Updated: 2025/03/03 20:02:59 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,17 +65,25 @@ void	*philo_tasks(void *arg)
 
 	philo = (t_philo *)arg;
 	if (philo->data->num_philo == 1)
-	{
 		one_philo(philo);
-		return (NULL);
-	}
-	if (philo->id % 2 == 0)
-		usleep(philo->data->time_eat * 500);
-	while (!should_stop(philo))
+	else
 	{
-		take_forks(philo);
-		eat(philo);
-		sleep_and_think(philo);
+		if (philo->id % 2 == 0)
+			usleep(1000);
+		while (1)
+		{
+			pthread_mutex_lock(&philo->data->state_mtx);
+			if (!philo->data->check_death || (philo->data->max_meal != -1 && \
+				philo->total_meal >= philo->data->max_meal))
+			{
+				pthread_mutex_unlock(&philo->data->state_mtx);
+				break ;
+			}
+			pthread_mutex_unlock(&philo->data->state_mtx);
+			take_forks(philo);
+			eat(philo);
+			sleep_and_think(philo);
+		}
 	}
 	return (NULL);
 }

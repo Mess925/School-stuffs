@@ -6,35 +6,26 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 15:10:39 by hthant            #+#    #+#             */
-/*   Updated: 2025/02/28 15:25:53 by hthant           ###   ########.fr       */
+/*   Updated: 2025/03/03 19:51:39 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	init_data(int ac, char **av, t_data *data)
+int	check_error(t_data *data, int ac)
 {
-	int	i;
-
-	i = 0;
-	data->num_philo = ft_atoi(av[1]);
-	data->time_die = ft_atoi(av[2]);
-	data->time_eat = ft_atoi(av[3]);
-	data->time_sleep = ft_atoi(av[4]);
-	data->check_death = 0;
-	data->philo = NULL;
-	if (ac == 6)
-		data->max_meal = ft_atoi(av[5]);
-	else
-		data->max_meal = -1;
 	if (data->num_philo == ERROR || data->time_die == ERROR || \
 		data->time_eat == ERROR || data->time_sleep == ERROR || \
 		(ac == 6 && data->max_meal == ERROR))
 		return (printf("Error: Invalid input arguments.\n"), ERROR);
-	data->start_time = get_time();
-	data->forks = malloc(sizeof(pthread_mutex_t) * data->num_philo);
-	if (!data->forks)
-		return (printf("Malloc allocation failed\n"), ERROR);
+	return (0);
+}
+
+int	mutex_init(t_data *data)
+{
+	int	i;
+
+	i = 0;
 	while (i < data->num_philo)
 	{
 		if (pthread_mutex_init(&data->forks[i], NULL) != 0)
@@ -45,6 +36,29 @@ int	init_data(int ac, char **av, t_data *data)
 		return (printf("Error: Failed to initialize print mutex\n"), ERROR);
 	if (pthread_mutex_init(&data->state_mtx, NULL) != 0)
 		return (printf("Error: Failed to initialize state mutex\n"), ERROR);
+	return (0);
+}
+
+int	init_data(int ac, char **av, t_data *data)
+{
+	data->num_philo = ft_atoi(av[1]);
+	data->time_die = ft_atoi(av[2]);
+	data->time_eat = ft_atoi(av[3]);
+	data->time_sleep = ft_atoi(av[4]);
+	data->check_death = 1;
+	data->philo = NULL;
+	if (ac == 6)
+		data->max_meal = ft_atoi(av[5]);
+	else
+		data->max_meal = -1;
+	if (check_error(data, ac) == ERROR)
+		return (ERROR);
+	data->start_time = get_time();
+	data->forks = malloc(sizeof(pthread_mutex_t) * data->num_philo);
+	if (!data->forks)
+		return (printf("Malloc allocation failed\n"), ERROR);
+	if (mutex_init(data) == ERROR)
+		return (ERROR);
 	return (SUCCESS);
 }
 

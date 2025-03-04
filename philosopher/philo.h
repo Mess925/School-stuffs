@@ -6,7 +6,7 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 15:39:54 by hthant            #+#    #+#             */
-/*   Updated: 2025/02/28 15:32:58 by hthant           ###   ########.fr       */
+/*   Updated: 2025/03/03 20:03:16 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,11 @@ typedef struct s_philo	t_philo;
 typedef struct s_data
 {
 	int				num_philo;
-	int				time_die;
-	int				time_eat;
-	int				time_sleep;
-	int				max_meal;
+	long			time_die;
+	long			time_eat;
+	long			time_sleep;
 	long			start_time;
+	int				max_meal;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	print_mtx;
 	pthread_mutex_t	state_mtx;
@@ -59,7 +59,6 @@ long	get_time(void);
 int		init_data(int ac, char **av, t_data *data);
 void	print_status(t_philo *philo, char *status);
 void	destroy_mutex(t_data *data);
-int		should_stop(t_philo *philo);
 int		init_data(int ac, char **av, t_data *data);
 int		init_philo(t_philo *philo, t_data *data);
 void	*philo_tasks(void *arg);
