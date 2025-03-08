@@ -6,7 +6,7 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 17:36:21 by hthant            #+#    #+#             */
-/*   Updated: 2025/03/07 21:09:41 by hthant           ###   ########.fr       */
+/*   Updated: 2025/03/08 13:17:57 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ int init_data(t_data *data, int ac, char **av)
         data->nbr_t_to_eat = atol(av[5]);
     else
         data->nbr_t_to_eat = -1;
-    
 }
 
 int main(int ac, char **av)
