@@ -1,1 +1,1 @@
-42 CORE Corriculum porjects.
+42 CORE Corriculum Projects.
