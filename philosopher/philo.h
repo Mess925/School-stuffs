@@ -6,7 +6,7 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 15:39:54 by hthant            #+#    #+#             */
-/*   Updated: 2025/03/03 20:03:16 by hthant           ###   ########.fr       */
+/*   Updated: 2025/03/11 16:06:25 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ typedef struct s_philo
 
 int		ft_atoi(const char *str);
 long	get_time(void);
-int		init_data(int ac, char **av, t_data *data);
 void	print_status(t_philo *philo, char *status);
 void	destroy_mutex(t_data *data);
 int		init_data(int ac, char **av, t_data *data);

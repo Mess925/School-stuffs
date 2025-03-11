@@ -6,7 +6,7 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 15:10:39 by hthant            #+#    #+#             */
-/*   Updated: 2025/03/03 19:51:39 by hthant           ###   ########.fr       */
+/*   Updated: 2025/03/11 17:06:22 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int	check_error(t_data *data, int ac)
 {
-	if (data->num_philo == ERROR || data->time_die == ERROR || \
-		data->time_eat == ERROR || data->time_sleep == ERROR || \
-		(ac == 6 && data->max_meal == ERROR))
+	if (data->num_philo <= 0 || data->time_die <= 0 || \
+		data->time_eat <= 0 || data->time_sleep <= 0 || \
+		(ac == 6 && data->max_meal <= 0))
 		return (printf("Error: Invalid input arguments.\n"), ERROR);
 	return (0);
 }
