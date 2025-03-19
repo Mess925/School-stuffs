@@ -6,12 +6,12 @@
 #    By: hthant <hthant@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/18 14:44:21 by hthant            #+#    #+#              #
-#    Updated: 2025/03/19 14:39:13 by hthant           ###   ########.fr        #
+#    Updated: 2025/03/19 20:22:33 by hthant           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = phonebook
-SRC = phonebook.cpp contact.cpp main.cpp
+SRC = PhoneBook.cpp Contact.cpp main.cpp
 OBJ = $(SRC:.cpp=.o)
 CC = c++ 
 CFLAGS = -Wall -Wextra -Werror -std=c++98

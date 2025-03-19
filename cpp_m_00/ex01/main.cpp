@@ -1,10 +1,20 @@
-#include "contact.hpp"
-#include "phonebook.hpp"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.cpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/19 20:20:24 by hthant            #+#    #+#             */
+/*   Updated: 2025/03/19 20:22:06 by hthant           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "Contact.hpp"
+#include "PhoneBook.hpp"
 
 int	main(void)
 {
-	Contact contact;
-	// int index = 1;
 	std::string Command;
 	PhoneBook phoneBook;
 
@@ -22,11 +32,5 @@ int	main(void)
 			std::cout << "Invalid command. Use ADD, SEARCH, or EXIT.\n";
 		}
 	}
-	// contact.DisplayContact();
-	// while (index < 9)
-	// {
-	// 	contact.DisplayAll(index);
-	// 	index++;
-	// }
 	return (0);
 }
