@@ -6,7 +6,7 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:23:26 by hthant            #+#    #+#             */
-/*   Updated: 2025/03/19 19:23:12 by hthant           ###   ########.fr       */
+/*   Updated: 2025/03/19 19:36:04 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,17 @@ void PhoneBook::ContactSearch() const
     int index;
     std::string input;
 
-    if (getContactCount() == 0) {
+    if (getContactCount() == 0)
+    {
         std::cout << "No contacts to search.\n";
         return;
+    }
+    else
+    {
+        std::cout << std::setw(10) << "Index" << "|"
+        << std::setw(10) << "FirstName" << "|"
+        << std::setw(10) << "LastName" << "|"
+        << std::setw(10) << "Nickname" << "|" << std:: endl;
     }
     for (int i = 0; i < getContactCount(); i++)
         contacts[i].DisplayAll(i + 1);
