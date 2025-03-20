@@ -6,18 +6,17 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:23:26 by hthant            #+#    #+#             */
-/*   Updated: 2025/03/19 20:22:10 by hthant           ###   ########.fr       */
+/*   Updated: 2025/03/20 13:05:30 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "PhoneBook.hpp"
 
+
 bool PhoneBook::IsValidPhoneNumber(const std::string &phoneNumber) const
 {
     if (phoneNumber.empty())
-    {
         return false;
-    }
 
     bool hasPlus = false;
     bool openParen = false;
@@ -26,35 +25,38 @@ bool PhoneBook::IsValidPhoneNumber(const std::string &phoneNumber) const
     for (size_t i = 0; i < phoneNumber.length(); i++)
     {
         char c = phoneNumber[i];
-
-        if (std::isdigit(c))
-            digitCount++;
-        else if (c == '+') {
-            if (hasPlus || i != 0)
-                return false;
-            hasPlus = true;
-        }
-        else if (c == '(')
+        switch (c)
         {
-            if (openParen || (i > 0 && !std::isspace(phoneNumber[i - 1]) && !std::ispunct(phoneNumber[i - 1])))
-                return false;
-            openParen = true;
+            case '+':
+                if (hasPlus || i != 0) return false;
+                hasPlus = true;
+                break;
+            case '(':
+                if (openParen || (i > 0 && !std::isspace(phoneNumber[i - 1]) && !std::ispunct(phoneNumber[i - 1])))
+                    return false;
+                openParen = true;
+                break;
+            case ')':
+                if (!openParen || (i > 0 && !std::isdigit(phoneNumber[i - 1])))
+                    return false;
+                openParen = false;
+                break;
+            case '-':
+            case ' ':
+                if (i == 0 || i == phoneNumber.length() - 1 || !std::isdigit(phoneNumber[i - 1]))
+                    return false;
+                break;
+            default:
+                if (std::isdigit(c))
+                    digitCount++;
+                else
+                    return false;
+                break;
         }
-        else if (c == ')')
-        {
-            if (!openParen || (i > 0 && !std::isdigit(phoneNumber[i - 1])))
-                return false;
-            openParen = false;
-        }
-        else if (c == '-' || c == ' ') {
-            if (i == 0 || i == phoneNumber.length() - 1 || !std::isdigit(phoneNumber[i - 1]))
-                return false;
-        }
-        else
-            return false;
     }
     return (digitCount >= 7 && digitCount <= 15);
 }
+
 
 void PhoneBook::ContactSearch() const
 {
