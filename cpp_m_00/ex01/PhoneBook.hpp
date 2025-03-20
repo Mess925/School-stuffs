@@ -6,7 +6,7 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 19:47:46 by hthant            #+#    #+#             */
-/*   Updated: 2025/03/20 15:51:25 by hthant           ###   ########.fr       */
+/*   Updated: 2025/03/20 15:59:05 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ private:
     Contact contacts[MAX_CONTACTS];
     int _ContactIndex;
     int _ContactCount;
-
     
 public:
     PhoneBook() : _ContactIndex(0), _ContactCount(0) {}
