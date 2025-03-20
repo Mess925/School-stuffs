@@ -6,12 +6,11 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:23:26 by hthant            #+#    #+#             */
-/*   Updated: 2025/03/20 13:05:30 by hthant           ###   ########.fr       */
+/*   Updated: 2025/03/20 15:53:46 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "PhoneBook.hpp"
-
 
 bool PhoneBook::IsValidPhoneNumber(const std::string &phoneNumber) const
 {
@@ -63,7 +62,7 @@ void PhoneBook::ContactSearch() const
     int index;
     std::string input;
 
-    if (getContactCount() == 0)
+    if ((_ContactCount) == 0)
     {
         std::cout << "No contacts to search.\n";
         return;
@@ -75,7 +74,7 @@ void PhoneBook::ContactSearch() const
         << std::setw(10) << "LastName" << "|"
         << std::setw(10) << "Nickname" << "|" << std:: endl;
     }
-    for (int i = 0; i < getContactCount(); i++)
+    for (int i = 0; i < _ContactCount; i++)
         contacts[i].DisplayAll(i + 1);
 
     std::cout << "Enter contact index: ";
@@ -87,7 +86,7 @@ void PhoneBook::ContactSearch() const
         std::cout << "Invalid input. Please enter a valid number.\n";
         return;
     }
-    if (index >= 1 && index <= getContactCount())
+    if (index >= 1 && index <= _ContactCount)
         contacts[index - 1].DisplayContact();
     else
         std::cout << "Invalid index. Please enter a valid contact number.\n";
@@ -127,12 +126,12 @@ void PhoneBook::ContentInit()
     std::cout << "Enter Darkest Secret: ";
     CheckError(DarkestSecret, "Darkest Secret");
 
-    int newIndex = getContactIndex() % MAX_CONTACTS;
+    int newIndex = _ContactIndex % MAX_CONTACTS;
     contacts[newIndex] = Contact(FirstName, LastName, NickName, PhoneNumber, DarkestSecret);
 
-    setContactIndex(newIndex + 1);
-    if (getContactCount() < MAX_CONTACTS)
-        setContactCount(getContactCount() + 1);
+    newIndex = (newIndex + 1);
+    if (_ContactCount < MAX_CONTACTS)
+        _ContactCount++;
 
     std::cout << "Contact added successfully!" << std::endl;
 }

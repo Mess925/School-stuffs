@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   contact.hpp                                        :+:      :+:    :+:   */
+/*   Contact.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 19:46:03 by hthant            #+#    #+#             */
-/*   Updated: 2025/03/19 19:21:22 by hthant           ###   ########.fr       */
+/*   Updated: 2025/03/20 13:52:03 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 #include <iostream>
 #include <iomanip>
 
-class Contact {
+class Contact 
+{
 private:
     std::string _FirstName;
     std::string _LastName;
