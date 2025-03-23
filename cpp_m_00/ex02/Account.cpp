@@ -6,7 +6,7 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 13:29:54 by hthant            #+#    #+#             */
-/*   Updated: 2025/03/20 20:03:32 by hthant           ###   ########.fr       */
+/*   Updated: 2025/03/23 14:37:37 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,16 +51,16 @@ Account::Account(int initial_deposit)
     _totalAmount += _amount;
     _displayTimestamp();
     std::cout << "index:" <<_accountIndex
-    << ";amount:"<<_amount
-    << ";created" << std::endl;
+              << ";amount:"<<_amount
+              << ";created" << std::endl;
 }
 
 Account::~Account(void)
 {
     _displayTimestamp();
     std::cout << "index:" <<_accountIndex
-    << ";amount:"<<_amount
-    << ";closed" << std::endl;
+              << ";amount:"<<_amount
+              << ";closed" << std::endl;
 }
 
 void Account::displayAccountsInfos() {
