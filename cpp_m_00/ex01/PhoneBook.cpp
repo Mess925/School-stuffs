@@ -6,7 +6,7 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:23:26 by hthant            #+#    #+#             */
-/*   Updated: 2025/03/20 15:53:46 by hthant           ###   ########.fr       */
+/*   Updated: 2025/03/24 13:17:36 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void PhoneBook::ContactSearch() const
     if (!(ss >> index))
     {
         std::cout << "Invalid input. Please enter a valid number.\n";
-        return;
+        // return;
     }
     if (index >= 1 && index <= _ContactCount)
         contacts[index - 1].DisplayContact();
