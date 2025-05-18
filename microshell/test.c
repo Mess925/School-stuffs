@@ -109,14 +109,14 @@ int main(int argc, char **argv, char **env)
     return 0;
 }
 
-if I
-    do
-        int pid = fork();
-if (pid == 0)
-{
-    int x = 0;
-}
-else
-{
-    int x = 1;
-}
+// if I
+//     do
+//         int pid = fork();
+// if (pid == 0)
+// {
+//     int x = 0;
+// }
+// else
+// {
+//     int x = 1;
+// }
