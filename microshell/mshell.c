@@ -12,6 +12,10 @@ void exec_cd(char **av, int i)
         printf("errorb\n");
 }
 
+void exec_cmd(char **av, int i, char **envp)
+{
+    return;
+}
 
 int main(int ac, char **av, char **envp)
 {
@@ -27,7 +31,7 @@ int main(int ac, char **av, char **envp)
         if (strcmp(*av , "cd") == 0)
             exec_cd(av,i);
         else
-            exec_cmd(av,i);
+            exec_cmd(av,i, envp);
     }
     return (0);
 }
