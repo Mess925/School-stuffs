@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: messs <messs@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 02:25:23 by hthant            #+#    #+#             */
-/*   Updated: 2024/11/12 20:02:16 by messs            ###   ########.fr       */
+/*   Updated: 2025/05/21 16:03:39 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,20 +130,20 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-int	main(void)
-{
-	int			fd;
-	const char	*path;
+// int	main(void)
+// {
+// 	int			fd;
+// 	const char	*path;
 
-	path = "test.txt";
-	fd = open(path, O_RDONLY);
-	printf("%s", get_next_line(fd));
-	printf("\n-----------\n");
-	printf("%s", get_next_line(fd));
-	printf("\n-----------\n");
-	printf("%s", get_next_line(fd));
-	printf("\n-----------\n");
-	printf("%s", get_next_line(fd));
-	printf("\n-----------\n");
-	printf("%s", get_next_line(fd));
-}
+// 	path = "test.txt";
+// 	fd = open(path, O_RDONLY);
+// 	printf("%s", get_next_line(fd));
+// 	printf("\n-----------\n");
+// 	printf("%s", get_next_line(fd));
+// 	printf("\n-----------\n");
+// 	printf("%s", get_next_line(fd));
+// 	printf("\n-----------\n");
+// 	printf("%s", get_next_line(fd));
+// 	printf("\n-----------\n");
+// 	printf("%s", get_next_line(fd));
+// }
