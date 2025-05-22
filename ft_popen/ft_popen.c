@@ -37,14 +37,12 @@ int ft_popen(char *file, char *const argv[], char type)
             close(pipe_fd[0]);
             if (dup2(pipe_fd[1], STDOUT_FILENO == -1))
                 exit(1);
-            close(pipe_fd[1]);
         }
         else
         {
             close(pipe_fd[1]);
             if (dup2(pipe_fd[0], STDIN_FILENO) == -1)
                 exit(1);
-            close(pipe_fd[0]);
         }
         close(pipe_fd[0]);
         close(pipe_fd[1]);
