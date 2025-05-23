@@ -6,7 +6,7 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 20:20:24 by hthant            #+#    #+#             */
-/*   Updated: 2025/03/19 20:22:06 by hthant           ###   ########.fr       */
+/*   Updated: 2025/05/23 16:23:19 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,13 @@ int	main(void)
 			phoneBook.ContentInit();
 		else if (Command == "SEARCH")
 			phoneBook.ContactSearch();
-		else
+		else if (Command == "EXIT")
 		{
-			std::cout << "Invalid command. Use ADD, SEARCH, or EXIT.\n";
+			std::cout << "Exiting The PhoneBook......\n";
+			break;
 		}
+		else
+			std::cout << "Invalid command. Use ADD, SEARCH, or EXIT.\n";
 	}
 	return (0);
 }
