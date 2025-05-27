@@ -1,10 +1,9 @@
 {
+    "json.schemas": [],
     "files.associations": {
-        "iostream": "cpp",
         "array": "cpp",
         "atomic": "cpp",
         "bit": "cpp",
-        "*.tcc": "cpp",
         "cctype": "cpp",
         "clocale": "cpp",
         "cmath": "cpp",
@@ -15,6 +14,7 @@
         "cstdint": "cpp",
         "cstdio": "cpp",
         "cstdlib": "cpp",
+        "ctime": "cpp",
         "cwchar": "cpp",
         "cwctype": "cpp",
         "deque": "cpp",
@@ -36,7 +36,9 @@
         "type_traits": "cpp",
         "utility": "cpp",
         "initializer_list": "cpp",
+        "iomanip": "cpp",
         "iosfwd": "cpp",
+        "iostream": "cpp",
         "istream": "cpp",
         "limits": "cpp",
         "new": "cpp",
@@ -44,11 +46,9 @@
         "ostream": "cpp",
         "ranges": "cpp",
         "span": "cpp",
+        "sstream": "cpp",
         "stdexcept": "cpp",
         "streambuf": "cpp",
-        "typeinfo": "cpp",
-        "ctime": "cpp",
-        "iomanip": "cpp",
-        "sstream": "cpp"
+        "typeinfo": "cpp"
     }
 }

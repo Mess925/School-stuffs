@@ -5,13 +5,13 @@
 #                                                     +:+ +:+         +:+      #
 #    By: hthant <hthant@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/03/18 14:44:21 by hthant            #+#    #+#              #
-#    Updated: 2025/03/19 20:22:33 by hthant           ###   ########.fr        #
+#    Created: 2025/05/27 16:25:01 by hthant            #+#    #+#              #
+#    Updated: 2025/05/27 12:20:41 by hthant           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = phonebook
-SRC = PhoneBook.cpp Contact.cpp main.cpp
+SRC = PhoneBook.cpp Contact.cpp Main.cpp 
 OBJ = $(SRC:.cpp=.o)
 CC = c++ 
 CFLAGS = -Wall -Wextra -Werror -std=c++98

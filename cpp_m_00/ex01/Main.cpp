@@ -1,17 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   Main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/19 20:20:24 by hthant            #+#    #+#             */
-/*   Updated: 2025/05/23 16:23:19 by hthant           ###   ########.fr       */
+/*   Created: 2025/05/27 13:39:21 by hthant            #+#    #+#             */
+/*   Updated: 2025/05/27 19:58:29 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Contact.hpp"
-#include "PhoneBook.hpp"
+# include "PhoneBook.hpp"
+# include "Contact.hpp"
+# include <string.h>
+# include <iostream>
 
 int	main(void)
 {
@@ -20,11 +22,10 @@ int	main(void)
 
 	while (1)
 	{
-		std::cout << "Please Enter A Command (ADD / SEARCH / EXIT): ";
-		if (!getline(std::cin, Command))
-			return (1);
+		std::cout << "Enter ONE Command (ADD / SEARCH / EXIT): ";
+		std::getline(std::cin, Command);
 		if (Command == "ADD")
-			phoneBook.ContentInit();
+        	phoneBook.ContentInit();
 		else if (Command == "SEARCH")
 			phoneBook.ContactSearch();
 		else if (Command == "EXIT")
