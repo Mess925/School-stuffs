@@ -6,7 +6,7 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 15:14:42 by hthant            #+#    #+#             */
-/*   Updated: 2025/05/27 20:13:18 by hthant           ###   ########.fr       */
+/*   Updated: 2025/05/28 14:50:03 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void PhoneBook::ContentInit()
     int newIndex = _contactIndex % MAX_CONTACTS;
     contacts[newIndex] = Contact(FirstName, LastName, NickName, PhoneNumber, DarkestSecret);
 
-    newIndex = (newIndex + 1);
+    _contactIndex++;
     if (_contactCount < MAX_CONTACTS)
         _contactCount++;
 
