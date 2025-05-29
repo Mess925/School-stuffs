@@ -1,23 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   Zombie.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/30 03:21:44 by hthant            #+#    #+#             */
-/*   Updated: 2025/05/30 04:22:01 by hthant           ###   ########.fr       */
+/*   Created: 2025/05/30 03:00:25 by hthant            #+#    #+#             */
+/*   Updated: 2025/05/30 04:18:29 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "Zombie.hpp"
+# include <iostream>
+# include <string>
 
-int main()
+class Zombie
 {
-    Zombie *zombie = newZombie("heap zombie");
-    zombie->announce();
-    delete zombie;
+private:
+    std::string _Name;
+public:
+    Zombie(){}
+    ~Zombie()
+    {
+        std::cout << _Name << " is destroyed." << std::endl;
+    }
+    void announce(void);
+    void setName(std::string name);
+};
+Zombie* zombieHorde(int N, std::string name);
 
-    randomChump("stack zombie");
-    return (0);
-}
+
+
