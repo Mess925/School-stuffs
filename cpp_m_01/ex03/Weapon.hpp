@@ -6,7 +6,7 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 14:51:05 by hthant            #+#    #+#             */
-/*   Updated: 2025/05/30 14:53:49 by hthant           ###   ########.fr       */
+/*   Updated: 2025/05/30 15:34:57 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,15 @@
 class Weapon
 {
 private:
-    /* data */
+    std::string _type;
 public:
-    Weapon(/* args */);
-    ~Weapon();
+    Weapon(std::string type);
+    const std::string& getType();
+    void setType(std::string type);
 };
 
-Weapon::Weapon(/* args */)
+Weapon::Weapon(std::string type)
 {
-}
-
-Weapon::~Weapon()
-{
+    _type = type;
 }
 # endif
