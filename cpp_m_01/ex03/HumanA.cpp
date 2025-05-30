@@ -6,7 +6,13 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 15:40:02 by hthant            #+#    #+#             */
-/*   Updated: 2025/05/30 15:40:03 by hthant           ###   ########.fr       */
+/*   Updated: 2025/05/30 20:07:13 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+# include "HumanA.hpp"
+
+void HumanA::attack()
+{
+    std::cout << _Name << " attacks with " << weapon.getType() << std::endl;
+};

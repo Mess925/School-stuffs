@@ -6,12 +6,12 @@
 #    By: hthant <hthant@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/30 02:59:32 by hthant            #+#    #+#              #
-#    Updated: 2025/05/30 14:49:06 by hthant           ###   ########.fr        #
+#    Updated: 2025/05/30 20:04:47 by hthant           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = zombie
-SRC = main.cpp
+NAME = weapon
+SRC = main.cpp HumanA.cpp HumanB.cpp Weapon.cpp
 OBJ = $(SRC:.cpp=.o)
 CC = c++ 
 CFLAGS = -Wall -Wextra -Werror -std=c++98

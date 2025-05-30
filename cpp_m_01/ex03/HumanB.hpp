@@ -6,7 +6,7 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 15:39:51 by hthant            #+#    #+#             */
-/*   Updated: 2025/05/30 15:53:57 by hthant           ###   ########.fr       */
+/*   Updated: 2025/05/30 19:59:22 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,12 @@
 class HumanB
 {
 private:
-    /* data */
+    std::string _Name;
+    Weapon* weapon;
 public:
-    HumanB(/* args */);
-    ~HumanB();
+    HumanB(std::string name);
+    void attack();
+    void setWeapon(Weapon &weapon);
 };
 
 # endif
