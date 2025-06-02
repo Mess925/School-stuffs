@@ -5,13 +5,13 @@
 #                                                     +:+ +:+         +:+      #
 #    By: hthant <hthant@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/06/02 14:05:05 by hthant            #+#    #+#              #
-#    Updated: 2025/06/02 14:05:07 by hthant           ###   ########.fr        #
+#    Created: 2025/06/02 14:04:49 by hthant            #+#    #+#              #
+#    Updated: 2025/06/02 15:42:26 by hthant           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = weapon
-SRC = main.cpp HumanA.cpp HumanB.cpp Weapon.cpp
+NAME = sed
+SRC = main.cpp sed.cpp 
 OBJ = $(SRC:.cpp=.o)
 CC = c++ 
 CFLAGS = -Wall -Wextra -Werror -std=c++98
