@@ -6,7 +6,7 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 15:37:48 by hthant            #+#    #+#             */
-/*   Updated: 2025/06/03 21:13:29 by hthant           ###   ########.fr       */
+/*   Updated: 2025/06/03 21:13:48 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ Fixed::Fixed(const Fixed& other) {
 Fixed &Fixed::operator=(const Fixed& other) {
     std::cout << "Copy assignment operator called" << std::endl;
     if (this != &other)
-        this->_fixedvalue = other.getRawBits();
+        this->_fixedvalue = other._fixedvalue;
     return *this;
 }
 
@@ -33,11 +33,25 @@ Fixed::~Fixed() {
     std::cout << "Destructor called" << std::endl;
 }
 
-int Fixed::getRawBits( void ) const {
-    std::cout << "getRawBits member function called" << std::endl;
-    return this->_fixedvalue;
+Fixed::Fixed(const int value){
+    std::cout<<"Int constructor called"<< std::endl;
+    this->_fixedvalue = value << _fractionalBits;
 }
 
-void Fixed::setRawBits( int const raw ) {
-    this->_fixedvalue = raw;
+Fixed::Fixed(const float value){
+    std::cout<<"Flaot constructor called"<<std::endl;
+    this->_fixedvalue = roundf(value * (1 << _fractionalBits));
+}
+
+float Fixed::toFloat() const{
+    return (float)this->_fixedvalue / (1 << _fractionalBits);
+}
+
+int Fixed::toInt() const{
+    return this->_fixedvalue >> _fractionalBits;
+}
+
+std::ostream& operator<<(std::ostream& os, const Fixed& fixed) {
+    os << fixed.toFloat();
+    return os;
 }
