@@ -6,11 +6,11 @@
 #    By: hthant <hthant@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/03 15:30:47 by hthant            #+#    #+#              #
-#    Updated: 2025/06/03 15:31:13 by hthant           ###   ########.fr        #
+#    Updated: 2025/06/03 19:34:14 by hthant           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = megaphone
+NAME = fixed
 SRC = main.cpp Fixed.cpp 
 OBJ = $(SRC:.cpp=.o)
 CC = c++ 
