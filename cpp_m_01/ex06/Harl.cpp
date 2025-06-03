@@ -6,7 +6,7 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 17:19:28 by hthant            #+#    #+#             */
-/*   Updated: 2025/06/02 17:39:30 by hthant           ###   ########.fr       */
+/*   Updated: 2025/06/03 15:09:40 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,22 +40,34 @@ void Harl::error() {
 
 void Harl::complain(std::string level)
 {
+    std::string levels[] = { "DEBUG", "INFO", "WARNING", "ERROR" };
+    void (Harl::*functions[])() = {
+        &Harl::debug,
+        &Harl::info,
+        &Harl::warning,
+        &Harl::error
+    };
+
     int complaintLevel = -1;
+    for (int i = 0; i < 4; ++i)
+    {
+        if (levels[i] == level)
+        {
+            complaintLevel = i;
+            break;
+        }
+    }
 
-    if (level == "DEBUG") complaintLevel = 0;
-    else if (level == "INFO") complaintLevel = 1;
-    else if (level == "WARNING") complaintLevel = 2;
-    else if (level == "ERROR") complaintLevel = 3;
-
-    switch (complaintLevel) {
+    switch (complaintLevel)
+    {
         case 0:
-            debug();
+            (this->*functions[0])();
         case 1:
-            info();
+            (this->*functions[1])();
         case 2:
-            warning();
+            (this->*functions[2])();
         case 3:
-            error();
+            (this->*functions[3])();
             break;
         default:
             std::cout << "[ ELSE ]" << std::endl;
