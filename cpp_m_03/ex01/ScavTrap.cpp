@@ -6,7 +6,7 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/08 17:24:02 by hthant            #+#    #+#             */
-/*   Updated: 2025/06/08 20:41:05 by hthant           ###   ########.fr       */
+/*   Updated: 2025/06/08 21:04:23 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ ScavTrap::ScavTrap(std::string name) : ClapTrap(name) {
 
 ScavTrap::ScavTrap(const ScavTrap& other) : ClapTrap(other)
 {
-    std::cout << "ScaveTrap copy " << other._name << " is created" << std::endl; 
+    std::cout << "ScavTrap copy " << other._name << " is created" << std::endl; 
 }
 
 ScavTrap& ScavTrap::operator=(const ScavTrap& other){
@@ -36,12 +36,12 @@ ScavTrap& ScavTrap::operator=(const ScavTrap& other){
     ClapTrap::operator=(other);
     {
     }   
-    std::cout<<"ScaveTrap " << other._name << " is asigned."<<std::endl;
+    std::cout<<"ScavTrap " << other._name << " is asigned."<<std::endl;
     return *this;
 }
 
 ScavTrap::~ScavTrap(){
-    std::cout<<"ScaveTrap "<<this->_name << " is destroyed." <<std::endl;
+    std::cout<<"ScavTrap "<<this->_name << " is destroyed." <<std::endl;
 }
 
 void ScavTrap::attack(const std::string& target) {
@@ -62,5 +62,5 @@ void ScavTrap::attack(const std::string& target) {
 
 
 void ScavTrap::guardGate(){
-    std::cout << "ScaveTrap " <<this->_name << " is now in Gate keeper Mood."<< std::endl;
+    std::cout << "ScavTrap " <<this->_name << " is now in Gate keeper Mood."<< std::endl;
 }

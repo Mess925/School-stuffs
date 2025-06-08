@@ -6,7 +6,7 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 09:48:49 by hthant            #+#    #+#             */
-/*   Updated: 2025/06/08 20:43:51 by hthant           ###   ########.fr       */
+/*   Updated: 2025/06/08 20:58:25 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,5 +78,5 @@ int main() {
     scopy.beRepaired(5);
     scopy.takeDamage(15);
     scopy.beRepaired(10);
-    std::cout <<std::endl <<"__________________________END OF CLAPTRAP TEST_______________"<<std::endl;
+    std::cout <<std::endl <<"__________________________END OF SCAVTRAP TEST_______________"<<std::endl;
 }
