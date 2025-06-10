@@ -6,12 +6,12 @@
 #    By: hthant <hthant@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/03 15:30:47 by hthant            #+#    #+#              #
-#    Updated: 2025/06/10 15:57:25 by hthant           ###   ########.fr        #
+#    Updated: 2025/06/10 15:57:46 by hthant           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = scavtrap
-SRC = main.cpp ClapTrap.cpp ScavTrap.cpp
+NAME = diamondtrap
+SRC = main.cpp ClapTrap.cpp ScavTrap.cpp FragTrap.cpp
 OBJ = $(SRC:.cpp=.o)
 CC = c++ 
 CFLAGS = -Wall -Wextra -Werror -std=c++98

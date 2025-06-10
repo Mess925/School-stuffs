@@ -6,11 +6,11 @@
 #    By: hthant <hthant@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/03 15:30:47 by hthant            #+#    #+#              #
-#    Updated: 2025/06/08 20:53:25 by hthant           ###   ########.fr        #
+#    Updated: 2025/06/10 15:57:37 by hthant           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = claptrap
+NAME = fragtrap
 SRC = main.cpp ClapTrap.cpp ScavTrap.cpp FragTrap.cpp
 OBJ = $(SRC:.cpp=.o)
 CC = c++ 
