@@ -6,7 +6,7 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/08 17:24:02 by hthant            #+#    #+#             */
-/*   Updated: 2025/06/08 20:41:05 by hthant           ###   ########.fr       */
+/*   Updated: 2025/06/11 00:40:46 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ ScavTrap::ScavTrap() : ClapTrap("Unnamed") {
     this->_hitPoint = 100;
     this->_energyPoint = 50;
     this->_attackDamage = 20;
-    std::cout << "ScavTrap default" << this->_name <<" is called." <<std::endl;
+    std::cout << "ScavTrap default " << this->_name <<" is called." <<std::endl;
 }
 
 ScavTrap::ScavTrap(std::string name) : ClapTrap(name) {
