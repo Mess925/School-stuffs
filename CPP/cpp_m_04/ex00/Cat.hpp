@@ -6,7 +6,7 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 16:55:51 by hthant            #+#    #+#             */
-/*   Updated: 2025/06/10 15:08:14 by hthant           ###   ########.fr       */
+/*   Updated: 2025/06/11 00:57:34 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ public:
     Cat(const std::string type);
 
     void makeSound() const ;
-    Brain* getBrain() const;
 };
 
 # endif
