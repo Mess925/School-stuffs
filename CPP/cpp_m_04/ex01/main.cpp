@@ -6,40 +6,37 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 16:56:09 by hthant            #+#    #+#             */
-/*   Updated: 2025/06/09 19:43:45 by hthant           ###   ########.fr       */
+/*   Updated: 2025/06/10 15:21:31 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "Animal.hpp"
-# include "Dog.hpp"
-# include "Cat.hpp"
-# include "WrongAniaml.hpp"
-# include "WrongCat.hpp"
+#include "Dog.hpp"
+#include "Cat.hpp"
 
-int	main(void)
-{
-	const Animal *meta = new Animal();
-	const Animal *j = new Dog();
-	const Animal *i = new Cat();
-	std::cout << j->getType() << " " << std::endl;
-	std::cout << i->getType() << " " << std::endl;
-	i->makeSound(); // will output the cat sound!
-	j->makeSound();
-	meta->makeSound();
+int main() {
+    const int size = 4;
+    Animal* animals[size];
 
-    delete meta;
-    delete j;
-    delete i;
+    for (int i = 0; i < size; ++i) {
+        if (i < size / 2)
+            animals[i] = new Dog();
+        else
+            animals[i] = new Cat();
+    }
 
-    std::cout<<"________________________________________________________"<<std::endl<<std::endl;
+    std::cout << "\n--- Testing Deep Copy ---\n";
+    Dog originalDog;
+    originalDog.getBrain()->setIdea(0, "Chase the cat");
 
-    const WrongAnimal *wa = new WrongAnimal();
-	const WrongAnimal *wc = new WrongCat();
-	std::cout << wc->getType() << " " << std::endl;
-	wc->makeSound(); // will output the cat sound!
-	wa->makeSound();
+    Dog copyDog = originalDog;
+    copyDog.getBrain()->setIdea(0, "Sleep on the couch");
 
-    delete wa;
-    delete wc;
-	return (0);
+    std::cout << "Original Dog Idea: " << originalDog.getBrain()->getIdea(0) << "\n";
+    std::cout << "Copied Dog Idea:   " << copyDog.getBrain()->getIdea(0) << "\n";
+
+    std::cout << "\n--- Cleaning up ---\n";
+    for (int i = 0; i < size; ++i)
+        delete animals[i];
+
+    return 0;
 }

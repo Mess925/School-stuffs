@@ -6,7 +6,7 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 19:55:28 by hthant            #+#    #+#             */
-/*   Updated: 2025/06/09 19:56:59 by hthant           ###   ########.fr       */
+/*   Updated: 2025/06/10 14:37:55 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,15 @@
 class Brain
 {
 private:
-    /* data */
+    std::string ideas[100];
 public:
-    Brain(/* args */);
+    Brain();
+    Brain(const Brain& other);
+    Brain& operator=(const Brain& other);
     ~Brain();
+
+    void setIdea(int index, const std::string& idea);
+    std::string getIdea(int index) const;
 };
 
 
