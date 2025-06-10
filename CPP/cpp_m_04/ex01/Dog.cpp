@@ -6,7 +6,7 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 16:55:58 by hthant            #+#    #+#             */
-/*   Updated: 2025/06/10 15:24:33 by hthant           ###   ########.fr       */
+/*   Updated: 2025/06/10 15:35:14 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ Dog::Dog(const Dog& other): Animal(other){
     this->brain = new Brain(*other.brain);
 }
 
-Dog&::Dog::operator=(const Dog& other){
+Dog& Dog::operator=(const Dog& other){
     if(this != &other){
         Animal::operator=(other);
         delete brain;

@@ -6,7 +6,7 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 16:55:48 by hthant            #+#    #+#             */
-/*   Updated: 2025/06/10 15:25:56 by hthant           ###   ########.fr       */
+/*   Updated: 2025/06/10 15:34:47 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ Cat::Cat(const Cat& other): Animal(other){
     std::cout<<"Cat Copy Constructor "<< other.type << " is created."<< std::endl;
 }
 
-Cat&::Cat::operator=(const Cat& other){
+Cat& Cat::operator=(const Cat& other){
     if(this != &other){
         Animal::operator=(other);
         delete brain;

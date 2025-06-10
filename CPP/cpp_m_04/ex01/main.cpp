@@ -6,7 +6,7 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 16:56:09 by hthant            #+#    #+#             */
-/*   Updated: 2025/06/10 15:21:31 by hthant           ###   ########.fr       */
+/*   Updated: 2025/06/10 15:37:30 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int main() {
     const int size = 4;
     Animal* animals[size];
 
+    std::cout << "--- Creating Animals ---\n";
     for (int i = 0; i < size; ++i) {
         if (i < size / 2)
             animals[i] = new Dog();
@@ -24,15 +25,23 @@ int main() {
             animals[i] = new Cat();
     }
 
-    std::cout << "\n--- Testing Deep Copy ---\n";
+    std::cout << "\n--- Testing Deep Copy Constructor ---\n";
     Dog originalDog;
     originalDog.getBrain()->setIdea(0, "Chase the cat");
 
-    Dog copyDog = originalDog;
+    Dog copyDog = originalDog;  // Copy constructor
     copyDog.getBrain()->setIdea(0, "Sleep on the couch");
 
     std::cout << "Original Dog Idea: " << originalDog.getBrain()->getIdea(0) << "\n";
     std::cout << "Copied Dog Idea:   " << copyDog.getBrain()->getIdea(0) << "\n";
+
+    std::cout << "\n--- Testing Deep Copy Assignment ---\n";
+    Dog assignedDog;
+    assignedDog = originalDog;  // Copy assignment operator
+    assignedDog.getBrain()->setIdea(0, "Dig a hole");
+
+    std::cout << "Original Dog Idea:  " << originalDog.getBrain()->getIdea(0) << "\n";
+    std::cout << "Assigned Dog Idea:  " << assignedDog.getBrain()->getIdea(0) << "\n";
 
     std::cout << "\n--- Cleaning up ---\n";
     for (int i = 0; i < size; ++i)
