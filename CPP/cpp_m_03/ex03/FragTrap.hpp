@@ -6,7 +6,7 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/08 20:53:31 by hthant            #+#    #+#             */
-/*   Updated: 2025/06/11 00:29:00 by hthant           ###   ########.fr       */
+/*   Updated: 2025/06/11 00:51:40 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 
 class FragTrap : virtual public ClapTrap
 {
+protected:
+    static const int _attackMax = 30 ;
 public:
     FragTrap();
     FragTrap(const FragTrap& other);
