@@ -6,7 +6,7 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 16:56:09 by hthant            #+#    #+#             */
-/*   Updated: 2025/06/10 15:37:30 by hthant           ###   ########.fr       */
+/*   Updated: 2025/06/22 11:59:06 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ int main() {
     std::cout << "\n--- Cleaning up ---\n";
     for (int i = 0; i < size; ++i)
         delete animals[i];
+    
+    std::cout << "\n--- AFTER DELETING ARRAY ANIMALS ---\n";
 
     return 0;
 }

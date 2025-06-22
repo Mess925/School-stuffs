@@ -6,7 +6,7 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 16:55:58 by hthant            #+#    #+#             */
-/*   Updated: 2025/06/10 15:35:14 by hthant           ###   ########.fr       */
+/*   Updated: 2025/06/22 11:55:54 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ Dog& Dog::operator=(const Dog& other){
 }
 
 Dog::~Dog(){
+    delete this->brain;
     std::cout<<"Dog Destructor is called." << std::endl;
-    delete brain;
 }
 
 void Dog::makeSound() const {

@@ -6,11 +6,11 @@
 #    By: hthant <hthant@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/09 16:49:26 by hthant            #+#    #+#              #
-#    Updated: 2025/06/09 19:46:48 by hthant           ###   ########.fr        #
+#    Updated: 2025/06/22 11:54:18 by hthant           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = polymorphism
+NAME = brain
 SRC = main.cpp Animal.cpp Cat.cpp Dog.cpp WrongCat.cpp WrongAnimal.cpp Brain.cpp
 OBJ = $(SRC:.cpp=.o)
 CC = c++ 
