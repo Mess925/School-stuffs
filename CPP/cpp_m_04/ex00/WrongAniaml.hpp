@@ -6,7 +6,7 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 18:33:29 by hthant            #+#    #+#             */
-/*   Updated: 2025/06/09 18:34:47 by hthant           ###   ########.fr       */
+/*   Updated: 2025/06/23 23:29:14 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ public:
 
     WrongAnimal(const std::string type);
     
-    virtual void makeSound() const;
+    void makeSound() const;
     std::string getType() const;
 };
 
