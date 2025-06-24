@@ -10,11 +10,6 @@ int picoshell(char **cmds[])
 	int fd[2];
 	int prev_fd = -1;
 	pid_t pid;
-	
-
-    char *cmd1[] = {"ls", "-l", NULL};
-	char *cmd2[] = {"grep", "c", NULL};
-
 
 	for(i = 0; cmds[i]; i++)
 	{
@@ -58,7 +53,7 @@ int main(int argc, char **argv)
 	char *cmd2[] = {"grep", "c", NULL};
 	char *cmd3[] = {"wc", "-l", NULL};
 
-	char **commands[] = {cmd1, cmd2, NULL};
+	char **commands[] = {cmd1, cmd2, cmd3, NULL};
 	
 	if(picoshell(commands) == 1)
 	{
