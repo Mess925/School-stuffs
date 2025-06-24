@@ -20,14 +20,14 @@ There are some functions in argo.c that might help you.
 
 Examples that should work:
 
-echo -n input | ./argo /dev/stdin | cat -e		output
-------------------------------------------		--------------------------------------------
-'1'							1$
-'"bonjour"'						"bonjour"$
-'"escape!\""'						"escape!\""$
-'{"tomatoes":42,"potatoes":234}'		    	{"tomatoes":42,"potatoes":234}$
+echo -n input | ./argo /dev/stdin | cat -e				output
+------------------------------------------				--------------------------------------------
+'1'														1$
+'"bonjour"'												"bonjour"$
+'"escape!\""'											"escape!\""$
+'{"tomatoes":42,"potatoes":234}'		    			{"tomatoes":42,"potatoes":234}$
 '{"recursion":{"recursion":{"recursion":"recursion"}}}'	{"recursion":{"recursion":{"recursion":"recursion"}}}$
-'"unfinished string'					Unexpected end of input$
-'"unfinished string 2\"'				Unexpected end of input$
-'{"no value?":}'					Unexpected token '}'$
-'{:12}'							Unexpected token ':'$
+'"unfinished string'									Unexpected end of input$
+'"unfinished string 2\"'								Unexpected end of input$
+'{"no value?":}'										Unexpected token '}'$
+'{:12}'													Unexpected token ':'$
