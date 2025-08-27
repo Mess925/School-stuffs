@@ -6,34 +6,42 @@
 /*   By: hthant <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 19:44:04 by hthant            #+#    #+#             */
-/*   Updated: 2025/08/27 21:13:33 by hthant           ###   ########.fr       */
+/*   Updated: 2025/08/28 01:02:44 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "bureaucrat.hpp"
 
-Bureaucrat::Bureaucrat():_name("Default"), _grade(150)
-{
-	std::cout<<"Default bureaucrat " << _name <<" is created with grade "<< _grade <<" is created."<< std::endl;
+Bureaucrat::Bureaucrat() : _name("Unnamed"), _grade(150) {}
+
+int	Bureacurat::getGrade() const {
+	return this->_grade;
 }
 
-Bureaucrat::Bureaucrat(const Bureaucrat& other): _name(other._name), _grade(other._grade)
-{
-	std::cout<<"Copy Bureaucrat "<< _name <<" is created with grade "<< _grade<<" is created."<< std::endl;
+std::string& Bureacurat::getName() const {
+	return this->_name;
 }
 
-Bureaucrat &Bureaucrat::operator=(const Bureaucrat& other)
+Bureaucrat::Bureaucrat(std::string _name, int _graddd)
+
+Bureacurat::Bureacurat(const Bureacurat& other) 
 {
-	if(this!= other)
-	{
-		_name = other._name;
-		_grade = other._grade;
-	}
-	std::cout<<"Bureaucrat" << _name<<"is assigned with grade"<<_grade<"is assigned."<<std::endl;
-	return *this;
+	if(this != &other)
+		this->_grade = other._grade;
 }
 
-Bureaucrat::~Buraucrat()
-{
-	std::cout<<"Bureaucrat"<<_name<<"is destroyed."<<std::endl;
+Bureacurat& Bureacurat::operator=(const Bureacurat& other){
+	if(this != other)
+		this->_grade = other._grade;
+	return (*this);
 }
+
+Bureacurat::Bureacurat(std::string _name, int _grade) : _name(name)
+{
+	if()
+}
+
+Bureacurat::~Bureacurat(){
+	std::cout<<"Bureacurat "<<this->getName()<<" is destroyed."<<std::endl;
+}
+
