@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Bureaucrat.hpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hthant <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/25 21:15:22 by hthant            #+#    #+#             */
-/*   Updated: 2025/08/28 01:02:47 by hthant           ###   ########.fr       */
+/*   Created: 2025/08/28 09:58:02 by hthant            #+#    #+#             */
+/*   Updated: 2025/08/28 09:58:04 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define BUREAUCRAT_HPP
 
 # include <iostream>
+# include <exception>
 # include <string>
 
 class Bureaucrat 
@@ -26,13 +27,25 @@ class Bureaucrat
 		Bureaucrat& operator=(const Bureaucrat& other);
 		~ Bureaucrat();
 
-		Bureaucrat(std::string _name, int _grade);
+		Bureaucrat(const std::string _name, int _grade);
 
 		int getGrade() const;
 		std::string& getName() const;
 
 		void increaseGrade();
 		void decreaseGrade();
+
+		class GradeTooHighException : public std::exception {
+			private:
+				const std::string _message;
+			public:
+				GradeTooHighException(const std::string& message) : _message(message)
+			{
+				const char* what() const throw() {
+					return _message.c_str();
+				}
+			}
+		}
 }
 
 # endif
