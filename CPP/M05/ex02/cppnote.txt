@@ -1,0 +1,17 @@
+"ABSTRACT CLASS"
+
+abstract class are the based class that cannot be instantiated directly 
+
+the class will have a virtual function like 
+
+"virtual void functionName() = 0"
+
+if the class has a finction like this that function will be overwritten in other classes..
+
+
+"VIRTUAL"
+
+if base class has a virtual and the derived calss override it the program will automatically work and called the function from the derived class.
+
+
+

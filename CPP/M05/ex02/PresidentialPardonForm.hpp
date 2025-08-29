@@ -1,30 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   RobotomyRequestForm.hpp                            :+:      :+:    :+:   */
+/*   PresidentalPardonForm.hpp                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/30 01:37:07 by hthant            #+#    #+#             */
-/*   Updated: 2025/08/30 01:40:56 by hthant           ###   ########.fr       */
+/*   Created: 2025/08/30 01:41:05 by hthant            #+#    #+#             */
+/*   Updated: 2025/08/30 01:45:53 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# ifndef ROBOTOMYREQUESTFORM_HPP
-# define ROBOTOMYREQUESTFORM_HPP
+# ifndef PRESIDENTIALPARDONFORM_HPP
+# define PRESIDENTIALPARDONFORM_HPP
 
 # include "AForm.hpp"
 
-class RobotomyReqyestForm : public AForm{
+class	PresidentialPardonForm: public AForm{
 	private:
 		std::string _target;
 	public:
-		RobotomyRequestForm();
-		RobotomyRequestForm(const RobotomyRequestForm &other);
-		RobotomyRequestForm& operator=(const RobotomyRequestForm &other);
-		~RobotomyRequestForm();
+		PresidentialPardonForm();
+		PresidentialPardonForm(const PresidentialPardonForm &other);
+		PresidentialPardonForm& operator= (const PresidentialPardonForm &other);
+		~PresidentialPardonForm();
 
-		RobotomyRequestForm(std::string target);
+		PresidentialPardonForm(std::string target);
 }
 
 # endif
