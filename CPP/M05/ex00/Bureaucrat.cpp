@@ -6,7 +6,7 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 09:57:30 by hthant            #+#    #+#             */
-/*   Updated: 2025/08/28 22:03:55 by hthant           ###   ########.fr       */
+/*   Updated: 2025/08/29 12:16:05 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ Bureaucrat::Bureaucrat(std::string name, int grade) : _name(name)
 }
 
 Bureaucrat::~Bureaucrat(){
-	std::cout<<"Bureaucrat "<<this->getName()<<" is destroyed."<<std::endl;
+	std::cout<<"Bureaucrat "<<this->_name<<" is destroyed."<<std::endl;
 }
 
 void	Bureaucrat::increaseGrade(){
@@ -56,7 +56,7 @@ void	Bureaucrat::increaseGrade(){
 }
 
 void	Bureaucrat::decreaseGrade(){
-	if(this->_grade += 150)
+	if(this->_grade == 150)
 		throw (Bureaucrat::GradeTooLowException());
 	else
 		this->_grade++;
@@ -64,6 +64,6 @@ void	Bureaucrat::decreaseGrade(){
 
 std::ostream& operator<<(std::ostream &os, const Bureaucrat b)
 {
-	os << ", bureacurat grade "<< b.getGrade() <<std::endl;
+	os << b.getName() << ", bureacurat grade "<< b.getGrade() <<std::endl;
 	return (os);
 }
