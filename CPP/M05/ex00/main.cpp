@@ -6,14 +6,12 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 09:57:41 by hthant            #+#    #+#             */
-/*   Updated: 2025/08/29 12:16:16 by hthant           ###   ########.fr       */
+/*   Updated: 2025/08/29 23:40:46 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include <iostream>
 # include "Bureaucrat.hpp"
-
-#include "Bureaucrat.hpp"
 
 int main() {
 	try{
