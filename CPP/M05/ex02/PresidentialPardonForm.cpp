@@ -6,14 +6,14 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 01:02:57 by hthant            #+#    #+#             */
-/*   Updated: 2025/08/30 12:53:19 by hthant           ###   ########.fr       */
+/*   Updated: 2025/08/30 18:15:38 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "PresidentialPardonForm.hpp" 
 
 PresidentialPardonForm::PresidentialPardonForm() 
-	: AForm("PresidentalPardonForm",25,5), _taget("default target"){}
+	: AForm("PresidentalPardon",25,5), _target("default target"){}
 
 PresidentialPardonForm::PresidentialPardonForm(const PresidentialPardonForm &other)
 	: AForm(other), _target(other._target){}

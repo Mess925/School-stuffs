@@ -6,14 +6,14 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 12:23:05 by hthant            #+#    #+#             */
-/*   Updated: 2025/08/30 12:13:43 by hthant           ###   ########.fr       */
+/*   Updated: 2025/08/30 18:17:52 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "AForm.hpp"
 
 AForm::AForm():
-       	_name("no name:"),
+       	_name("Default Form"),
        	_isSigned(false),
        	_gradeToSign(0),
        	_gradeToExecute(0){}
@@ -34,9 +34,9 @@ AForm::~AForm(){
 	std::cout<<"AForm "<<this->_name<<" is destroyed."<<std::endl; 
 }
 
-AForm::AForm(std::string name, bool isSigned, int gradeToSign, int gradeToExecute):
+AForm::AForm(std::string name, int gradeToSign, int gradeToExecute):
 	_name(name),
-	_isSigned(isSigned),
+	_isSigned(false),
 	_gradeToSign(gradeToSign),
 	_gradeToExecute(gradeToExecute)
 {

@@ -6,7 +6,7 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 01:41:05 by hthant            #+#    #+#             */
-/*   Updated: 2025/08/30 12:38:21 by hthant           ###   ########.fr       */
+/*   Updated: 2025/08/30 17:58:09 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,6 @@ class	PresidentialPardonForm: public AForm{
 
 		PresidentialPardonForm(std::string target);
 		void execute(Bureaucrat const &executor) const override;
-}
+};
 
 # endif
