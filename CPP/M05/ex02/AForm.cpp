@@ -6,7 +6,7 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 12:23:05 by hthant            #+#    #+#             */
-/*   Updated: 2025/08/30 00:23:26 by hthant           ###   ########.fr       */
+/*   Updated: 2025/08/30 12:13:43 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,17 @@ int	AForm::getGradeToExecute() const {
 }
 
 void	AForm::beSigned(const Bureaucrat &b){
-	       if(b.getGrade() > _gradeToSign)
-		       throw GradeTooHighException();
-	       _isSigned = true;
+	if(b.getGrade() > _gradeToSign)
+	       throw GradeTooHighException();
+       _isSigned = true;
 }
+
+void	AForm::checkExecution(Bureaucrat const &executor) const {
+	if(!_isSigned)
+		throw FormNotSignedexception();
+	if(executor.getGrade() > _getGradeToExecute)
+		throw GradeTooLowException();
+}	
 
 std::ostream& operator<<(std::ostream &os, const AForm& f) {
 	os << "AForm " << f.getName() << " \n\t isSigned: " << f.getIsSigned()
@@ -76,3 +83,4 @@ std::ostream& operator<<(std::ostream &os, const AForm& f) {
 	<< f.getGradeToExecute() << std::endl;
 	return (os);
 }
+

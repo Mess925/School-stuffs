@@ -6,7 +6,7 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 12:22:51 by hthant            #+#    #+#             */
-/*   Updated: 2025/08/30 01:02:51 by hthant           ###   ########.fr       */
+/*   Updated: 2025/08/30 12:09:59 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,24 +31,33 @@ class AForm{
 
 		AForm(std::string name, bool isSigned, int gradeToSign, int gradeToExecute);
 
-		class GradeTooHighException : public std::exception{
+		class	GradeTooHighException : public std::exception{
 			public:
 				const char* what() const throw(){
 					return "AForm Grade is too high!";
 				}
 		};
-		class GradeTooLowException : public std::exception{
+		class	GradeTooLowException : public std::exception{
 			public:
 				const char* what() const throw(){
 					return "AForm Grade is too low!";
 				}
 		};
-		void	beSigned(const Bureaucrat &b);
+		class	FormNotSignedException : public	std::exception{
+			public:
+				const char* what() const throw(){
+					return "Form not signed!"
+				}
+		}	
 
-		const	std::string getName() const;
+		const	std::string	getName() const;
 		bool	getIsSigned() const;
 		int	getGradeToSign() const;
 		int	getGradeToExecute() const;
+
+		virtual	void	execute(Bureaucrat const &executor) const = 0;
+		void	beSigned(const Bureaucrat &b);
+		void	checkExecution(Bureaucrat const &executor) const;
 };
 
 std::ostream& operator<<(std::ostream &os, const AForm &f);
