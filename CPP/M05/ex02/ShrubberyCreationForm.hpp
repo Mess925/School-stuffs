@@ -6,7 +6,7 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 01:05:07 by hthant            #+#    #+#             */
-/*   Updated: 2025/08/30 01:37:38 by hthant           ###   ########.fr       */
+/*   Updated: 2025/08/31 13:24:27 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ class ShrubberyCreationForm : public AForm{
 		~ShrubberyCreationForm();
 
 		ShrubberyCreationForm(std::string target);
-		
+		void	execute(Bureaucrat const &executor) const override;		
 }
 
 # endif

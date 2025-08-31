@@ -1,18 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ShrubberyCreationForm.cpp                          :+:      :+:    :+:   */
+/*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/30 01:03:09 by hthant            #+#    #+#             */
-/*   Updated: 2025/08/31 17:21:17 by hthant           ###   ########.fr       */
+/*   Created: 2024/05/14 11:56:14 by hthant            #+#    #+#             */
+/*   Updated: 2024/05/20 16:52:06 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "ShrubberyCreationForm.hpp"
+#include <stdio.h>
+#include <unistd.h>
 
-ShrubberyCreationForm::ShrubberyCreationForm()
-	:AForm("ShrubberyCreation",145,137), _target("default target"){}
+int	ft_isdigit(int c);
 
-
+int	ft_isdigit(int c)
+{
+	if (c >= '0' && c <= '9')
+		return (1);
+	else
+		return (0);
+}
+/*
+int	main(void)
+{
+	int	i;
+	i = isdigit(5);
+	printf("%d",i);
+}*/

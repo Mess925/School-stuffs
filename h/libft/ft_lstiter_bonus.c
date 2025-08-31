@@ -1,18 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ShrubberyCreationForm.cpp                          :+:      :+:    :+:   */
+/*   ft_lstiter_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/30 01:03:09 by hthant            #+#    #+#             */
-/*   Updated: 2025/08/31 17:21:17 by hthant           ###   ########.fr       */
+/*   Created: 2024/06/04 19:03:16 by hthant            #+#    #+#             */
+/*   Updated: 2024/06/04 21:21:36 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "ShrubberyCreationForm.hpp"
+#include "libft.h"
 
-ShrubberyCreationForm::ShrubberyCreationForm()
-	:AForm("ShrubberyCreation",145,137), _target("default target"){}
+void	ft_lstiter(t_list *lst, void (*f)(void *));
 
-
+void	ft_lstiter(t_list *lst, void (*f)(void *))
+{
+	if (!f || !lst)
+		return ;
+	while (lst)
+	{
+		f(lst->content);
+		lst = lst->next;
+	}
+}

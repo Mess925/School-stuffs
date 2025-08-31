@@ -1,18 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ShrubberyCreationForm.cpp                          :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/30 01:03:09 by hthant            #+#    #+#             */
-/*   Updated: 2025/08/31 17:21:17 by hthant           ###   ########.fr       */
+/*   Created: 2024/05/16 10:51:02 by hthant            #+#    #+#             */
+/*   Updated: 2024/05/30 14:18:28 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "ShrubberyCreationForm.hpp"
+#include"libft.h"
 
-ShrubberyCreationForm::ShrubberyCreationForm()
-	:AForm("ShrubberyCreation",145,137), _target("default target"){}
+void	ft_bzero(void *s, size_t n);
 
+void	ft_bzero(void *s, size_t n)
+{
+	size_t	i;
+	char	*str;
 
+	i = 0;
+	str = (char *)s;
+	while (i < n)
+	{
+		str[i] = 0;
+		i++;
+	}
+}
+
+//int main(void)
+//{
+//	char s[] = "hellohasdf";
+//	ft_bzero(s,4);
+//	printf("%s\n",s);
+//	return(0);
+//}

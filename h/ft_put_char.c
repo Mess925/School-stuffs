@@ -1,18 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ShrubberyCreationForm.cpp                          :+:      :+:    :+:   */
+/*   ft_put_char.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/30 01:03:09 by hthant            #+#    #+#             */
-/*   Updated: 2025/08/31 17:21:17 by hthant           ###   ########.fr       */
+/*   Created: 2024/06/11 17:14:46 by hthant            #+#    #+#             */
+/*   Updated: 2024/06/24 19:27:15 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "ShrubberyCreationForm.hpp"
+#include "ft_printf.h"
 
-ShrubberyCreationForm::ShrubberyCreationForm()
-	:AForm("ShrubberyCreation",145,137), _target("default target"){}
+int	ft_put_char(char c);
 
-
+int	ft_put_char(char c)
+{
+	write(1, &c, 1);
+	return (1);
+}

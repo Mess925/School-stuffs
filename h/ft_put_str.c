@@ -1,18 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ShrubberyCreationForm.cpp                          :+:      :+:    :+:   */
+/*   ft_put_str.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/30 01:03:09 by hthant            #+#    #+#             */
-/*   Updated: 2025/08/31 17:21:17 by hthant           ###   ########.fr       */
+/*   Created: 2024/06/11 17:03:17 by hthant            #+#    #+#             */
+/*   Updated: 2024/06/24 19:27:19 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "ShrubberyCreationForm.hpp"
+#include "ft_printf.h"
 
-ShrubberyCreationForm::ShrubberyCreationForm()
-	:AForm("ShrubberyCreation",145,137), _target("default target"){}
+int	ft_put_str(char *s);
 
+int	ft_put_str(char *s)
+{
+	int	i;
 
+	i = 0;
+	if (!s)
+		s = "(null)";
+	while (s[i])
+		ft_put_char(s[i++]);
+	return (i);
+}
+
+// int	main(void)
+// {
+// 	printf("NULL is %d",ft_put_str(NULL));
+// }

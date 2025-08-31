@@ -6,7 +6,7 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 01:02:57 by hthant            #+#    #+#             */
-/*   Updated: 2025/08/30 18:15:38 by hthant           ###   ########.fr       */
+/*   Updated: 2025/08/31 13:36:58 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,5 @@ PresidentialPardonForm &PresidentailPardonForm::operator=(const PresidentialPard
 
 PresidentialPardonForm::~PresidentialPardonForm(){}
 
-PresidentialPardonForm::PresidentialPardonForm()
+PresidentialPardonForm::PresidentialPardonForm(std::string target)
 	: AForm("PresidentialPardonForm",25,5), _target(target){}

@@ -1,18 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ShrubberyCreationForm.cpp                          :+:      :+:    :+:   */
+/*   ft_tolower.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/30 01:03:09 by hthant            #+#    #+#             */
-/*   Updated: 2025/08/31 17:21:17 by hthant           ###   ########.fr       */
+/*   Created: 2024/05/16 14:23:57 by hthant            #+#    #+#             */
+/*   Updated: 2024/05/20 16:52:29 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "ShrubberyCreationForm.hpp"
+#include<stdio.h>
 
-ShrubberyCreationForm::ShrubberyCreationForm()
-	:AForm("ShrubberyCreation",145,137), _target("default target"){}
+int	ft_tolower(int c);
 
+int	ft_tolower(int c)
+{
+	if (c >= 'A' && c <= 'Z')
+		c += 32;
+	return (c);
+}
 
+// int main(void)
+// {
+// 	int i = tolower(99);
+// 	int j = tolower(65);
+// 	int k = tolower(55);
+// 	printf("%c\n%c\n%c\n",i,j,k);
+// }

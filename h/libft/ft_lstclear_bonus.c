@@ -1,18 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ShrubberyCreationForm.cpp                          :+:      :+:    :+:   */
+/*   ft_lstclear_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/30 01:03:09 by hthant            #+#    #+#             */
-/*   Updated: 2025/08/31 17:21:17 by hthant           ###   ########.fr       */
+/*   Created: 2024/06/04 18:49:50 by hthant            #+#    #+#             */
+/*   Updated: 2024/06/04 21:22:40 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "ShrubberyCreationForm.hpp"
+#include "libft.h"
 
-ShrubberyCreationForm::ShrubberyCreationForm()
-	:AForm("ShrubberyCreation",145,137), _target("default target"){}
+void	ft_lstclear(t_list **lst, void (*del)(void *));
 
+void	ft_lstclear(t_list **lst, void (*del)(void *))
+{
+	t_list	*tmp;
 
+	if (!del || !lst || !*lst)
+		return ;
+	while (lst && *lst)
+	{
+		tmp = (*lst)->next;
+		ft_lstdelone(*lst, del);
+		*lst = tmp;
+	}
+}
