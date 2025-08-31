@@ -6,7 +6,7 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 12:22:51 by hthant            #+#    #+#             */
-/*   Updated: 2025/08/30 18:14:33 by hthant           ###   ########.fr       */
+/*   Updated: 2025/08/31 19:45:15 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@ class AForm{
 		class	FormNotSignedException : public	std::exception{
 			public:
 				const char* what() const throw(){
-					return "Form not signed!"
+					return "Form not signed!";
 				}
-		}	
+		};	
 
 		const	std::string	getName() const;
 		bool	getIsSigned() const;

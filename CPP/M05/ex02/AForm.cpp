@@ -6,7 +6,7 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 12:23:05 by hthant            #+#    #+#             */
-/*   Updated: 2025/08/30 18:17:52 by hthant           ###   ########.fr       */
+/*   Updated: 2025/08/31 20:02:17 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,8 @@ void	AForm::beSigned(const Bureaucrat &b){
 
 void	AForm::checkExecution(Bureaucrat const &executor) const {
 	if(!_isSigned)
-		throw FormNotSignedexception();
-	if(executor.getGrade() > _getGradeToExecute)
+		throw FormNotSignedException();
+	if(executor.getGrade() > _gradeToExecute)
 		throw GradeTooLowException();
 }	
 

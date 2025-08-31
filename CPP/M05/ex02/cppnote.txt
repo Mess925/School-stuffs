@@ -14,4 +14,6 @@ if the class has a finction like this that function will be overwritten in other
 if base class has a virtual and the derived calss override it the program will automatically work and called the function from the derived class.
 
 
+fstream in cpp
 
+file read write 

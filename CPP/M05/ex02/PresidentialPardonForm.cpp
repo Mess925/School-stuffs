@@ -6,7 +6,7 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 01:02:57 by hthant            #+#    #+#             */
-/*   Updated: 2025/08/31 13:36:58 by hthant           ###   ########.fr       */
+/*   Updated: 2025/08/31 20:06:04 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ PresidentialPardonForm::PresidentialPardonForm()
 PresidentialPardonForm::PresidentialPardonForm(const PresidentialPardonForm &other)
 	: AForm(other), _target(other._target){}
 
-PresidentialPardonForm &PresidentailPardonForm::operator=(const PresidentialPardonForm &other)
+PresidentialPardonForm &PresidentialPardonForm::operator=(const PresidentialPardonForm &other)
 {
 	if( this!= &other)
 	{
@@ -32,3 +32,8 @@ PresidentialPardonForm::~PresidentialPardonForm(){}
 
 PresidentialPardonForm::PresidentialPardonForm(std::string target)
 	: AForm("PresidentialPardonForm",25,5), _target(target){}
+
+void	PresidentialPardonForm::execute(Bureaucrat const &executor) const{
+	checkExecution(executor);
+	std::cout<< _target<< " has been paralyzed by Zaphod Beeblebrox." <<std::endl;
+}

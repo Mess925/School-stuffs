@@ -6,7 +6,7 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 01:37:07 by hthant            #+#    #+#             */
-/*   Updated: 2025/08/30 17:53:50 by hthant           ###   ########.fr       */
+/*   Updated: 2025/08/31 19:56:08 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ class RobotomyRequestForm : public AForm{
 		~RobotomyRequestForm();
 
 		RobotomyRequestForm(std::string target);
-		void	execute(Bureaucrat const &executor) const override;
+		void	execute(Bureaucrat const &executor) const ;
 };
 
 # endif
