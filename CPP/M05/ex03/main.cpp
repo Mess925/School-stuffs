@@ -5,33 +5,25 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/31 19:43:59 by hthant            #+#    #+#             */
-/*   Updated: 2025/09/01 13:23:26 by hthant           ###   ########.fr       */
+/*   Created: 2025/09/01 12:06:35 by hthant            #+#    #+#             */
+/*   Updated: 2025/09/01 12:44:36 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Bureaucrat.hpp"
-#include "ShrubberyCreationForm.hpp"
-#include "RobotomyRequestForm.hpp"
-#include "PresidentialPardonForm.hpp"
-#include <ctime>
+# include "Intern.hpp"
 
-int main() {
-    srand(time(NULL));
-
-    Bureaucrat bob("Bob", 1);
-
-    ShrubberyCreationForm shrub("home");
-    RobotomyRequestForm robo("Bender");
-    PresidentialPardonForm pardon("Arthur");
-
-    bob.signForm(shrub);
-    bob.executeForm(shrub);
-
-    bob.signForm(robo);
-    bob.executeForm(robo);
-
-    bob.signForm(pardon);
-    bob.executeForm(pardon);
-
+int main(){
+	try {
+		Bureaucrat b("b", 1);
+		std::string	forms[4] = {"robotomy request", "shrubbery creation", "presidential pardon", "random form"};
+		AForm*	validForms[4] = {NULL, NULL, NULL, NULL};
+		Intern	i;
+		for (int j = 0; j < 3; j++) {
+			validForms[j] = i.makeForm(forms[j], "random target");
+			if (validForms[j])
+				validForms[j]->execute(b);
+		}
+	} catch (const std::exception& e) {
+		std::cout << e.what() << " not ok" << std::endl;
+	}
 }
