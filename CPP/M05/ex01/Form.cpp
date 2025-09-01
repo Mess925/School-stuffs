@@ -6,7 +6,7 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 12:23:05 by hthant            #+#    #+#             */
-/*   Updated: 2025/09/01 08:35:03 by hthant           ###   ########.fr       */
+/*   Updated: 2025/09/01 18:28:07 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	Form::getGradeToExecute() const {
 
 void	Form::beSigned(const Bureaucrat &b){
 	       if(b.getGrade() > _gradeToSign)
-		       throw GradeTooHighException();
+		       throw GradeTooLowException();
 	       _isSigned = true;
 }
 
