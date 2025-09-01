@@ -6,7 +6,7 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 12:22:51 by hthant            #+#    #+#             */
-/*   Updated: 2025/08/29 20:38:16 by hthant           ###   ########.fr       */
+/*   Updated: 2025/09/01 08:32:06 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ class Form{
 		Form& operator=(const Form& other);
 		~Form();
 
-		Form(std::string name, bool isSigned, int gradeToSign, int gradeToExecute);
+		Form(std::string name, int gradeToSign, int gradeToExecute);
 
 		class GradeTooHighException : public std::exception{
 			public:

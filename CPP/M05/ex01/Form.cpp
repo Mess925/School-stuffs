@@ -6,7 +6,7 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 12:23:05 by hthant            #+#    #+#             */
-/*   Updated: 2025/08/29 21:47:56 by hthant           ###   ########.fr       */
+/*   Updated: 2025/09/01 08:35:03 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ Form::~Form(){
 	std::cout<<"Form "<<this->_name<<" is destroyed."<<std::endl; 
 }
 
-Form::Form(std::string name, bool isSigned, int gradeToSign, int gradeToExecute):
+Form::Form(std::string name, int gradeToSign, int gradeToExecute):
 	_name(name),
-	_isSigned(isSigned),
+	_isSigned(false),
 	_gradeToSign(gradeToSign),
 	_gradeToExecute(gradeToExecute)
 {
