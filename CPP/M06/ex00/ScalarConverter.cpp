@@ -6,7 +6,7 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 18:53:23 by hthant            #+#    #+#             */
-/*   Updated: 2025/09/02 20:07:50 by hthant           ###   ########.fr       */
+/*   Updated: 2025/09/02 21:09:49 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	ScalarConverter::convert(const std::string& literal){
 		char c = literal[0];
 		std::cout<<"char: "<< c <<std::endl;
 		std::cout<< "int: "<< static_cast<int>(c) <<std::endl;
-		std::cout<<"float: "<<std::fixed<<std::setprecision(1)<<static_cast<float>(c) <<std::endl;
+		std::cout<<"float: "<<std::fixed<<std::setprecision(1)<<static_cast<float>(c) <<"f" <<std::endl;
 		std::cout<<"double: "<<std::fixed<<std::setprecision(1)<<static_cast<double>(c)<<std::endl;
 		return;
 	}
