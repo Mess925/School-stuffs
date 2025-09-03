@@ -6,7 +6,7 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 18:53:23 by hthant            #+#    #+#             */
-/*   Updated: 2025/09/03 09:01:34 by hthant           ###   ########.fr       */
+/*   Updated: 2025/09/03 09:08:43 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,4 +126,18 @@ void	ScalarConverter::convert(const std::string& literal){
 	}
 	std::cout << "char: impossible\nint: impossible\nfloat: impossible\ndouble: impossible\n";
 }
+
+
+// > ./convert 12345678
+// char: impossible
+// int: 12345678
+// float: 12345678.0f
+// double: 12345678.0
+//  ~/s/CPP/M06/ex00 | main ?4                                                                                                                                                                              09:07:07
+// > ./convert 123456789
+// char: impossible
+// int: 123456789
+// float: 123456792.0f
+// double: 123456789.0
+
 
