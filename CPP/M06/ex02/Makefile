@@ -6,7 +6,7 @@
 #    By: hthant <hthant@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/03 22:04:39 by hthant            #+#    #+#              #
-#    Updated: 2025/09/03 22:04:40 by hthant           ###   ########.fr        #
+#    Updated: 2025/09/04 21:46:23 by hthant           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME = identify
 CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
-SRC = main.cpp functions.cpp
+SRC = main.cpp Base.cpp
 OBJ = $(SRC:.cpp=.o)
 
 all: $(NAME)
