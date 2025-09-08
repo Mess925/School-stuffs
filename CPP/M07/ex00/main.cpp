@@ -6,11 +6,11 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 22:15:56 by hthant            #+#    #+#             */
-/*   Updated: 2025/09/04 22:35:46 by hthant           ###   ########.fr       */
+/*   Updated: 2025/09/08 14:07:03 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "Whatever.hpp"
+# include "whatever.hpp"
 
 int main( void ) {
 int a = 2;

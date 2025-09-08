@@ -6,7 +6,7 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 23:28:10 by hthant            #+#    #+#             */
-/*   Updated: 2025/09/06 09:41:43 by hthant           ###   ########.fr       */
+/*   Updated: 2025/09/08 16:12:00 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,7 @@ class Array {
 		const T& operator[](unsigned int index) const;
 		unsigned int getSize() const;
 };
+
+# include "Array.tpp"
 
 # endif
