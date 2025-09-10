@@ -33,6 +33,14 @@ class Span {
 		void	addNumber(int n);
 		unsigned int shortestSpan() ;
 		unsigned int longestSpan() ;
+		template <typename T>
+			void	addMulti(T begin, T end){
+				unsigned int limit = static_cast<unsigned int>(std::distance(begin,end));
+				if(_nums.size() + limit > _maxN){
+					throw std::exception();
+				}
+				_nums.insert(_nums.end(), begin, end);
+			}
 };
 
 # endif
