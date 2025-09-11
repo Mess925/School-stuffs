@@ -10,12 +10,12 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME = array_test 
+NAME = MuatatntStack
 
 CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98 -I.
 
-SRC = main.cpp MutantStack.cpp
+SRC = main.cpp 
 OBJ = $(SRC:.cpp=.o)
 
 all: $(NAME)
