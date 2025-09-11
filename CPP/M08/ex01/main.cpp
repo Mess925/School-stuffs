@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 # include <Span.hpp>
+#include <vector>
 
 int main()
 {
@@ -21,7 +22,6 @@ int main()
     		sp.addNumber(17);
     		sp.addNumber(9);
     		sp.addNumber(11);
-
     		std::vector<int> nums2;
     		for(int i = 1 ; i < 96; i++)
 	    		nums2.push_back(i);
