@@ -10,8 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include <Span.hpp>
-#include <vector>
+# include "Span.hpp"
+# include <iostream>
+# include <vector>
 
 int main()
 {
