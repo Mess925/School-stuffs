@@ -6,7 +6,7 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 13:43:35 by hthant            #+#    #+#             */
-/*   Updated: 2025/09/16 15:19:39 by hthant           ###   ########.fr       */
+/*   Updated: 2025/09/16 15:51:35 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,22 +94,16 @@ bool BitcoinExchange::validDate(const std::string& date) {
         return false;
     }
     
-    if (day < 1) {
+    if (day < 1 || day > 31) {
         writeErrorMsg(std::string("invalid day"), date);
         return false;
     }
 
-        std::string months[] = {
+    std::string months[] = {
         "", "January", "February", "March", "April", "May", "June",
         "July", "August", "September", "October", "November", "December"
     };
 
-    if ((month == 4 || month == 6 || month == 9 || month == 11) && day > 30) {
-        std::string specificErrorMsg = "invalid day for " + months[month];
-        writeErrorMsg(specificErrorMsg, date);
-        return false;
-    }
-    
     if (month == 2) {
         bool isLeap = (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0));
         int maxDays = isLeap ? 29 : 28;
@@ -117,12 +111,12 @@ bool BitcoinExchange::validDate(const std::string& date) {
             writeErrorMsg(std::string("invalid day for February"), date);
             return false;
         }
-    } 
-
-    if(day > 31){
-        writeErrorMsg(std::string("invalid day"), date);
+    } else if ((month == 4 || month == 6 || month == 9 || month == 11) && day > 30) {
+        std::string specificErrorMsg = "invalid day for " + months[month];
+        writeErrorMsg(specificErrorMsg, date);
         return false;
     }
+    
     return true;
 }
 
@@ -135,8 +129,8 @@ bool	BitcoinExchange::validLine(const std::string& line){
 	}
 	inputRecord.date = line.substr(0,inputRecord.deli_pos - 1);
 	inputRecord.value = line.substr(inputRecord.deli_pos + 2);
-	validDate(inputRecord.date);
-	validValue(inputRecord.value);
+	if(!validDate(inputRecord.date) || !validValue(inputRecord.value))
+		return false;
 	return true;
 }
 
