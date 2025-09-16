@@ -11,6 +11,8 @@
 /* ************************************************************************** */
 
 # include "BitcoinExchange.hpp"
+# include <iostream>
+# include <fstream>
 
 BitcoinExchange::BitcoinExchange(){}
 
@@ -27,11 +29,14 @@ BitcoinExchange& BitcoinExchange::operator=(const BitcoinExchange& other){
 BitcoinExchange::~BitcoinExchange(){};
 
 bool BitcoinExchange::isValidFile(const std::string &fileName){
-	std::ifstream file;
-	file.open(fileName.c_str());
+	std::ifstream file(fileName.c_str());
 	if(!file.is_open())
 		std::cout << "Cannot open the .txt file" << std::endl;
 	else
 		std::cout << "IT is valid" << std::endl;
+	std::string line;
+	while(std::getline(file,line, '|'))
+		std::cout << line << std::endl;
+	file.close();
 	return true;
 }

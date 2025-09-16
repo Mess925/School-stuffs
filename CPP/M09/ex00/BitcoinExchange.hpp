@@ -14,8 +14,6 @@
 # define BITCOINEXCHANGE_HPP
 
 # include <map>
-# include <iostream>
-# include <fstream>
 # include <string>
 
 class BitcoinExchange {
