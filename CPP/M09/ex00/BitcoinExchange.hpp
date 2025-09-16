@@ -6,7 +6,7 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 10:55:22 by hthant            #+#    #+#             */
-/*   Updated: 2025/09/12 14:47:28 by hthant           ###   ########.fr       */
+/*   Updated: 2025/09/16 14:08:47 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,12 @@
 
 # include <map>
 # include <string>
+
+struct InputData{
+	std::string date;
+	std::string value;
+	size_t deli_pos;
+};
 
 class BitcoinExchange {
 	private:
@@ -26,6 +32,9 @@ class BitcoinExchange {
 		~BitcoinExchange();
 
 		bool isValidFile(const std::string &fileName);
+		bool validLine(const std::string& line);
+		bool validDate(const std::string& date);
+		bool validValue(const std::string& valueStr);
 };
 
 # endif
