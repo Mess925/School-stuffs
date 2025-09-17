@@ -6,7 +6,7 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 10:55:22 by hthant            #+#    #+#             */
-/*   Updated: 2025/09/12 11:15:03 by hthant           ###   ########.fr       */
+/*   Updated: 2025/09/17 17:17:44 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ class BitcoinExchange {
 		BitcoinExchange& operator=(const BitcoinExchange& other);
 		~BitcoinExchange();
 
-		bool validFile(const std::string& fileName);
+		// bool validFile(const std::string& fileName);
+		void processInputFile(const std::string& fileName);
 		bool validLine(const std::string& line, Data& d, bool check);
 		bool validDate(const std::string& date);
 		bool validValue(const std::string& valueStr, bool check);

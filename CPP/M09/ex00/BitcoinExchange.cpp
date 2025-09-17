@@ -6,7 +6,7 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 13:43:35 by hthant            #+#    #+#             */
-/*   Updated: 2025/09/16 15:51:35 by hthant           ###   ########.fr       */
+/*   Updated: 2025/09/17 17:17:43 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ bool 	BitcoinExchange::validLine(const std::string& line, Data& d, bool check){
 		return false;	
 	return true;
 }
-
+/*
 bool BitcoinExchange::validFile(const std::string &fileName){
 	std::ifstream file(fileName.c_str());
 	if(!file.is_open())
@@ -157,6 +157,54 @@ bool BitcoinExchange::validFile(const std::string &fileName){
 	file.close();
 	return true;
 }
+*/
+
+
+void BitcoinExchange::processInputFile(const std::string& fileName) {
+    std::ifstream file(fileName.c_str());
+    if (!file.is_open()) {
+        std::cerr << "Error: could not open file => " << fileName << std::endl;
+        return;
+    }
+
+    std::string line;
+    std::getline(file, line);
+
+    Data d;
+    d.deli = '|';
+    loadData(); 
+
+    while (std::getline(file, line)) {
+        if (!validLine(line, d, true)) {
+            continue;
+        }
+
+        std::map<std::string, double>::iterator it = _money.lower_bound(d.date);
+        double rate = 0.0;
+        
+        if (it != _money.end() && it->first == d.date) {
+            rate = it->second;
+        } else {
+            if (it != _money.begin()) {
+                --it;
+                rate = it->second;
+            } else {
+                std::cerr << "Error: Date " << d.date << " is before the earliest record." << std::endl;
+                continue;
+            }
+        }
+
+        double value;
+        std::stringstream ss(d.value);
+        if (ss >> value) {
+            std::cout << d.date << " => " << value << " = " << value * rate << std::endl;
+        } else {
+            std::cerr << "Error: Invalid value format => " << d.value << std::endl;
+        }
+    }
+    file.close();
+}
+
 
 bool BitcoinExchange::loadData(){
 	std::ifstream file("data.csv");
@@ -176,9 +224,27 @@ bool BitcoinExchange::loadData(){
 		double rate;
 		if(ss >> rate)
 			_money[d.date] = rate;
-		std::cout << rate << std::endl;
 	}
-
 	file.close();
 	return true;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
