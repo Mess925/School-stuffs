@@ -147,10 +147,9 @@ bool BitcoinExchange::validFile(const std::string &fileName){
 	d.deli = '|';
 	std::string line;
 	std::getline (file, line);
-	if (line != "date | value") return false;
 	while(std::getline(file,line)){
 		if(line == "date | value")
-			continue;
+	continue;
 		else
 			validLine(line , d, true);
 	}
@@ -161,48 +160,44 @@ bool BitcoinExchange::validFile(const std::string &fileName){
 
 
 void BitcoinExchange::processInputFile(const std::string& fileName) {
-    std::ifstream file(fileName.c_str());
-    if (!file.is_open()) {
-        std::cerr << "Error: could not open file => " << fileName << std::endl;
-        return;
-    }
+    	std::ifstream file(fileName.c_str());
+    	if (!file.is_open()) {
+        	std::cerr << "Error: could not open file => " << fileName << std::endl;
+        	return;
+    	}
 
-    std::string line;
-    std::getline(file, line);
+    	std::string line;
+    	std::getline(file, line);
+	if (line != "date | value") return;
 
-    Data d;
-    d.deli = '|';
-    loadData(); 
+    	Data d;
+    	d.deli = '|';
+    	loadData(); 
 
-    while (std::getline(file, line)) {
-        if (!validLine(line, d, true)) {
-            continue;
-        }
-
-        std::map<std::string, double>::iterator it = _money.lower_bound(d.date);
-        double rate = 0.0;
+    	while (std::getline(file, line)) {
+        	if (!validLine(line, d, true)) continue;
+		std::map<std::string, double>::iterator it = _money.lower_bound(d.date);
+        	double rate = 0.0;
         
-        if (it != _money.end() && it->first == d.date) {
-            rate = it->second;
-        } else {
-            if (it != _money.begin()) {
-                --it;
-                rate = it->second;
-            } else {
-                std::cerr << "Error: Date " << d.date << " is before the earliest record." << std::endl;
-                continue;
-            }
-        }
-
-        double value;
-        std::stringstream ss(d.value);
-        if (ss >> value) {
-            std::cout << d.date << " => " << value << " = " << value * rate << std::endl;
-        } else {
-            std::cerr << "Error: Invalid value format => " << d.value << std::endl;
-        }
-    }
-    file.close();
+        	if (it != _money.end() && it->first == d.date)
+			rate = it->second;
+		else {
+			if (it != _money.begin()) {
+				--it;
+				rate = it->second;
+			} else {
+				std::cerr << "Error: Date " << d.date << " is before the earliest record." << std::endl;
+				continue;
+			}
+		}
+		double value;
+		std::stringstream ss(d.value);
+		if (ss >> value)
+			std::cout << d.date << " => " << value << " = " << value * rate << std::endl;
+		else
+			std::cerr << "Error: Invalid value format => " << d.value << std::endl;
+	}
+	file.close();
 }
 
 
