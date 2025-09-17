@@ -19,6 +19,7 @@ int main(int ac, char** av){
 		return -1;
 	}
 	BitcoinExchange b;
-	b.isValidFile(av[1]);
+	b.validFile(av[1]);
+	b.loadData();
 	return 0;
 }

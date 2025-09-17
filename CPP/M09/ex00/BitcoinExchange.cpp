@@ -14,6 +14,7 @@
 # include <iostream>
 # include <fstream>
 # include <sstream>
+#include <string>
 
 BitcoinExchange::BitcoinExchange(){}
 
@@ -34,7 +35,7 @@ static void writeErrorMsg(const std::string& msg,const std::string& val){
 	std::cerr<< msg << " => "<< val<< std::endl;
 }
 
-bool BitcoinExchange::validValue(const std::string& valueStr) {
+bool BitcoinExchange::validValue(const std::string& valueStr, bool check) {
     if (valueStr.empty()) {
 	    writeErrorMsg(std::string("empty value"),valueStr);
 	    return false;
@@ -54,7 +55,7 @@ bool BitcoinExchange::validValue(const std::string& valueStr) {
 	    writeErrorMsg(std::string("not a positive number"),valueStr);
 	    return false;
     }
-    if (value > 1000) {
+    if (value > 1000 && check) {
 	    writeErrorMsg(std::string("too large a number"),valueStr);
 	    return false;
     } 
@@ -120,31 +121,64 @@ bool BitcoinExchange::validDate(const std::string& date) {
     return true;
 }
 
-bool	BitcoinExchange::validLine(const std::string& line){
-	InputData inputRecord;
-	inputRecord.deli_pos = line.find('|');
-	if(inputRecord.deli_pos == std::string::npos){
-		std::cerr<< "Error: bad input => "<< line.substr(0, inputRecord.deli_pos) << std::endl;
+bool 	BitcoinExchange::validLine(const std::string& line, Data& d, bool check){
+	d.deli_pos = line.find(d.deli);
+	if(d.deli_pos == std::string::npos){
+		std::cerr<< "Error: bad input wiht no " << d.deli <<" => "<< line.substr(0,d.deli_pos) << std::endl;
 		return false;
 	}
-	inputRecord.date = line.substr(0,inputRecord.deli_pos - 1);
-	inputRecord.value = line.substr(inputRecord.deli_pos + 2);
-	if(!validDate(inputRecord.date) || !validValue(inputRecord.value))
-		return false;
+	d.date= line.substr(0,d.deli_pos);
+	d.value= line.substr(d.deli_pos + 1);
+	if(d.date.size() != 10)
+		d.date = line.substr(0, d.deli_pos -1);
+	if(!validDate(d.date) || !validValue(d.value, check))
+		return false;	
 	return true;
 }
 
-bool BitcoinExchange::isValidFile(const std::string &fileName){
+bool BitcoinExchange::validFile(const std::string &fileName){
 	std::ifstream file(fileName.c_str());
 	if(!file.is_open())
+	{
 		std::cout << "Cannot open the .txt file" << std::endl;
+		return false;
+	}
+	Data d;
+	d.deli = '|';
 	std::string line;
+	std::getline (file, line);
+	if (line != "date | value") return false;
 	while(std::getline(file,line)){
 		if(line == "date | value")
 			continue;
 		else
-			validLine(line);
+			validLine(line , d, true);
 	}
+	file.close();
+	return true;
+}
+
+bool BitcoinExchange::loadData(){
+	std::ifstream file("data.csv");
+	if(!file.is_open())
+	{
+		std::cerr<<"ERROR"<< std::endl;
+		return false;
+	}
+	std::string line;
+	std::getline(file, line);
+	Data d;
+	d.deli = ',';
+	while(std::getline(file,line))
+	{
+		validLine(line,d, false);
+		std::stringstream ss(d.value);
+		double rate;
+		if(ss >> rate)
+			_money[d.date] = rate;
+		std::cout << rate << std::endl;
+	}
+
 	file.close();
 	return true;
 }
