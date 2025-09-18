@@ -34,7 +34,7 @@ void	RPN::PolishEvaluator(const std::string& arg){
 		{
 			std::cout << "The array can accept "<< arr<< std::endl;
 		}
-		else if 
+		else if{} 
 			std::cout<< "The int is "<< arr << std::endl;
 	}
 }
