@@ -19,5 +19,5 @@ int main (int ac, char **av){
 		return -1;
 	}
 	RPN a;
-
+	a.PolishEvaluator(av[1]);
 }

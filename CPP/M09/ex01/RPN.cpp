@@ -25,7 +25,17 @@ RPN& RPN::operator=(const RPN& other){
 
 RPN::~RPN(){}
 
-void	RPN::PolishEvaluator(std::string& arg){
-
+void	RPN::PolishEvaluator(const std::string& arg){
+	std::stack<int> myStack;
+	std::stringstream ss(arg);
+	std::string arr;
+	while(ss >> arr){
+		if(arr == "+" || arr == "-" || arr == "*" || arr == "/")
+		{
+			std::cout << "The array can accept "<< arr<< std::endl;
+		}
+		else if 
+			std::cout<< "The int is "<< arr << std::endl;
+	}
 }
 

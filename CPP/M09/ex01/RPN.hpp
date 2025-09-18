@@ -14,6 +14,9 @@
 # define RPN_HPP
 
 # include <string>
+# include <iostream>
+# include <stack>
+# include <sstream>
 
 class RPN {
 	public:
@@ -22,7 +25,7 @@ class RPN {
 		RPN& operator=(const RPN& other);
 		~RPN();
 
-		void PolishEvaluator(std::string& arg);
+		void PolishEvaluator(const std::string& arg);
 };
 
 # endif
