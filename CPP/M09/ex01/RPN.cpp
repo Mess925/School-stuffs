@@ -38,9 +38,9 @@ int RPN::calculation(int x, int y, char o){
 			if( y != 0 )
 				return ( x / y );
 			else
-				throw std::exception();
+				throw std::logic_error( std::string ("division by zero"));
 		default:
-			throw std::exception();
+			throw std::invalid_argument( std::string ("Invalid argument"));
 	}
 }
 
@@ -52,7 +52,7 @@ void	RPN::PolishEvaluator(const std::string& arg){
 	while(ss >> arr){
 		if((arr == "+" || arr == "-" || arr == "*" || arr == "/") && arr.size() == 1){
 			if(myStack.size() < 2)
-				throw std::exception();
+				throw std::length_error(std::string ("Invalid out of range"));
 			int y = myStack.top();
 			myStack.pop();
 			int x = myStack.top();
@@ -60,16 +60,13 @@ void	RPN::PolishEvaluator(const std::string& arg){
 			myStack.push(calculation(x,y,arr[0]));
 		}
 		else {
-			if(!isdigit(arr[0]) || arr.size()!= 1){
-				std::cerr<<"This is not an integer " <<arr[0] <<std::endl;
-				throw std::exception();
-
-			}
+			if(!isdigit(arr[0]) || arr.size()!= 1)
+				throw std::invalid_argument( std::string ("Invalid argument"));
 			myStack.push(arr[0] - '0');
 		}
 	}
 	if(myStack.size() != 1)
-		throw std::exception();
+		throw std::length_error(std::string ("Invalid out of range"));
 	std::cout << myStack.top() <<std::endl;
 }
 
