@@ -18,6 +18,11 @@ int main (int ac, char **av){
 		std::cout << "Error: not enough arguments." << std::endl;
 		return -1;
 	}
-	RPN a;
-	a.PolishEvaluator(av[1]);
+	try{
+		RPN a;
+		a.PolishEvaluator(av[1]);
+	}
+	catch(const std::exception& e){
+		std::cerr << "ERROR: " << e.what() << std::endl;
+	}
 }
