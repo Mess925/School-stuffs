@@ -1,0 +1,96 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   PmergeMe.cpp                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/22 11:24:31 by hthant            #+#    #+#             */
+/*   Updated: 2025/09/22 15:35:15 by hthant           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+# include "PmergeMe.hpp"
+# include <iostream>
+# include <climits>
+# include <stdexcept>
+# include <sstream>
+# include <string>
+
+Merge::Merge(){}
+
+Merge:: Merge(const Merge& other){
+	*this = other;
+}
+
+Merge& Merge::operator=(const Merge& other){
+	(void) other;
+	return *this;
+}
+
+Merge::~Merge(){};
+
+bool Merge::checkInput(int ac, char **av){
+	for(int i = 1; i < ac; i++){
+		std::string arg = av[i];
+		std::stringstream ss(arg);
+		std::string token;
+
+		while(ss >> token){
+			if(token.empty() || (token[0] == '-' && token.size()> 2) || token[0] == '+'){
+				throw :: std::invalid_argument("Invalid argument");
+				return false;
+			}
+			for(size_t j = 0; j < token.size(); j++){
+				if(!std::isdigit(token[j])){
+					throw ::std::invalid_argument("Invalid argument");
+					return false;
+					}
+			}
+			std::stringstream n(token);
+			long num;
+			n >> num;
+			if(num < 0 || num > INT_MAX){
+				throw:: std::out_of_range("Out of Int limit");
+				return false;
+			}
+			_vecetorData.push_back(static_cast<int>(num));
+			_dequeData.push_back(static_cast<int>(num));
+		}
+	} 
+	return true;
+}
+
+void Merge::Display(const std::string& str, const std::vector<int>& data){
+	std::cout << str;
+	if(data.size() <= 5) {
+		for(size_t i = 0;i < data.size(); i++){
+			std::cout << data[i];
+			if(i < data.size() - 1)
+				std::cout << " ";
+		}
+	}
+	else {
+		for(size_t j = 0; j < 4; j++){
+			std::cout << data[j];
+			if(j < 3)
+				std::cout << " ";
+		}
+		std::cout << " [...]";
+	}
+}
+
+bool Merge::program(int ac, char** av){
+	if(ac < 2){
+		std::cerr << "Not enough Arguments" << std::endl;
+		return false;
+	}
+	if(!checkInput(ac,av)){
+		throw:: std::invalid_argument("Invalid Argument");
+		return false;
+	}
+
+	Display("Before: ", _vecetorData);
+
+	return true;
+}
