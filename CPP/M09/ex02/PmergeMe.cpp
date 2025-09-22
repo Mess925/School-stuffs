@@ -11,10 +11,13 @@
 /* ************************************************************************** */
 
 # include "PmergeMe.hpp"
+#include <exception>
 # include <iostream>
 # include <climits>
 # include <stdexcept>
 # include <sstream>
+# include <utility>
+#include <vector>
 
 Merge::Merge(){}
 
@@ -83,6 +86,27 @@ void Merge::Display(const std::string& str, const std::vector<int>& data){
 	std::cout << std::endl;
 }
 
+std::vector<std::pair<int,int> > Merge::makePair(const std::vector<int>& data)
+{
+	size_t size=data.size();
+	int remain;
+	if(size %2 != 0)
+	{
+		remain = data[size - 1];
+		size -= 1;
+	}
+	std::vector<std::pair<int,int> >result;
+	for(size_t i = 0;i < size; i += 2){
+		int left = data.at(i);
+		int right = data.at(i+1);
+		result.push_back(std::make_pair(left, right));
+	}
+	for(size_t i =0;i < result.size(); i++)
+		std::cout << "(" << result[i].first << "," << result[i].second<< ")";
+	std::cout <<std::endl;
+	return result;
+}
+
 bool Merge::program(int ac, char** av){
 	if(ac < 2){
 		std::cerr << "Not enough Arguments" << std::endl;
@@ -94,6 +118,9 @@ bool Merge::program(int ac, char** av){
 	}
 
 	Display("Before: ", _vecetorData);
+	makePair(_vecetorData);
 
 	return true;
 }
+
+
