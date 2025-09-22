@@ -15,7 +15,6 @@
 # include <climits>
 # include <stdexcept>
 # include <sstream>
-# include <string>
 
 Merge::Merge(){}
 
@@ -24,7 +23,10 @@ Merge:: Merge(const Merge& other){
 }
 
 Merge& Merge::operator=(const Merge& other){
-	(void) other;
+	if(this != &other){
+		_vecetorData = other._vecetorData;
+		_dequeData = other._dequeData;
+	}
 	return *this;
 }
 
@@ -78,6 +80,7 @@ void Merge::Display(const std::string& str, const std::vector<int>& data){
 		}
 		std::cout << " [...]";
 	}
+	std::cout << std::endl;
 }
 
 bool Merge::program(int ac, char** av){
