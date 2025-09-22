@@ -30,7 +30,7 @@ class Merge {
 		bool program(int ac, char** av);
 		bool checkInput(int ac, char** av);
 		void Display(const std::string& str, const std::vector<int>& data);
-		std::vector<std::pair<int,int> >makePair(const std::vector<int>& data);
+		void magic(const std::vector<int>& data);
 };
 
 # endif 

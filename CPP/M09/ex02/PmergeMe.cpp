@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 # include "PmergeMe.hpp"
-#include <exception>
+# include <algorithm>
 # include <iostream>
 # include <climits>
 # include <stdexcept>
@@ -86,12 +86,14 @@ void Merge::Display(const std::string& str, const std::vector<int>& data){
 	std::cout << std::endl;
 }
 
-std::vector<std::pair<int,int> > Merge::makePair(const std::vector<int>& data)
+void Merge::magic(const std::vector<int>& data)
 {
 	size_t size=data.size();
 	int remain;
+	bool flag = 0;
 	if(size %2 != 0)
 	{
+		flag = 1;
 		remain = data[size - 1];
 		size -= 1;
 	}
@@ -104,7 +106,38 @@ std::vector<std::pair<int,int> > Merge::makePair(const std::vector<int>& data)
 	for(size_t i =0;i < result.size(); i++)
 		std::cout << "(" << result[i].first << "," << result[i].second<< ")";
 	std::cout <<std::endl;
-	return result;
+	std::vector<int>big;
+	std::vector<int>small;
+	for(size_t i  = 0; i < size/2 ; i++){
+		if(result[i].first > result[i].second){
+			big.push_back(result[i].first);
+			small.push_back(result[i].second);
+		}
+		else{
+			big.push_back(result[i].second);
+			small.push_back(result[i].first);
+		}
+	}
+	if(flag)
+		small.push_back(remain);
+
+	std::sort(big.begin(), big.end());
+	for(size_t i =0 ; i < big.size(); i++)
+		std::cout << big[i] <<std::endl;
+	std::cout << std::endl;
+	for(size_t i = 0; i < small.size(); i++)
+		std::cout << small[i] << std::endl;
+	std::vector<int> sorted = big;
+	for (size_t i = 0; i < small.size(); i++) {
+		int s = small[i];
+		std::vector<int>::iterator it = std::lower_bound(sorted.begin(), sorted.end(), s);
+		sorted.insert(it, s);
+       }
+       _vecetorData = sorted;
+       std::cout << std::endl;
+       for(size_t i = 0;i < sorted.size(); i ++){
+	       std::cout << sorted[i] << std::endl;
+       }
 }
 
 bool Merge::program(int ac, char** av){
@@ -118,9 +151,9 @@ bool Merge::program(int ac, char** av){
 	}
 
 	Display("Before: ", _vecetorData);
-	makePair(_vecetorData);
+	magic(_vecetorData);
 
 	return true;
 }
 
-
+ 
