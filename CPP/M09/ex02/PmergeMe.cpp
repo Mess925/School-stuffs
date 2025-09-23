@@ -12,12 +12,14 @@
 
 # include "PmergeMe.hpp"
 # include <algorithm>
+# include <iomanip>
 # include <iostream>
 # include <climits>
 # include <stdexcept>
 # include <sstream>
+# include <string>
 # include <utility>
-#include <vector>
+# include <vector>
 
 Merge::Merge(){}
 
@@ -68,22 +70,21 @@ bool Merge::checkInput(int ac, char **av){
 
 void Merge::Display(const std::string& str, const std::vector<int>& data){
 	std::cout << str;
+	int max_lenth = *std::max_element(data.begin(), data.end());
+	std::stringstream ss;
+    	ss << max_lenth;
+    	int width = ss.str().length();
 	if(data.size() <= 5) {
 		for(size_t i = 0;i < data.size(); i++){
-			std::cout << data[i];
-			if(i < data.size() - 1)
-				std::cout << " ";
+			std::cout <<  std::setw(width) << data[i];
 		}
 	}
 	else {
 		for(size_t j = 0; j < 4; j++){
-			std::cout << data[j];
-			if(j < 3)
-				std::cout << " ";
+			std::cout << std::setw(width) << data[j];
 		}
 		std::cout << " [...]";
 	}
-	std::cout << std::endl;
 }
 
 void Merge::magic(const std::vector<int>& data)
@@ -103,9 +104,6 @@ void Merge::magic(const std::vector<int>& data)
 		int right = data.at(i+1);
 		result.push_back(std::make_pair(left, right));
 	}
-	for(size_t i =0;i < result.size(); i++)
-		std::cout << "(" << result[i].first << "," << result[i].second<< ")";
-	std::cout <<std::endl;
 	std::vector<int>big;
 	std::vector<int>small;
 	for(size_t i  = 0; i < size/2 ; i++){
@@ -122,11 +120,6 @@ void Merge::magic(const std::vector<int>& data)
 		small.push_back(remain);
 
 	std::sort(big.begin(), big.end());
-	for(size_t i =0 ; i < big.size(); i++)
-		std::cout << big[i] <<std::endl;
-	std::cout << std::endl;
-	for(size_t i = 0; i < small.size(); i++)
-		std::cout << small[i] << std::endl;
 	std::vector<int> sorted = big;
 	for (size_t i = 0; i < small.size(); i++) {
 		int s = small[i];
@@ -135,9 +128,6 @@ void Merge::magic(const std::vector<int>& data)
        }
        _vecetorData = sorted;
        std::cout << std::endl;
-       for(size_t i = 0;i < sorted.size(); i ++){
-	       std::cout << sorted[i] << std::endl;
-       }
 }
 
 bool Merge::program(int ac, char** av){
@@ -150,8 +140,10 @@ bool Merge::program(int ac, char** av){
 		return false;
 	}
 
-	Display("Before: ", _vecetorData);
+	Display("Before:", _vecetorData);
 	magic(_vecetorData);
+	Display("After :", _vecetorData);
+	std::cout << std::endl;
 
 	return true;
 }

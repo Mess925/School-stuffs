@@ -16,6 +16,7 @@
 # include <vector>
 # include <deque>
 # include <string>
+# include <bits/stdc++.h>
 
 class Merge {
 	private:
