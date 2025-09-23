@@ -34,4 +34,4 @@ class Merge {
 		void magic(const std::vector<int>& data);
 };
 
-# endif 
+# endif
