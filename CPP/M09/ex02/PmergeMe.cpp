@@ -204,10 +204,6 @@ void Merge::magic(const std::vector<int>& data) {
 		sorted.insert(it, remain);
 	}
 	_vecetorData = sorted;
-
-
-	for(size_t i  = 0; i < _vecetorData.size(); i ++)
-		std::cout << _vecetorData[i] <<std::endl;
 }
 
 
