@@ -92,7 +92,7 @@ void Merge::Display(const std::string& str, const std::vector<int>& data){
 	}
 }
 
-std::vector<int> generateTacobsthal(int n){
+std::vector<int> generateJacobsthal(int n){
 	std::vector<int> a;
 	if (n == 1){
 		a.push_back(0);
@@ -106,7 +106,7 @@ std::vector<int> generateTacobsthal(int n){
 	}
 	return a;
 }
-/*
+
 void Merge::magic(const std::vector<int>& data)
 {
 	size_t size=data.size();
@@ -149,63 +149,6 @@ void Merge::magic(const std::vector<int>& data)
        _vecetorData = sorted;
        std::cout << std::endl;
 }
-*/
-
-void Merge::magic(const std::vector<int>& data) {
-	size_t size = data.size();
-	int remain = -1;
-	bool has_remain = false;
-
-	if (size % 2 != 0) {
-		has_remain = true;
-        	remain = data[size - 1];
-        	size -= 1;
-	}
-
-	std::vector<std::pair<int, int> > pairs;
-	for (size_t i = 0; i < size; i += 2)
-        	pairs.push_back(std::make_pair(data[i], data[i + 1]));
-
-	std::vector<int> big;
-	std::vector<int> small;
-
-	for(size_t i  = 0; i < size/2 ; i++){
-		if(pairs[i].first > pairs[i].second){
-			big.push_back(pairs[i].first);
-			small.push_back(pairs[i].second);
-		}
-		else{
-			big.push_back(pairs[i].second);
-			small.push_back(pairs[i].first);
-		}
-	}
-
-	std::sort(big.begin(), big.end());
-	std::vector<int> sorted = big;
-	std::vector<int> jacobsthal_sequence = generateTacobsthal(small.size());
-
-	if (!small.empty()) {
-		std::vector<int>::iterator it = std::lower_bound(sorted.begin(), sorted.end(), small[0]);
-		sorted.insert(it, small[0]);
-	}
-
-	for (size_t i = 2; i < jacobsthal_sequence.size(); ++i) {
-		int end_index = std::min(jacobsthal_sequence[i], (int)small.size());
-        	int start_index = jacobsthal_sequence[i - 1];
-		for (int j = end_index - 1; j >= start_index; --j) {
-			int element_to_insert = small[j];
-			std::vector<int>::iterator it = std::lower_bound(sorted.begin(), sorted.end(), element_to_insert);
-			sorted.insert(it, element_to_insert);
-		}
-	}
-
-	if (has_remain) {
-		std::vector<int>::iterator it = std::lower_bound(sorted.begin(), sorted.end(), remain);
-		sorted.insert(it, remain);
-	}
-	_vecetorData = sorted;
-}
-
 
 bool Merge::program(int ac, char** av){
 	if(ac < 2){
@@ -218,7 +161,6 @@ bool Merge::program(int ac, char** av){
 	}
 
 	Display("Before: ", _vecetorData);
-	std::cout << std::endl;
 	magic(_vecetorData);
 	Display("After : ", _vecetorData);
 	std::cout << std::endl;
