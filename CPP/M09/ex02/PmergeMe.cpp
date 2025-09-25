@@ -16,6 +16,7 @@
 # include <iomanip>
 # include <iostream>
 # include <climits>
+#include <iterator>
 # include <stdexcept>
 # include <sstream>
 # include <string>
@@ -90,6 +91,7 @@ void Merge::Display(const std::string& str, const std::vector<int>& data){
 		}
 		std::cout << " [...]";
 	}
+	std::cout << std::endl;
 }
 
 std::vector<int> generateJacobsthal(int n){
@@ -107,9 +109,51 @@ std::vector<int> generateJacobsthal(int n){
 	return a;
 }
 
+std::vector<int>mergeLeftRight(std::vector<int> left, std::vector<int> right){
+	std::vector<int> result;
+	size_t i = 0;
+	size_t j = 0;
+
+	while(i < left.size() & j < right.size()){
+		if(left[i] < right[j]){
+			result.push_back(left[i]);
+			i++;}
+		else{
+			result.push_back(right[j]);
+			j++;}
+	}
+	while(i < left.size()){
+		result.push_back(left[i]);
+		i++;}
+	while(j < right.size()){
+		result.push_back(right[j]);
+		j++;}
+	return  result;
+}
+
+void merge(std::vector<int>& big){
+	if(big.size() <= 1)
+		return;
+	size_t size = big.size()/2;
+	std::vector<int> left(big.begin(), big.begin() + size);
+	std::vector<int> right(big.begin() + size, big.end());
+	merge(left);
+	merge(right);
+	big = mergeLeftRight(left,right);
+}
+int findPairedElement(std::vector<std::pair<int, int> >& pair, int big){
+	for(size_t i = 0; i < pair.size(); i++){
+		if(pair[i].second == big)
+			return pair[i].first;
+	}
+	return -1;
+}
+
 void Merge::magic(const std::vector<int>& data)
 {
 	size_t size=data.size();
+	if(size <= 1)
+		return;
 	int remain;
 	bool flag = 0;
 	if(size %2 != 0)
@@ -124,30 +168,65 @@ void Merge::magic(const std::vector<int>& data)
 		int right = data.at(i+1);
 		result.push_back(std::make_pair(left, right));
 	}
+	for(size_t i =0; i < result.size(); i++){
+		if(result[i].first > result[i].second)
+			std::swap(result[i].first,result[i].second);
+	}
 	std::vector<int>big;
 	std::vector<int>small;
-	for(size_t i  = 0; i < size/2 ; i++){
-		if(result[i].first > result[i].second){
-			big.push_back(result[i].first);
-			small.push_back(result[i].second);
-		}
-		else{
+	for(size_t i  = 0; i < result.size(); i++){
 			big.push_back(result[i].second);
 			small.push_back(result[i].first);
-		}
 	}
+	merge(big);
 	if(flag)
 		small.push_back(remain);
 
-	std::sort(big.begin(), big.end());
 	std::vector<int> sorted = big;
-	for (size_t i = 0; i < small.size(); i++) {
-		int s = small[i];
-		std::vector<int>::iterator it = std::lower_bound(sorted.begin(), sorted.end(), s);
-		sorted.insert(it, s);
-       }
+	int firstToInsert =  findPairedElement(result,sorted[0]);
+	if(firstToInsert != -1){
+		std::vector<int>::iterator it = std::find(small.begin(), small.end(), firstToInsert);
+		if(it != small.end()){
+			sorted.insert(sorted.begin(), *it);
+			small.erase(it);
+		}
+	}
+	for(size_t i = 0; i < sorted.size(); i++)
+		std::cout << sorted[i] << ";";
+	std::cout << std::endl;
+	std::vector<int> jacob = generateJacobsthal(small.size());
+	size_t lastindex = 0;
+	size_t jacobindex = 1;
+	while(jacobindex < jacob.size() && (size_t)jacob[jacobindex] <= small.size()){
+		size_t endIndex = jacob[jacobindex];
+		size_t firstIndex = jacob[jacobindex - 1];
+		for(size_t i = endIndex; i > firstIndex ; i--){
+			int value = small[i - 1];
+			std::vector<int>::iterator it = std::lower_bound(sorted.begin(), sorted.end(), value);
+			sorted.insert(it, value);
+		}
+		lastindex = endIndex;
+		jacobindex++;
+		for(size_t i =0; i < sorted.size(); i++)
+			std::cout << "h" <<sorted[i] << ";";
+		std::cout << std::endl;
+	}
+	for(size_t i = 0; i < small.size(); i++)
+		std::cout << small[i] << ";";
+	std::cout << std::endl;
+	for(size_t i =0; i < sorted.size(); i++)
+		std::cout << "h" <<sorted[i] << ";";
+	std::cout << std::endl;
+	for(size_t i = lastindex; i < small.size(); i++){
+		int value = small[i];
+		std::vector<int>::iterator it = std::lower_bound(sorted.begin(), sorted.end(), value);
+		sorted.insert(it, value);
+	}
+	for(size_t i =0; i < sorted.size(); i++)
+		std::cout << "h" <<sorted[i] << ";";
+	std::cout << std::endl;
+
        _vecetorData = sorted;
-       std::cout << std::endl;
 }
 
 bool Merge::program(int ac, char** av){
@@ -163,7 +242,6 @@ bool Merge::program(int ac, char** av){
 	Display("Before: ", _vecetorData);
 	magic(_vecetorData);
 	Display("After : ", _vecetorData);
-	std::cout << std::endl;
 
 	return true;
 }
