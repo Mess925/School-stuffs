@@ -20,7 +20,7 @@
 
 class Merge {
 	private:
-		std::vector<int> _vecetorData;
+		std::vector<int> _vectorData;
 		std::deque<int> _dequeData;
 	public:
 		Merge();
@@ -28,10 +28,11 @@ class Merge {
 		Merge& operator= (const Merge& other);
 		~Merge();
 
-		bool program(int ac, char** av);
-		bool checkInput(int ac, char** av);
+		void program(int ac, char** av);
+		void checkInput(int ac, char** av);
 		void Display(const std::string& str, const std::vector<int>& data);
 		void magic(const std::vector<int>& data);
+		void magicD(const std::deque<int> & data);
 };
 
 # endif
