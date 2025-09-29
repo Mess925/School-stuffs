@@ -13,7 +13,6 @@
 # ifndef BUREAUCRAT_HPP
 # define BUREAUCRAT_HPP
 
-# include <iostream>
 # include <exception>
 # include <string>
 # include "Form.hpp"
@@ -40,19 +39,13 @@ class Bureaucrat
 		void	signForm(Form& f);
 
 		class GradeTooHighException : public std::exception {
-			public:
-				const char* what() const throw(){
-					return "Grade is to High";
-				}		
+				const char* what() const throw();
 		};
 		class GradeTooLowException : public std::exception {
-			public:
-				const char* what() const throw(){
-					return "Grade is too Low";
-			}
+				const char* what() const throw();
 		};
 };
 
-std::ostream& operator<<(std::ostream &os, const Bureaucrat &b);
+// std::ostream& operator<<(std::ostream &os, const Bureaucrat &b);
 
 # endif

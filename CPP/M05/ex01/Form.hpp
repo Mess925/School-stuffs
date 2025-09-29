@@ -32,16 +32,10 @@ class Form{
 		Form(std::string name, int gradeToSign, int gradeToExecute);
 
 		class GradeTooHighException : public std::exception{
-			public:
-				const char* what() const throw(){
-					return "Form Grade is too high!";
-				}
+				const char* what() const throw();
 		};
 		class GradeTooLowException : public std::exception{
-			public:
-				const char* what() const throw(){
-					return "Form Grade is too low!";
-				}
+				const char* what() const throw();
 		};
 		void	beSigned(const Bureaucrat &b);
 

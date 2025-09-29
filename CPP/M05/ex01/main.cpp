@@ -11,30 +11,41 @@
 /* ************************************************************************** */
 
 # include <iostream>
-# include "Bureaucrat.hpp"
 # include "Form.hpp"
+# include "Bureaucrat.hpp"
 
 int main() {
 	try {
-		Bureaucrat a("a", 150);
+		std::cout << "-----------------------------------------1" << std::endl;
+		// Bureaucrat a("a", 151);
+		Bureaucrat b ("b", 149);
+		b.decreaseGrade();
+		b.getGrade();
+		// std::cout << a <<std::endl;
 	}
 	catch (const std::exception &e){
+		std::cout << "-----------------------------------------2" << std::endl;
 		std::cout <<e.what() << std::endl;
 	}
 	try{
+		std::cout << "-----------------------------------------3" << std::endl;
 		Form a("a", 1 , 1);
 		Bureaucrat b("b", 3);
 		b.signForm(a);
 	}
 	catch (const std::exception &e){
+		std::cout << "-----------------------------------------4" << std::endl;
 		std::cout <<e.what() <<std::endl;
 	}
 	try{
+		std::cout << "-----------------------------------------5" << std::endl;
 		Form c("c", 150, 1);
 		Bureaucrat b("b", 3);
 		b.signForm(c);
+		std::cout << c <<std::endl;
 	}
 	catch(const std::exception &e){
+		std::cout << "-----------------------------------------6" << std::endl;
 		std::cout << e.what() <<std::endl;
 	}
 }

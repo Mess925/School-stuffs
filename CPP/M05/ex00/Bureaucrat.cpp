@@ -19,13 +19,14 @@ int	Bureaucrat::getGrade() const {
 }
 
 const std::string& Bureaucrat::getName() const {
-	return this->_name;
+	return _name;
 }
 
-Bureaucrat::Bureaucrat(const Bureaucrat& other) 
+Bureaucrat::Bureaucrat(const Bureaucrat& other): _name(other._name) 
 {
-	if(this != &other)
+	if(this != &other){
 		this->_grade = other._grade;
+	}
 }
 
 Bureaucrat& Bureaucrat::operator=(const Bureaucrat& other){
@@ -45,21 +46,28 @@ Bureaucrat::Bureaucrat(std::string name, int grade) : _name(name)
 }
 
 Bureaucrat::~Bureaucrat(){
-	std::cout<<"Bureaucrat "<<this->_name<<" is destroyed."<<std::endl;
 }
 
 void	Bureaucrat::increaseGrade(){
-	if(this->_grade == 1)
+	if(this->_grade <= 1)
 		throw (Bureaucrat::GradeTooHighException());
 	else
 		this->_grade--;
 }
 
 void	Bureaucrat::decreaseGrade(){
-	if(this->_grade == 150)
-		throw (Bureaucrat::GradeTooLowException());
+	if(this->_grade >= 150) 
+		throw (Bureaucrat::GradeTooLowException()); 
 	else
 		this->_grade++;
+}
+
+const char* Bureaucrat::GradeTooHighException::what() const throw() {
+	return "Grade too High!";
+}
+
+const char * Bureaucrat::GradeTooLowException::what() const throw() {
+	return "Grade too Low!";
 }
 
 std::ostream& operator<<(std::ostream &os, const Bureaucrat b)

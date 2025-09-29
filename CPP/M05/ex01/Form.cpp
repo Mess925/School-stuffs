@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 # include "Form.hpp"
+# include <iostream>
 
 Form::Form():
        	_name("no name:"),
@@ -70,9 +71,17 @@ void	Form::beSigned(const Bureaucrat &b){
 	       _isSigned = true;
 }
 
+const char* Bureaucrat::GradeTooHighException::what() const throw(){
+	return "Form grade is too high";
+}
+
+const char* Bureaucrat::GradeTooLowException::what() const throw(){
+	return "Form grade is too low";
+}
+
 std::ostream& operator<<(std::ostream &os, const Form& f) {
-	os << "Form " << f.getName() << " \n\t isSigned: " << f.getIsSigned()
-	<< " \n\t\t gradeToSign: " << f.getGradeToSign() << " \n\t\t gradeToExecute: "
+	os << "Form " << f.getName() << "\nisSigned: " << f.getIsSigned()
+	<< "\nGradeToSign: " << f.getGradeToSign() << "\nGradeToExecute: "
 	<< f.getGradeToExecute() << std::endl;
 	return (os);
 }

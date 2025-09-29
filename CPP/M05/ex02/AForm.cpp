@@ -11,6 +11,8 @@
 /* ************************************************************************** */
 
 # include "AForm.hpp"
+#include "Bureaucrat.hpp"
+# include <iostream>
 
 AForm::AForm():
        	_name("Default Form"),
@@ -45,7 +47,7 @@ AForm::AForm(std::string name, int gradeToSign, int gradeToExecute):
 	}
 	if(gradeToExecute > 150 || gradeToExecute > 150){
 		throw GradeTooLowException();
-	}
+ 	}
 }
 
 const	std::string AForm::getName() const {
@@ -76,10 +78,21 @@ void	AForm::checkExecution(Bureaucrat const &executor) const {
 	if(executor.getGrade() > _gradeToExecute)
 		throw GradeTooLowException();
 }	
+const char* AForm::GradeTooHighException::what() const throw(){
+	return "Aform grade is too high";
+}
+
+const char* AForm::GradeTooLowException::what() const throw(){
+	return "AForm grade is too low!";
+}
+
+const char* AForm::FormNotSignedException::what() const throw(){
+					return " Form is not signed!";
+				}
 
 std::ostream& operator<<(std::ostream &os, const AForm& f) {
-	os << "AForm " << f.getName() << " \n\t isSigned: " << f.getIsSigned()
-	<< " \n\t\t gradeToSign: " << f.getGradeToSign() << " \n\t\t gradeToExecute: "
+	os << "AForm " << f.getName() << " \nisSigned: " << f.getIsSigned()
+	<< " \nGradeToSign: " << f.getGradeToSign() << " \nGradeToExecute: "
 	<< f.getGradeToExecute() << std::endl;
 	return (os);
 }

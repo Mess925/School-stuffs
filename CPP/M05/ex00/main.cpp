@@ -16,12 +16,16 @@
 int main() {
 	try{
 		Bureaucrat a("a", 150);
+		std::cout << a;
+		a.decreaseGrade();
 	}
 	catch (const std::exception &e) {
 		std::cout <<e.what() <<std::endl;
 	}
 	try{
 		Bureaucrat b("b", 0);
+		std::cout<<b;
+		b.increaseGrade();
 	} 
 	catch (const std::exception &e){
 		std::cout <<e.what() <<std::endl;
@@ -34,13 +38,11 @@ int main() {
 		std::cout <<e.what() <<std::endl;    
 	}
 	try{
-		Bureaucrat a("a", 150);
-		a.getGrade();
+		Bureaucrat a("d", 150);
 		a.increaseGrade();
-		a.getGrade();
+		std::cout <<a;
 		a.decreaseGrade();
-		a.getGrade();
-		a.getName();
+		std::cout << a;
 	}
 	catch(const std::exception &e){
 		std::cout<<e.what()<<std::endl;

@@ -11,6 +11,8 @@
 /* ************************************************************************** */
 
 # include "Bureaucrat.hpp"
+#include <exception>
+# include <iostream>
 
 Bureaucrat::Bureaucrat() : _name("Unnamed"), _grade(150) {}
 
@@ -22,7 +24,10 @@ const std::string& Bureaucrat::getName() const {
 	return this->_name;
 }
 
-Bureaucrat::Bureaucrat(const Bureaucrat& other): _name(other._name), _grade(other._grade){}
+Bureaucrat::Bureaucrat(const Bureaucrat& other): _name(other._name){
+	if(this != &other)
+		this->_grade = other._grade;
+}
 
 
 Bureaucrat& Bureaucrat::operator=(const Bureaucrat& other){
@@ -69,6 +74,14 @@ void	Bureaucrat::signForm(AForm& f) {
 	std::cout << this->_name << " signed " << f.getName() << std::endl;
 }
 
+const char* Bureaucrat::GradeTooHighException::what() const throw(){
+	return "Grade is too High!";
+}
+
+const char* Bureaucrat::GradeTooLowException::what() const throw(){
+	return "Grade is too Low!";
+}
+
 void	Bureaucrat::executeForm(AForm const &form)
 {
 	try{
@@ -80,8 +93,9 @@ void	Bureaucrat::executeForm(AForm const &form)
 	}
 }
 
+/*
 std::ostream& operator<<(std::ostream &os, const Bureaucrat b)
 {
 	os << b.getName() << ", bureacurat grade "<< b.getGrade() <<std::endl;
 	return (os);
-}
+}*/

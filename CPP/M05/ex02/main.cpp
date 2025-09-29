@@ -15,23 +15,56 @@
 #include "RobotomyRequestForm.hpp"
 #include "PresidentialPardonForm.hpp"
 #include <ctime>
+#include <exception>
+#include <iostream>
 
-int main() {
+int main()
+{
     srand(time(NULL));
 
-    Bureaucrat bob("Bob", 1);
+    try{
+	    Bureaucrat bob("Bob", 1);
+	    ShrubberyCreationForm shrub("home");
+	    RobotomyRequestForm robo("Bender");
+	    PresidentialPardonForm pardon("Arthur");
 
-    ShrubberyCreationForm shrub("home");
-    RobotomyRequestForm robo("Bender");
-    PresidentialPardonForm pardon("Arthur");
+	    bob.signForm(shrub);
+	    bob.executeForm(shrub);
 
-    bob.signForm(shrub);
-    bob.executeForm(shrub);
+	    bob.signForm(robo);
+	    bob.executeForm(robo);
 
-    bob.signForm(robo);
-    bob.executeForm(robo);
+	    bob.signForm(pardon);
+	    bob.executeForm(pardon);
+    }
+    catch(const std::exception& e){
+	    std::cout << e.what() << std::endl; 
+    }
+    std::cout << "-------------------------------------------------------------" <<std::endl;
+    try{
+	   Bureaucrat a("a", 150);
+	   ShrubberyCreationForm shrub("hello");
+	   RobotomyRequestForm robo("Robo");
+	   PresidentialPardonForm pardon("Pre");
 
-    bob.signForm(pardon);
-    bob.executeForm(pardon);
+	   a.signForm(shrub);
+	   a.executeForm(shrub);
 
+	   a.signForm(robo);
+	   a.executeForm(robo);
+
+	   a.signForm(pardon);
+	   a.executeForm(pardon);
+    }
+    catch(const std::exception& e){
+    	std::cout << e.what() <<std::endl;
+    }
+    /*
+    try{
+	    AForm a;
+    }
+    catch(const std::exception& e)
+    {
+	    std::cout << e.what() <<std::endl;
+    }*/
 }
