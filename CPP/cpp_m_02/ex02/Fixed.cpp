@@ -11,6 +11,8 @@
 /* ************************************************************************** */
 
 # include "Fixed.hpp"
+#include <exception>
+#include <stdexcept>
 
 Fixed::Fixed() {
     this->_fixedvalue = 0;
@@ -88,8 +90,7 @@ Fixed Fixed::operator*(const Fixed& other)const{
 Fixed Fixed::operator/(const Fixed& other)const{
     if(other._fixedvalue == 0)
     {
-        std::cerr<<"Error: Division by Zero(0)!"<<std::endl;
-        return Fixed(0);
+	    throw std::runtime_error("Fixed point division by zero");
     }
     return Fixed(this->toFloat() / other.toFloat());
 }
@@ -125,6 +126,7 @@ const Fixed& Fixed::min(const Fixed& a , const Fixed& b)
 {
     return (a < b) ? a : b;
 }
+
 Fixed& Fixed::max(Fixed&a , Fixed&b)
 {
     return (a > b) ? a : b;

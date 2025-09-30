@@ -44,14 +44,14 @@ Fixed::Fixed(const float value){
 }
 
 float Fixed::toFloat() const{
-    return (float)this->_fixedvalue / (1 << _fractionalBits);
+    return ((float)this->_fixedvalue / (1 << _fractionalBits));
 }
 
 int Fixed::toInt() const{
-    return this->_fixedvalue >> _fractionalBits;
+    return (this->_fixedvalue >> _fractionalBits);
 }
 
 std::ostream& operator<<(std::ostream& os, const Fixed& fixed) {
     os << fixed.toFloat();
-    return os;
+    return (os);
 }
