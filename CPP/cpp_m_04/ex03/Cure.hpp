@@ -6,7 +6,7 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 19:20:27 by hthant            #+#    #+#             */
-/*   Updated: 2025/10/01 20:29:33 by hthant           ###   ########.fr       */
+/*   Updated: 2025/10/02 12:36:52 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ class Cure : public AMateria{
 		~Cure();
 
 		AMateria* clone() const;
-		// void use(ICharacter& target);
+		void use(ICharacter& target);
+		std::string const& getType() const;
 };
 
 # endif

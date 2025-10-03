@@ -6,7 +6,7 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 20:29:46 by hthant            #+#    #+#             */
-/*   Updated: 2025/10/01 20:30:05 by hthant           ###   ########.fr       */
+/*   Updated: 2025/10/02 12:37:57 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,6 @@ AMateria* Ice::clone() const{
 	return new Ice(*this);
 }
 
-void Ice::use(ICharacter& target){}
+void Ice::use(ICharacter& target){
+	std::cout << "* shoots an ice bolt at " << target.getName() << " *" <<std::endl;
+}
