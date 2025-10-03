@@ -1,30 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Amateria.cpp                                       :+:      :+:    :+:   */
+/*   IMateriaSource.hpp                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/01 19:12:40 by hthant            #+#    #+#             */
-/*   Updated: 2025/10/01 19:58:13 by hthant           ###   ########.fr       */
+/*   Created: 2025/10/03 19:49:42 by hthant            #+#    #+#             */
+/*   Updated: 2025/10/03 19:54:06 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "AMateria.hpp"
+# ifndef IMATERIASOURCE_HPP
+# define IMATERIASOURCE_HPP
 
-AMateria::AMateria():_type("Unknown"){}
+#include "AMateria.hpp"
+class IMateriaSource{
+	public:
+		virtual ~IMateriaSource();
+		virtual void learnMateria(AMateria*) = 0;
+		virtual AMateria* createMateria(std::string const & type) = 0;
+};
 
-AMateria::AMateria(const AMateria& other) : _type(other._type) {
-}
-
-AMateria& AMateria::operator=(const AMateria& other){
-	(void) other;
-	return *this;
-}
-
-AMateria::AMateria(std::string const& type):_type(type){}
-
-std::string const& AMateria::getType() const{
-	return this->_type;
-}
-
+# endif

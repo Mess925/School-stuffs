@@ -6,7 +6,7 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 11:29:14 by hthant            #+#    #+#             */
-/*   Updated: 2025/10/02 13:58:31 by hthant           ###   ########.fr       */
+/*   Updated: 2025/10/03 20:20:03 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,6 @@ Character::Character(const Character& other){
 Character& Character::operator=(const Character& other){
 	if( this!= &other ){
 		this->_name = other._name;
-	}
-
 	for(size_t i = 0; i < 4;i++){
 		if(this->_inventory[i]){
 			delete this->_inventory[i]; 
@@ -50,11 +48,15 @@ Character& Character::operator=(const Character& other){
 		else {
 			this->_inventory[i] = NULL;
 		}
-	}
+	}}
 	return *this;
 }
 
-Character::~Character(){}
+Character::~Character(){
+	for(size_t i = 0; i < 4; i++)
+		delete _inventory[i];
+}
+
 
 Character::Character(std::string name){
 	this->_name = name;
@@ -76,13 +78,23 @@ int Character::availableIdx(void){
 }
 
 void Character::equip(AMateria* m){
-
+	if(!m )
+		return;
+	size_t availableIdx = this->availableIdx();
+	if(availableIdx == -1 )
+		return;
+	if(availableIdx >= 0 && availableIdx <= 3)
+		_inventory[availableIdx] = m;
 }
 
 void Character::unequip(int idx){
-
+	if(idx >= 0 && idx <= 3)
+		_inventory[idx] = NULL;
 }
 
 void Character::use(int idx, ICharacter& target){
-
+	if(idx >= 0 and idx <= 3 && _inventory[idx]){
+		std::cout << this->_name << " : " ;
+		_inventory[idx]->use(target);
+	}
 }
