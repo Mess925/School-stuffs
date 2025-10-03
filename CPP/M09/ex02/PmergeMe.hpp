@@ -31,7 +31,7 @@ class Merge {
 		void program(int ac, char** av);
 		void checkInput(int ac, char** av);
 		void Display(const std::string& str, const std::vector<int>& data);
-		void magic(std::vector<int>& data);
+		std::vector<int> magic(std::vector<int>& data);
 		// void magicD(const std::deque<int> & data);
 };
 

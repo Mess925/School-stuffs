@@ -35,10 +35,7 @@ Merge& Merge::operator=(const Merge& other){
 	return *this;
 }
 
-Merge::~Merge(){};
-
-void Merge::checkInput(int ac, char **av){
-	for(int i = 1; i < ac; i++){
+Merge::~Merge(){}; void Merge::checkInput(int ac, char **av){ for(int i = 1; i < ac; i++){
 		std::string arg = av[i];
 		std::stringstream ss(arg);
 		std::string token;
@@ -99,53 +96,23 @@ std::vector<int> generateJacobsthal(int n){
 	}
 	return a;
 }
-
-std::vector<int>mergeLeftRight(std::vector<int> left, std::vector<int> right){
-	std::vector<int> result;
-	size_t i = 0;
-	size_t j = 0;
-
-	while(i < left.size() & j < right.size()){
-		if(left[i] < right[j]){
-			result.push_back(left[i]);
-			i++;}
-		else{
-			result.push_back(right[j]);
-			j++;}
-	}
-	while(i < left.size()){
-		result.push_back(left[i]);
-		i++;}
-	while(j < right.size()){
-		result.push_back(right[j]);
-		j++;}
-	return  result;
-}
-
-void merge(std::vector<int>& big){
-	if(big.size() <= 1)
-		return;
-	size_t size = big.size()/2;
-	std::vector<int> left(big.begin(), big.begin() + size);
-	std::vector<int> right(big.begin() + size, big.end());
-	merge(left);
-	merge(right);
-	big = mergeLeftRight(left,right);
-}
-
+int n = 0;
 int findPairedElement(std::vector<std::pair<int, int> >& pair, int big){
 	for(size_t i = 0; i < pair.size(); i++){
-		if(pair[i].second == big)
+		if(pair[i].second == big){
+			n++;
 			return pair[i].first;
+			
+		}
 	}
 	return -1;
 }
 
-void Merge::magic(std::vector<int>& data)
+std::vector<int> Merge::magic(std::vector<int>& data)
 {
 	size_t size=data.size();
 	if(size <= 1)
-		return;
+		return data;
 	int remain;
 	bool flag = 0;
 	if(size %2 != 0)
@@ -161,8 +128,10 @@ void Merge::magic(std::vector<int>& data)
 		result.push_back(std::make_pair(left, right));
 	}
 	for(size_t i =0; i < result.size(); i++){
-		if(result[i].first > result[i].second)
+		if(result[i].first > result[i].second){
 			std::swap(result[i].first,result[i].second);
+			n++;
+		}
 	}
 	std::vector<int>big;
 	std::vector<int>small;
@@ -170,7 +139,7 @@ void Merge::magic(std::vector<int>& data)
 			big.push_back(result[i].second);
 			small.push_back(result[i].first);
 	}
-	magic(big);
+	big = magic(big);
 	if(flag)
 		small.push_back(remain);
 
@@ -193,6 +162,7 @@ void Merge::magic(std::vector<int>& data)
 			int value = small[i - 1];
 			std::vector<int>::iterator it = std::lower_bound(sorted.begin(), sorted.end(), value);
 			sorted.insert(it, value);
+			n++;
 		}
 		lastindex = endIndex;
 		jacobindex++;
@@ -201,8 +171,10 @@ void Merge::magic(std::vector<int>& data)
 		int value = small[i];
 		std::vector<int>::iterator it = std::lower_bound(sorted.begin(), sorted.end(), value);
 		sorted.insert(it, value);
+		n++;
 	}
        _vectorData = sorted;
+       return _vectorData;
 }
 
 void Merge::program(int ac, char** av){
@@ -224,6 +196,7 @@ void Merge::program(int ac, char** av){
 	std::cout << std::fixed << std::setprecision(5);
 	std::cout << "Time to process a range of " << _vectorData.size() << " elements with std::vector : " << timeTaken << " us" << std::endl;
 	// std::cout << "Time to process a range of " << _vectorData.size() << " elements with std::deque : " << timeTakenD << " us" << std::endl;
+	std::cout << "TOTAL n " << n <<std::endl;
 }
 
  
