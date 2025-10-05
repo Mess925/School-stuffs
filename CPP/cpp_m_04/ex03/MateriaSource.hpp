@@ -15,7 +15,7 @@
 
 #include "AMateria.hpp"
 #include "IMateriaSource.hpp"
-class MateriaSource: public IMateriaSouerce{
+class MateriaSource: public IMateriaSource {
 	AMateria* _templates[4];
 	public:
 		MateriaSource();

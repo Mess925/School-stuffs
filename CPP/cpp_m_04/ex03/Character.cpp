@@ -6,13 +6,14 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 11:29:14 by hthant            #+#    #+#             */
-/*   Updated: 2025/10/03 20:43:22 by hthant           ###   ########.fr       */
+/*   Updated: 2025/10/05 17:37:16 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "Character.hpp"
 #include "AMateria.hpp"
 #include "ICharacter.hpp"
+#include <iterator>
 #include <string>
 
 Character::Character(){
@@ -80,7 +81,7 @@ int Character::availableIdx(void){
 void Character::equip(AMateria* m){
 	if(!m )
 		return;
-	size_t availableIdx = this->availableIdx();
+	int availableIdx = this->availableIdx();
 	if(availableIdx == -1 )
 		return;
 	if(availableIdx >= 0 && availableIdx <= 3)

@@ -6,7 +6,7 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 20:43:44 by hthant            #+#    #+#             */
-/*   Updated: 2025/10/03 20:43:29 by hthant           ###   ########.fr       */
+/*   Updated: 2025/10/05 17:22:52 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define ICHARACTER_HPP
 
 #include "AMateria.hpp"
+class AMateria;
 class ICharacter{
 	public:
 		virtual ~ICharacter(){}

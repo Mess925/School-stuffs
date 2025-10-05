@@ -6,7 +6,7 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 20:02:34 by hthant            #+#    #+#             */
-/*   Updated: 2025/10/02 12:35:54 by hthant           ###   ########.fr       */
+/*   Updated: 2025/10/05 17:52:26 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,11 @@
 
 Cure::Cure():AMateria("cure"){}
 
-Cure::Cure(const Cure& other){
-	*this = other;
-}
+Cure::Cure(const Cure& other) : AMateria(other){}
 
 Cure& Cure::operator=(const Cure& other){
-	(void) other;
+	if(this != &other)
+		AMateria::operator=(other);
 	return *this;
 }
 

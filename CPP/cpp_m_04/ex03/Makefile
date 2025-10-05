@@ -1,31 +1,37 @@
-# **************************************************************************** #
+#  **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
 #    By: hthant <hthant@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/06/09 16:49:26 by hthant            #+#    #+#              #
-#    Updated: 2025/10/01 19:59:03 by hthant           ###   ########.fr        #
+#    Created: 2025/09/03 22:04:39 by hthant            #+#    #+#              #
+#    Updated: 2025/09/08 16:02:36 by hthant           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = interface
-SRC = main.cpp AMateria.cpp Ice.cpp Cure.cpp ICharacter.cpp Character.cpp
-OBJ = $(SRC:.cpp=.o)
-CC = c++ 
-CFLAGS = #-Wall -Wextra -Werror -std=c++98
+
+CXX = c++
+CXXFLAGS = -Wall -Wextra -Werror -std=c++98
+
+SRCDIR = .
+OBJDIR = obj
+
+SOURCES = main.cpp AMateria.cpp Character.cpp Cure.cpp Ice.cpp MateriaSource.cpp 
+OBJECTS = $(SOURCES:%.cpp=$(OBJDIR)/%.o)
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJ)
+$(NAME): $(OBJECTS)
+	$(CXX) $(CXXFLAGS) $(OBJECTS) -o $(NAME)
 
-%.o: %.cpp
-	$(CC) $(CFLAGS) -c $< -o $@
+$(OBJDIR)/%.o: $(SRCDIR)/%.cpp
+	@mkdir -p $(OBJDIR)
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
-	rm -f $(OBJ)
+	rm -rf $(OBJDIR)
 
 fclean: clean
 	rm -f $(NAME)
