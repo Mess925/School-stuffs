@@ -21,6 +21,7 @@ Character::Character(){
 		this->_inventory[i] = NULL;
 	}
 	_name = "Unname";
+	std::cout << "Character " << this->_name << " is created." <<std::endl;
 }
 
 Character::Character(const Character& other){
@@ -31,6 +32,7 @@ Character::Character(const Character& other){
 		else
 			this->_inventory[i] = NULL;
 	}	
+	std::cout << "Character " << this->_name << " is created." <<std::endl;
 }
 
 Character& Character::operator=(const Character& other){
@@ -64,6 +66,7 @@ Character::Character(std::string name){
 	for(size_t i =0; i < 4; i++){
 		this->_inventory[i] = NULL;
 	}
+	std::cout << "Character " << this->_name << " is created." <<std::endl;
 }
 
 std::string const& Character:: getName() const{

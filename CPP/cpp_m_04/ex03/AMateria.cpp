@@ -26,6 +26,7 @@ AMateria& AMateria::operator=(const AMateria& other){
 AMateria::AMateria(std::string const& type):_type(type){}
 
 std::string const& AMateria::getType() const{
+	std::cout << this->_type<< " is the type" << std::endl ;
 	return  this->_type;
 }
 
