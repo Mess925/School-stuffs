@@ -70,7 +70,7 @@ AMateria* MateriaSource::createMateria(std::string const & type){
 	std::cout << "Hi" << std::endl;
 	for(size_t i = 0; i < 4; i++){
 		if(this->_templates[i])
-			std::cout << "Type " << this->_templates[i]->getType() << std::endl;	
+			std::cout << "Type " << this->_templates[i]->getType() << std::endl;
 		else{
 			std::cout << "There is no templates "  << std::endl;
 			return 0;
