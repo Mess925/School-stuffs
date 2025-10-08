@@ -15,7 +15,6 @@
 #include <cstddef>
 
 MateriaSource::MateriaSource(){
-	std::cout << "Default MateriaSource" << std::endl;
 	for(size_t i =0; i < 4; i++)
 		_templates[i] = NULL;
 }
@@ -58,26 +57,21 @@ void MateriaSource::learnMateria(AMateria* m){
 	if(!m )
 		return;
 	for(size_t i = 0; i < 4; i++){
-		if(_templates[i] != NULL){
+		if(_templates[i] == NULL){
 			this->_templates[i] = m;
-			break;
+			return;
 		}
 	}
 
 }
 
 AMateria* MateriaSource::createMateria(std::string const & type){
-	std::cout << "Hi" << std::endl;
 	for(size_t i = 0; i < 4; i++){
-		if(this->_templates[i])
-			std::cout << "Type " << this->_templates[i]->getType() << std::endl;
-		else{
-			std::cout << "There is no templates "  << std::endl;
-			return 0;
-		}
-		if(this->_templates[i]->getType() ==  type){
-			AMateria* newMateria = this->_templates[i]->clone();
-			return  newMateria;
+		if(this->_templates[i]){
+			if(this->_templates[i]->getType() ==  type){
+				AMateria* newMateria = this->_templates[i]->clone();
+				return  newMateria;
+			}
 		}
 	}
 	return (0);

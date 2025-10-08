@@ -14,7 +14,6 @@
 # include "Ice.hpp"
 
 Ice::Ice(): AMateria("ice"){
-	std::cout << "Default " << this->_type <<std::endl;
 }
 
 Ice::Ice(const Ice& other) : AMateria(other){}
