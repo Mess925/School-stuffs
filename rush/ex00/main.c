@@ -22,9 +22,9 @@ int main(int argc, char**argv){
 		return -1;
 	int n = getN((ft_size(argv[1]) + 1)/2);
 	int grid[n][n];
-	initgrid(grid, n, argv[1]);
-	/* solve(grid); */
-	printgrid(grid, n);
+	initgrid(n, grid, argv[1]);
+	solve(n, grid, argv[1]);
+	printgrid(n, grid);
 
 	return 0;
 }

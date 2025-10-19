@@ -21,8 +21,8 @@ int ft_size(char *str);
 void ft_putstr(char *str);
 void ft_putchar(char c);
 int getN(int size);
-// int solve(int[n][n] grid);
-void initgrid(int grid[], int n, char *str);
-void printgrid(int grid[], int n);
+void solve(int n, int grid[n][n], char *str);
+void initgrid(int n, int grid[n][n], char *str);
+void printgrid(int n,int grid[n][n]);
 
 # endif
