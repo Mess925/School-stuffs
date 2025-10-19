@@ -6,7 +6,7 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 16:09:09 by hthant            #+#    #+#             */
-/*   Updated: 2025/10/18 16:17:44 by hthant           ###   ########.fr       */
+/*   Updated: 2025/10/18 22:42:02 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,10 @@ int main(int argc, char**argv){
 	if(!check(argv[1]))
 		return -1;
 	int n = getN((ft_size(argv[1]) + 1)/2);
-	int grid[n][n] = {{0}};
-	int clue[n][n];
-	solve(grid, clue, 0);
+	int grid[n][n];
+	initgrid(grid, n, argv[1]);
+	/* solve(grid); */
+	printgrid(grid, n);
 
 	return 0;
 }

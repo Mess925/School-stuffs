@@ -6,11 +6,15 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 20:31:55 by hthant            #+#    #+#             */
-/*   Updated: 2025/10/18 20:31:56 by hthant           ###   ########.fr       */
+/*   Updated: 2025/10/18 22:45:36 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "header.h"
+
+void doNth(){
+	return;
+}
 
 int check(char *str){
 	int i = 0;
@@ -21,7 +25,7 @@ int check(char *str){
 	}
 	while(str[i] != 0){
 		if(str[i] >= 48 && str[i] <= 57)
-			ft_putchar(str[i]);
+			doNth();
 		else{
 			if(str[i] != ' ' ){
 				ft_putstr("ERROR");
