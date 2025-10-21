@@ -11,9 +11,9 @@
 /* ************************************************************************** */
 
 # include "bigint.hpp"
-#include <filesystem>
 #include <string>
 # include <vector>
+# include <algorithm>
 
 bigint::bigint(): _value(0){}
 
@@ -87,16 +87,18 @@ bigint bigint::operator*(const bigint& n){
 		for(int j = b.size() -1; j >=0; j--){
 			int res = ((a[i] - '0') * (b[j] - '0')); 
 			int sum = res + arr [ i + j + 1 ]; 
-			arr[i+j+ 1] = sum % 10;
-			arr[i + j] = sum /10;
+			arr[i + j + 1] = sum % 10;
+			arr[i + j] += sum /10;
 		}
 	}
 	std::string res ;
-	for(size_t i =0; i < arr.size() ; i++){
-		if(arr[i] == 0)
-			i++;
-		res.push_back(arr[i] + '0');	
-	}
-
+	size_t i = 0;
+	while( i < arr.size() && arr[i] == 0)
+		i++;
+	arr.erase(arr.begin(), arr.begin()+ i );
+	for(size_t i  =0; i < arr.size();  i++)
+		res.push_back(arr[i] + '0');
 	return bigint(res);
 }
+
+
