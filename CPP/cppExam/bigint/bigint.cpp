@@ -86,9 +86,17 @@ bigint bigint::operator*(const bigint& n){
 	for(int i = a.size() -1; i >= 0 ; i--){
 		for(int j = b.size() -1; j >=0; j--){
 			int res = ((a[i] - '0') * (b[j] - '0')); 
-			total= std::to_string(res);
+			int sum = res + arr [ i + j + 1 ]; 
+			arr[i+j+ 1] = sum % 10;
+			arr[i + j] = sum /10;
 		}
 	}
-	return bigint(total);
+	std::string res ;
+	for(size_t i =0; i < arr.size() ; i++){
+		if(arr[i] == 0)
+			i++;
+		res.push_back(arr[i] + '0');	
+	}
 
+	return bigint(res);
 }

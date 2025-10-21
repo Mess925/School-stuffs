@@ -14,9 +14,11 @@
 
 int main(){
 	bigint a(30);
-	bigint b("14");
+	bigint b("123");
+	bigint c("456");
 	std::cout << b << std::endl;
 	std::cout << a << std::endl;
-	std::cout << (a * b) << std::endl;
+	std::cout << c << std::endl;
+	std::cout << (c * b) << std::endl;
 	return 0;
 }
