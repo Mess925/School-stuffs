@@ -19,12 +19,22 @@ class bigint {
 		~bigint();
 
 		std::string getVal() const ;
+
+		//bool type return 
 		bool operator>(const bigint& b);
 		bool operator<(const bigint& b);
 		bool operator==(const bigint& b);
 		bool operator>=(const bigint& b);
 		bool operator<=(const bigint& b);
 		bool operator!=(const bigint& b);
+
+		//object type return 
+		bigint operator+(const bigint& b);
+		bigint& operator++();
+		bigint operator++(int);
+		bigint& operator+=(const bigint& b);
+		bigint operator>>(int n);
+		bigint operator<<(int n);
 };
 
 std::ostream& operator<<(std::ostream& os, const bigint& b);

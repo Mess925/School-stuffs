@@ -1,4 +1,5 @@
 # include "bigint.hpp"
+#include <cstddef>
 # include <ostream>
 # include <string>
 # include <sstream>
@@ -54,7 +55,7 @@ std::ostream& operator<<(std::ostream& os, const bigint& b){
 }
 
 bool bigint::operator>(const bigint& b){
-	return (this->_val < b._val);
+	return (this->_val > b._val);
 }
 
 bool bigint::operator<(const bigint& b){
@@ -76,3 +77,62 @@ bool bigint::operator<=(const bigint& b){
 bool bigint::operator!=(const bigint& b){
 	return (this->_val != b._val);
 }
+
+bigint bigint::operator+(const bigint& b){
+	std::string firstval = this->_val;
+	std::string secval = b.getVal();
+	std::string result = "";
+
+	int carry = 0;
+	int firstIndex = firstval.length() - 1;
+	int secondInex = secval.length() - 1;
+
+	while (firstIndex >= 0 || secondInex  >= 0 || carry) {
+		int firstDigit = firstIndex >= 0 ? firstval[firstIndex] - '0' : 0;
+		int secondDigit = secondInex >= 0 ? secval[secondInex] - '0' : 0;
+		
+		int sum = firstDigit + secondDigit + carry;
+		carry = sum / 10;
+		result.insert(result.begin(), (sum % 10) + '0');
+
+		firstIndex --;
+		secondInex --;
+	}
+	return bigint(result);
+}
+
+bigint& bigint::operator++(){	
+	*this = *this + bigint(1);
+	return *this;
+}
+
+bigint bigint::operator++(int){
+	bigint temp = *this;
+	*this = *this + bigint(1);
+	return temp;
+}
+
+bigint& bigint::operator+=(const bigint& b){
+	*this = *this + b;
+	return *this;
+}
+
+bigint bigint::operator<<(int n){
+	if(this->_val == "0")
+		return *this;
+	std::string res = this->getVal();
+	res = res + std::string(n, '0');
+	return (bigint(res));
+}
+
+bigint bigint::operator>>(int n) {
+    std::string res = this->getVal();
+
+    if (res.length() <= (size_t)n)
+        return bigint("0");
+
+    res.erase(res.length() - n, n); 
+    return bigint(res);
+}
+
+

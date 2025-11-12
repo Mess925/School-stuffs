@@ -5,13 +5,33 @@ int main(){
 	bigint c("1");
 	bigint d;
 	
-	std::cout << a <<std::endl;
-	a = c;
+	std::cout <<"a is " << a ;
+	// a = c;
 	d = 5;
-	std::cout << a <<std::endl;
-	std::cout <<" b is " <<b <<std::endl;
-	std::cout << c << std::endl;
-	std::cout << d << std::endl;
+	std::cout <<"a is " << a ;
+	std::cout <<"b is " << b ;
+	std::cout <<"c is " << c ;
+	std::cout <<"d is " << d ;
+
+	std::cout << "BOOL TEST CASES" << std::endl;
+	std::cout << (a < b) << std::endl;
+	std::cout << (a > b) << std::endl;
+	std::cout << (a == b) << std::endl;
+	std::cout << (a >= b) << std::endl;
+	std::cout << (a <= b) << std::endl;
+	std::cout << (a != b) << std::endl;
+
+	//object type return 
+	std::cout << "OBJECT TEST CASES" << std::endl; 
+	a = 98;
+	c = 1;
+	std::cout << " a + c is = " << (a + c);
+	std::cout << a++ ;
+	std::cout << ++a ;
+	std::cout << ( c += a  );
+	c =  123456;
+	std::cout << (c << 3 ) ;
+	std::cout << (c >> 3 ) ;
 }
 
 /* these return a new value
