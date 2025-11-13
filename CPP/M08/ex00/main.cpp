@@ -10,7 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include <easyfind.hpp>
+# include "easyfind.hpp"
+# include <vector>
+# include <list>
 
 int main() {
     std::vector<int> my_vector;
