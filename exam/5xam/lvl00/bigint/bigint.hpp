@@ -35,6 +35,9 @@ class bigint {
 		bigint& operator+=(const bigint& b);
 		bigint operator>>(int n);
 		bigint operator<<(int n);
+
+		//helper functon
+		void removeLeadingZero();
 };
 
 std::ostream& operator<<(std::ostream& os, const bigint& b);

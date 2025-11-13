@@ -1,5 +1,6 @@
 # include "bigint.hpp"
 #include <cstddef>
+#include <iterator>
 # include <ostream>
 # include <string>
 # include <sstream>
@@ -133,6 +134,15 @@ bigint bigint::operator>>(int n) {
 
     res.erase(res.length() - n, n); 
     return bigint(res);
+}
+
+void bigint::removeLeadingZero(){
+	if(this->_val.empty())
+		this->_val = "0";
+	int i = 0;
+	while(i < (int)this->_val.length() - 1 && _val[i] == '0')
+		++i;
+	this->_val = this->_val.substr(i);
 }
 
 

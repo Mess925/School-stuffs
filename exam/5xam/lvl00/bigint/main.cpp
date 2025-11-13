@@ -32,6 +32,9 @@ int main(){
 	c =  123456;
 	std::cout << (c << 3 ) ;
 	std::cout << (c >> 3 ) ;
+	bigint e = 03;
+	e.removeLeadingZero();
+	std::cout << e ;
 }
 
 /* these return a new value
