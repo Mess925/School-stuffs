@@ -1,0 +1,66 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Base.cpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/03 21:55:32 by hthant            #+#    #+#             */
+/*   Updated: 2025/09/04 22:02:05 by hthant           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+# include "Base.hpp"
+
+Base::~Base(){std::cout << "destructor" <<std::endl;}
+
+Base*	generate(){
+	std::srand(std::time(NULL));
+	switch (rand() % 3) {
+		case 0:
+			return new A();
+		case 1:
+			return new B();
+		default:
+			return new C();
+	}
+}
+
+void	identify(Base* p){
+	if(dynamic_cast<A*>(p))
+		std::cout << "A" << std::endl;
+	else if (dynamic_cast<B*>(p))
+		std::cout<<"B" << std::endl;
+	else if (dynamic_cast<C*>(p))
+		std::cout << "c" << std::endl;
+	else
+		std::cout << "NULL" << std::endl;
+}
+
+void	identify(Base& p){
+	try{
+		(void)dynamic_cast<A&>(p);
+		std::cout << "A" << std::endl;
+		return;
+	}
+	catch (std::exception& e) {
+		std::cout << e.what() << "A" << std::endl;
+	}
+	try{
+		(void)dynamic_cast<B&>(p);
+		std::cout << "B" << std::endl;
+		return;
+	}
+	catch (std::exception& e) {
+		std::cout << e.what() << "B" << std::endl;
+	}
+	try{
+		(void)dynamic_cast<C&>(p);
+		std::cout << "C" << std::endl;
+		return;
+	}
+	catch (std::exception& e) {
+		std::cout << e.what() << "C" << std::endl;
+	}
+}
+
