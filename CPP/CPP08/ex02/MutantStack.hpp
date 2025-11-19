@@ -10,30 +10,29 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# ifndef MUTANTSTACK_HPP
-# define MUTANTSTACK_HPP
+#ifndef MUTANTSTACK_HPP
+#define MUTANTSTACK_HPP
 
-# include <stack>
-# include <deque>
+#include <stack>
 
-template <typename T, typename Container = std::deque<T> >
-class MutantStack : public std::stack<T, Container> {
-	public:
-		MutantStack();
-		MutantStack(const MutantStack& other);
-		MutantStack& operator=(const MutantStack& other);
-		~MutantStack();
+template <typename T>
+class MutantStack : public std::stack<T>
+{
+public:
+	MutantStack();
+	MutantStack(const MutantStack &other);
+	MutantStack &operator=(const MutantStack &other);
+	~MutantStack();
 
+	typedef typename std::stack<T>::container_type::iterator iterator;
+	typedef typename std::stack<T>::container_type::const_iterator const_iterator;
 
-		typedef typename Container::iterator iterator;
-		typedef typename Container::const_iterator const_iterator;
-
-		iterator	begin();
-		iterator	end();
-		const_iterator	begin() const;	
-		const_iterator	end() const;
+	iterator begin();
+	iterator end();
+	const_iterator begin() const;
+	const_iterator end() const;
 };
 
-# include "MutantStack.tpp"
+#include "MutantStack.tpp"
 
-# endif
+#endif
