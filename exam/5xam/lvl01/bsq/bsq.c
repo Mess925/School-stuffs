@@ -80,8 +80,8 @@ static void solve_bsq(char **map, int rows, int cols, char empty, char fill, cha
 		}
 	}
 
-	for(int x = max_i; x > max_i - max_size; x--){
-		for(int y = max_j ; y > max_j - max_size ; y--){
+	for(int x = max_i - max_size + 1 ; x <= max_i; x++){
+		for(int y = max_j - max_size + 1 ; y <= max_j ; y++){
 			map[x][y] = fill;
 		}
 	}    
@@ -115,6 +115,7 @@ int main(int argc, char *argv[]){
 	int first_len = -1;	
 	for (int i = 0; i < line_count; i++){
 		nread = getline(&line, &len, stream);
+		fprintf(stdout,"The line is %s\n", line);
 		if (nread <= 0)
 			error_exit(&line, stream);
 
