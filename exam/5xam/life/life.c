@@ -19,7 +19,7 @@ int aliveCount(char **str, int i, int j, int height, int width){
 			}
 			int newx = i + x;
 			int newy = j + y;
-			if(newy >= 0 && newy < widht && newx >= 0 && newx < height){
+			if(newy >= 0 && newy < width && newx >= 0 && newx < height){
 				if(str[newx][newy] == 'O')
 					count++;
 			}
