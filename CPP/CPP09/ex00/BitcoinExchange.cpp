@@ -51,7 +51,7 @@ bool BitcoinExchange::validValue(const std::string& valueStr, bool check) {
 	    writeErrorMsg(std::string("not a number"),valueStr);
 	    return false;
     }
-    if (value < 0) {
+    if (value < 0 && check) {
 	    writeErrorMsg(std::string("not a positive number"),valueStr);
 	    return false;
     }
@@ -160,27 +160,24 @@ bool BitcoinExchange::validFile(const std::string &fileName){
 
 
 void BitcoinExchange::processInputFile(const std::string& fileName) {
-    	std::ifstream file(fileName.c_str());
-    	if (!file.is_open()) {
-        	std::cerr << "Error: could not open file => " << fileName << std::endl;
-        	return;
-    	}
-
-    	std::string line;
-    	std::getline(file, line);
+	std::ifstream file(fileName.c_str());
+	if (!file.is_open()) {
+    	std::cerr << "Error: could not open file => " << fileName << std::endl;
+    	return;
+	}
+	std::string line;
+	std::getline(file, line);
 	if (line != "date | value") return;
-
-    	Data d;
-    	d.deli = '|';
-    	loadData(); 
-
-    	while (std::getline(file, line)) {
-        	if (!validLine(line, d, true)) continue;
+	Data d;
+	d.deli = '|';
+	loadData(); 
+	while (std::getline(file, line)) {
+    	if (!validLine(line, d, true)) continue;
 		std::map<std::string, double>::iterator it = _money.lower_bound(d.date);
-        	double rate = 0.0;
-        
-        	if (it != _money.end() && it->first == d.date)
-			rate = it->second;
+    	double rate = 0.0;
+    
+    	if (it != _money.end() && it->first == d.date)
+		rate = it->second;
 		else {
 			if (it != _money.begin()) {
 				--it;

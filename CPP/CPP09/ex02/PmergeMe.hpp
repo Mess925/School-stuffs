@@ -16,7 +16,6 @@
 # include <vector>
 # include <deque>
 # include <string>
-# include <bits/stdc++.h>
 
 class Merge {
 	private:
@@ -30,9 +29,10 @@ class Merge {
 
 		void program(int ac, char** av);
 		void checkInput(int ac, char** av);
-		void Display(const std::string& str, const std::vector<int>& data);
+		template<typename T>
+		void Display(const std::string& str, const T& data);
 		std::vector<int> magic(std::vector<int>& data);
-		// void magicD(const std::deque<int> & data);
+		std::deque<int> magicD(std::deque<int> & data);
 };
 
 # endif

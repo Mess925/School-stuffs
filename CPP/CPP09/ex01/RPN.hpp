@@ -17,7 +17,9 @@
 # include <iostream>
 # include <stack>
 # include <sstream>
+# include <climits>
 # include <cctype>
+# include <cstdlib>
 
 class RPN {
 	public:
@@ -26,7 +28,7 @@ class RPN {
 		RPN& operator=(const RPN& other);
 		~RPN();
 
-		int calculation(int x, int y, char o);
+		int calculation(int x, int y, char op);
 		void PolishEvaluator(const std::string& arg);
 };
 

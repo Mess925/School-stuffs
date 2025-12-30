@@ -24,7 +24,7 @@ RPN& RPN::operator=(const RPN& other){
 }
 
 RPN::~RPN(){}
-
+/*
 int RPN::calculation(int x, int y, char o){
 	switch(o)
 	{
@@ -43,7 +43,42 @@ int RPN::calculation(int x, int y, char o){
 			throw std::invalid_argument( std::string ("Invalid argument"));
 	}
 }
-
+*/
+int RPN::calculation(int x, int y, char op) {
+    long long result;
+    switch (op) {
+        case '+':
+            if (((y > 0) && (x > INT_MAX - y)) || ((y < 0) && (x < INT_MIN - y))) {
+                throw std::overflow_error("Integer overflow detected during addition.");
+            }
+            result = (long long)x + y;
+            break;
+        case '-':
+             if (((y > 0) && (x < INT_MIN + y)) || ((y < 0) && (x > INT_MAX + y))) {
+                throw std::overflow_error("Integer overflow detected during subtraction.");
+            }
+            result = (long long)x - y;
+            break;
+        case '*':
+            if (x != 0 && (y > INT_MAX / abs(x) || y < INT_MIN / abs(x))) {
+                throw std::overflow_error("Integer overflow detected during multiplication.");
+            }
+	    result = (long long)x * y;
+	    break;
+        case '/':
+            if (y == 0) {
+                throw std::runtime_error("Division by zero.");
+            }
+            if (x == INT_MIN && y == -1) {
+                throw std::overflow_error("Integer overflow detected (INT_MIN / -1).");
+            }
+            result = (long long)x / y;
+            break;
+        default:
+            throw std::invalid_argument("Unknown operator.");
+    	}
+    	return static_cast<int>(result);
+}
 
 void	RPN::PolishEvaluator(const std::string& arg){
 	std::stack<int> myStack;
