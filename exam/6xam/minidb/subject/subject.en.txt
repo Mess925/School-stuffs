@@ -1,0 +1,48 @@
+Assignment name  : mini_db
+Expected files   : mini_db.cpp
+Language         : C++
+--------------------------------------------------------------------------------
+
+You are provided with a Socket class and a Server class.
+
+You must implement a very small key-value database server.
+
+The program takes one argument: the port to listen on.
+
+The server listens on 127.0.0.1.
+
+When the server starts listening, it must print:
+ready
+
+Clients can connect using netcat.
+
+The server must support the following commands:
+
+POST <key> <value>
+GET <key>
+DELETE <key>
+
+Responses:
+
+POST:
+- Always respond with: 0
+
+GET:
+- If the key exists, respond with: 0 <value>
+- If the key does not exist, respond with: 1
+
+DELETE:
+- If the key existed and was deleted, respond with: 0
+- If the key did not exist, respond with: 1
+
+Each response must end with a newline.
+
+When a client disconnects, the database must be saved to a file named ".save".
+When the server starts, it must reload the database from this file if it exists.
+
+The server must be non-blocking and handle multiple clients using select().
+
+You must not modify the main function signature.
+You must not change the provided class interfaces.
+
+Memory leaks and file descriptor leaks are forbidden.
