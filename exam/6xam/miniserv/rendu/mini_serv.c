@@ -56,52 +56,40 @@ char *str_join(char *buf, char *add)
 }
 
 static int g_id[FD_SETSIZE];
-static char *g_buf[FD_SETSIZE];
-static int g_next = 0;
+static char *g_buff[FD_SETSIZE];
 static int g_max = 0;
+static int g_next = 0;
 static fd_set g_read, g_master;
 
-static void fatal(void)
-{
-	write(2, "Fatal error\n", 12);
+static void fatal(){
+	write(2, "ERROR\n", 6);
 	exit(1);
 }
 
-static void arg_err(void)
-{
-	write(2, "Wrong number of arguments\n", 26);
-	exit(1);
-}
-
-static void send_all(int except, const char *msg)
-{
-	for (int fd = 0; fd <= g_max; fd++)
-		if (fd != except && g_id[fd] != -1)	
+static void send_all(int efd, char *msg){
+	for(int fd = 0; fd <= g_max; fd++){
+		if(fd != efd && g_id[fd] != -1)
 			send(fd, msg, strlen(msg), 0);
+	}
 }
 
-static void add_client(int s)
-{
+static void add_client(int sockfd){
 	struct sockaddr_in addr;
 	socklen_t len = sizeof(addr);
-	int fd = accept(s, (void *)&addr, &len);
-
-	if (fd < 0 || fd >= FD_SETSIZE)
+	int fd = accept(sockfd, (void *)&addr, &len);
+	if(fd < 0 || fd >= FD_SETSIZE)
 		return;
-
-	g_id[fd] = g_next++;
-	g_buf[fd] = NULL;
-	if (fd > g_max) g_max = fd;
-
+	g_id[fd] =  g_next++;
+	g_buff[fd] = NULL;
+	if(fd > g_max)
+		g_max = fd;
 	FD_SET(fd, &g_master);
-
 	char msg[64];
 	sprintf(msg, "server: client %d just arrived\n", g_id[fd]);
 	send_all(fd, msg);
 }
 
-static void rem_client(int fd)
-{
+static void remove_client(int fd){
 	char msg[64];
 	sprintf(msg, "server: client %d just left\n", g_id[fd]);
 	send_all(fd, msg);
@@ -109,84 +97,83 @@ static void rem_client(int fd)
 	close(fd);
 	FD_CLR(fd, &g_master);
 
-	free(g_buf[fd]);
-	g_buf[fd] = NULL;
+	free(g_buff[fd]);
+	g_buff[fd] = NULL;
 	g_id[fd] = -1;
 }
 
-static void handle(int fd)
-{
-	char buf[4096];
-	int r = recv(fd, buf, 4095, 0);
-	if (r <= 0)
-		return rem_client(fd);
+static void handle(int fd){
+	char buffer[4096];
+	int r = recv(fd, buffer, 4095, 0);
+	if( r <= 0 )
+		return remove_client(fd);
 
-	buf[r] = 0;
-	g_buf[fd] = str_join(g_buf[fd], buf);
-	if (!g_buf[fd])
+	buffer[r] = 0;
+	g_buff[fd] = str_join(g_buff[fd], buffer);
+	if(!g_buff[fd])
 		fatal();
-
 	char *msg;
-	while (extract_message(&g_buf[fd], &msg) == 1)
-	{
+	while(extract_message(&g_buff[fd], &msg) == 1){
 		char out[64];
-		sprintf(out, "client %d: ", g_id[fd]);
+		sprintf(out, "client %d", g_id[fd]);
 
-		char *sendbuf = malloc(strlen(out) + strlen(msg) + 1);
-		if (!sendbuf) fatal();
+		char *sendbuff = malloc(strlen(msg) + strlen(out));
+		if(!sendbuff)
+			fatal();
 
-		sendbuf[0] = 0;
-		strcat(sendbuf, out);
-		strcat(sendbuf, msg);
+		sendbuff[0] = 0;
+		strcat(sendbuff, out);
+		strcat(sendbuff, msg);
 
-		send_all(fd, sendbuf);
-
-		free(sendbuf);
+		send_all(fd, sendbuff);
+		free(sendbuff);
 		free(msg);
 	}
 }
 
-int main(int ac, char **av)
-{
-	if (ac != 2)
-		arg_err();
-
-	int s = socket(AF_INET, SOCK_STREAM, 0);
-	if (s < 0)
+int main(int ac, char **av) {
+	if(ac != 2)
 		fatal();
+	int sockfd, connfd, len;
+	struct sockaddr_in servaddr, cli;
 
-	struct sockaddr_in serv;
-	bzero(&serv, sizeof(serv));
-	serv.sin_family = AF_INET;
-	serv.sin_addr.s_addr = htonl(2130706433);
-	serv.sin_port = htons(atoi(av[1]));
-
-	if (bind(s, (void *)&serv, sizeof(serv)) < 0)
+	// socket create and verification
+	sockfd = socket(AF_INET, SOCK_STREAM, 0);
+	if (sockfd < 0) {
 		fatal();
-	if (listen(s, 128) < 0)
-		fatal();
+	}
+	bzero(&servaddr, sizeof(servaddr));
 
-	for (int i = 0; i < FD_SETSIZE; i++)
-	{
-		g_id[i] = -1;
-		g_buf[i] = NULL;
+	// assign IP, PORT
+	servaddr.sin_family = AF_INET;
+	servaddr.sin_addr.s_addr = htonl(2130706433); //127.0.0.1
+	servaddr.sin_port = htons(atoi(av[1]));
+
+	if ((bind(sockfd, (void *)&servaddr, sizeof(servaddr))) < 0) {
+		fatal();
+	}
+	if (listen(sockfd, 128) < 0) {
+		fatal();
 	}
 
-	g_max = s;
+	for(int i = 0; i < FD_SETSIZE; i++){
+		g_id[i] = -1;
+		g_buff[i] = NULL;
+	}
+	g_max = sockfd;
 	FD_ZERO(&g_master);
-	FD_SET(s, &g_master);
+	FD_SET(sockfd, &g_master);
 
-	while (1)
-	{
+	while(1){
 		g_read = g_master;
-		if (select(g_max + 1, &g_read, NULL, NULL, NULL) < 0)
+		if(select(g_max +1 , &g_read, NULL, NULL, NULL) < 0)
 			continue;
-
-		if (FD_ISSET(s, &g_read))
-			add_client(s);
-
-		for (int fd = 0; fd <= g_max; fd++)
-			if (fd != s && g_id[fd] != -1 && FD_ISSET(fd, &g_read))
+		if(FD_ISSET(sockfd, &g_read))
+			add_client(sockfd);
+		for(int fd = 0 ; fd <= g_max; fd++){
+			if(fd != sockfd && g_id[fd] != -1 && FD_ISSET(fd, &g_read))
 				handle(fd);
+		}
 	}
 }
+
