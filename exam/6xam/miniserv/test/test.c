@@ -62,19 +62,19 @@ static int g_next = 0;
 static fd_set g_read, g_master;
 
 static void arg(){
-	write(2, "Argument Error.\n",16);
+	write(2, "Wrong number of arguments\n", 26);
 	exit(1);
 }
 
 static void fatal(){
-	write(2, "Fatal Error.\n",13);
+	write(2, "Fatal error\n", 12);
 	exit(1);
 }
 
-static void send_all(int efd, char *msg){
-	for(int fd = 0; fd <= g_max; fd++){
+static void send_all(int efd,char *msg){
+	for(int fd = 0 ; fd <= g_max; fd++){
 		if(fd != efd && g_id[fd] != -1)
-			send(fd, msg, strlen(msg), 0);
+			send(fd, msg,strlen(msg), 0);
 	}
 }
 
@@ -89,43 +89,45 @@ static void add_client(int sockfd){
 	g_buff[fd] = NULL;
 	if(fd > g_max)
 		g_max = fd;
+
 	FD_SET(fd, &g_master);
 	char msg[64];
-	sprintf(msg, "server: client %d just joined.\n", g_id[fd]);
-	send_all(fd, msg);
+	sprintf(msg, "server: client %d just arrived\n", g_id[fd]);
+	send_all(fd,msg);
 }
 
 static void remove_client(int fd){
 	char msg[64];
-	sprintf(msg,"server: clinet %d just left.\n", g_id[fd]);
+	sprintf(msg, "server: client %d just left\n", g_id[fd]);
 	send_all(fd, msg);
 
 	close(fd);
 	FD_CLR(fd, &g_master);
-
 	free(g_buff[fd]);
-	g_buff[fd] = NULL;
+	g_buff[fd] =  NULL;
 	g_id[fd] = -1;
 }
 
 static void handle(int fd){
 	char buffer[4096];
 	int r = recv(fd, buffer, 4095, 0);
-	if(r <= 0)
-		return (remove_client(fd));
+	if( r <= 0 ){
+		remove_client(fd);
+		return;
+	}
 	buffer[r] = 0;
-	g_buff[fd] = str_join(g_buff[fd], buffer);
+	g_buff[fd] =  str_join(g_buff[fd], buffer);
 	if(!g_buff[fd])
 		fatal();
 	char *msg;
-	while(extract_message(&g_buff[fd], &msg)){
+	while(extract_message(&g_buff[fd], &msg) == 1)
+	{
 		char out[64];
 		sprintf(out, "client %d: ", g_id[fd]);
 
-		char *sendbuff = malloc(strlen(msg) + strlen(out) + 1);
-		if(! sendbuff)
+		char *sendbuff =  malloc(strlen(out) + strlen(msg) + 1);
+		if(!sendbuff)
 			fatal();
-
 		sendbuff[0] = 0;
 		strcat(sendbuff, out);
 		strcat(sendbuff, msg);
@@ -138,14 +140,14 @@ static void handle(int fd){
 }
 
 int main(int ac, char **av) {
-	if(ac != 2){
+	if(ac != 2)
 		arg();
-	}
 	int sockfd, connfd, len;
 	struct sockaddr_in servaddr, cli;
 
+	// socket create and verification
 	sockfd = socket(AF_INET, SOCK_STREAM, 0);
-	if (sockfd < 0 )
+	if (sockfd < 0)
 		fatal();
 	bzero(&servaddr, sizeof(servaddr));
 
@@ -156,7 +158,7 @@ int main(int ac, char **av) {
 	// Binding newly created socket to given IP and verification
 	if ((bind(sockfd, (void *)&servaddr, sizeof(servaddr))) < 0)
 		fatal();
-	if (listen(sockfd, 128) < 0)
+	if (listen(sockfd, 128) < 0) 
 		fatal();
 
 	for(int i = 0; i < FD_SETSIZE; i++){
@@ -169,7 +171,7 @@ int main(int ac, char **av) {
 	FD_SET(sockfd, &g_master);
 
 	while(1){
-		g_read = g_master;
+		g_read =  g_master;
 		if(select(g_max + 1, &g_read, NULL, NULL, NULL) < 0)
 			continue;
 		if(FD_ISSET(sockfd, &g_read))
